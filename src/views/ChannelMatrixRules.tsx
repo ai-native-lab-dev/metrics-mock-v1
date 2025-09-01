@@ -16,7 +16,22 @@ export default function ChannelMatrixRules() {
       {/* Channel Transition Matrix */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Channel Transition Matrix</h2>
-        <p className="text-gray-600 mb-6">Customer can start in any [Row], then can end in one of the [Col]?</p>
+        <div className="text-gray-700 mb-6 space-y-3">
+          <p>
+            Customer interactions can start and end in any CS channel, with valid paths defined in the CS Channel Matrix. The value we count is the number of times authenticated customers interacted with us — measured as <strong>page visits</strong> for Visit channels, and as <strong>contacts</strong> for Bot and CSA channels — always classified by the channel where the interaction <strong>ended</strong>.
+          </p>
+          <div className="space-y-2">
+            <div className="font-semibold">🔹 Examples</div>
+            <div>
+              <div className="font-medium">Repeat Interaction Started in CS Landing Page, Ended in CSA Chat</div>
+              <p className="text-gray-600">A customer browses the CS Landing Page 100 times, then escalates into CSA Chat.<br/>Counted as <strong>one interaction ended in CSA Chat</strong>.</p>
+            </div>
+            <div>
+              <div className="font-medium">Repeat Interaction Started in CS Chatbot, Ended in CS Chatbot</div>
+              <p className="text-gray-600">A customer authenticates and engages multiple times with CS Chatbot, staying there until resolution.<br/>Counted as <strong>one interaction ended in CS Chatbot</strong>.</p>
+            </div>
+          </div>
+        </div>
         
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
