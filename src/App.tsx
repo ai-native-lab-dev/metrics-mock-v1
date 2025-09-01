@@ -3,6 +3,7 @@ import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import MetricsOverview from './views/MetricsOverview';
 import MetricsDeck from './components/MetricsDeck';
+import MetricsDictionary from './views/MetricsDictionary';
 import CSChannelTrends from './views/CSChannelTrends';
 import CXImpact from './views/CXImpact';
 import Methodology from './views/Methodology';
@@ -98,18 +99,14 @@ function App() {
       case 'methodology':
         return <Methodology />;
       case 'dictionary':
+        return <MetricsDictionary />;
       case 'faqs':
         return (
           <div className="max-w-4xl mx-auto">
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100/50 p-8 shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                {currentView === 'dictionary' ? 'Metrics Dictionary' : 'Frequently Asked Questions'}
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
               <p className="text-gray-600">
-                {currentView === 'dictionary' 
-                  ? 'This section will contain detailed definitions and explanations of all metrics used in the dashboard.'
-                  : 'This section will contain answers to commonly asked questions about the dashboard and its features.'
-                }
+                This section will contain answers to commonly asked questions about the dashboard and its features.
               </p>
             </div>
           </div>
