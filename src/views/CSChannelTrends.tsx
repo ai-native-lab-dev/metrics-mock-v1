@@ -103,6 +103,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
 
   function Section({ title, rows, sectionRef }: { title: string; rows: Array<{ start: string; end: string; endCat: string }>; sectionRef: React.RefObject<HTMLDetailsElement | null> }) {
     const colors = groupColors(title);
+    const [expandedEndChannels, setExpandedEndChannels] = useState<Set<string>>(new Set());
     
     // Group rows by "Ended In" channel
     const groupedByEnd = rows.reduce((acc, row) => {
@@ -112,6 +113,29 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
       acc[row.end].push(row);
       return acc;
     }, {} as Record<string, Array<{ start: string; end: string; endCat: string }>>);
+    
+    const toggleEndChannel = (endChannel: string) => {
+      setExpandedEndChannels(prev => {
+        const newSet = new Set(prev);
+        if (newSet.has(endChannel)) {
+          newSet.delete(endChannel);
+        } else {
+          newSet.add(endChannel);
+        }
+        return newSet;
+      });
+    };
+    
+    const toggleAllEndChannels = () => {
+      const allEndChannels = Object.keys(groupedByEnd);
+      const allExpanded = allEndChannels.every(channel => expandedEndChannels.has(channel));
+      
+      if (allExpanded) {
+        setExpandedEndChannels(new Set());
+      } else {
+        setExpandedEndChannels(new Set(allEndChannels));
+      }
+    };
     
     const getFilteredValues = (r: any, year: number) => {
       return staticMonthlyValues(r.start, r.end, year, type);
@@ -155,9 +179,21 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
 
     return (
       <details ref={sectionRef} open className={`border ${colors.border} rounded-2xl overflow-hidden`}>
-        <summary className={`px-4 py-3 ${colors.header} font-semibold flex items-center gap-2`}>
-          <span className={`${colors.dot} w-2 h-2 rounded-full inline-block`}></span>
-          {title} <span className="text-gray-500 text-xs">({rows.length})</span>
+        <summary className={`px-4 py-3 ${colors.header} font-semibold flex items-center justify-between`}>
+          <div className="flex items-center gap-2">
+            <span className={`${colors.dot} w-2 h-2 rounded-full inline-block`}></span>
+            {title} <span className="text-gray-500 text-xs">({rows.length})</span>
+          </div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleAllEndChannels();
+            }}
+            className="text-xs px-3 py-1 rounded-lg bg-white/80 hover:bg-white text-gray-600 hover:text-gray-800 border border-gray-200 hover:border-gray-300 transition-all duration-200"
+          >
+            {Object.keys(groupedByEnd).every(channel => expandedEndChannels.has(channel)) ? 'Collapse All' : 'Expand All'}
+          </button>
         </summary>
         <div className="bg-white overflow-auto border border-gray-200 rounded-lg">
           <table className="min-w-[1200px] w-full text-sm">
@@ -175,9 +211,17 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
               {Object.entries(groupedByEnd).map(([endChannel, endRows]) => (
                 <React.Fragment key={endChannel}>
                   {/* Sub-section header for each "Ended In" channel */}
-                  <tr className={`${colors.header} border-b-2 border-gray-300`}>
+                  <tr className={`${colors.header} border-b-2 border-gray-300 cursor-pointer hover:opacity-80 transition-opacity`} onClick={() => toggleEndChannel(endChannel)}>
                     <td className="px-3 py-2 font-semibold text-left w-48 border-r border-gray-200" colSpan={2}>
                       <div className="flex items-center gap-2">
+                        <svg 
+                          className={`w-4 h-4 transition-transform duration-200 ${expandedEndChannels.has(endChannel) ? 'rotate-90' : ''}`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
                         <span className="text-sm">Ended in:</span>
                         <span className="font-bold text-base">{endChannel}</span>
                         <span className="text-xs text-gray-500">({endRows.length} paths)</span>
@@ -205,8 +249,8 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                     })}
                   </tr>
                   
-                  {/* Individual rows for this end channel */}
-                  {endRows.map((r, idx) => {
+                  {/* Individual rows for this end channel - only show when expanded */}
+                  {expandedEndChannels.has(endChannel) && endRows.map((r, idx) => {
                     const v24 = getFilteredValues(r, 2024);
                     const v25 = getFilteredValues(r, 2025);
                     return (
