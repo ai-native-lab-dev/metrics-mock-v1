@@ -93,6 +93,15 @@ export default function ChannelMatrixRules() {
             </div>
           </div>
           <div className="flex items-start gap-3">
+            <div className="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span className="text-red-600 text-sm font-bold">✕</span>
+            </div>
+            <div>
+              <h3 className="font-medium text-gray-900">Contact ID Constraint</h3>
+              <p className="text-gray-600 text-sm">Customers can only use either CS Landing Page OR CS Homepage within the same contact ID. Other paths create a new contact ID or don't conform with the definition of an interaction ending with the same contact ID.</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3">
             <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
               <span className="text-green-600 text-sm font-bold">✓</span>
             </div>
@@ -167,18 +176,135 @@ export default function ChannelMatrixRules() {
         </div>
       </div>
 
-      {/* Blocked Combinations */}
+      {/* Blocked Combinations Matrix */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Blocked Combinations</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {blockedCombinations.map(({ start, end }, idx) => (
-            <div key={idx} className="flex items-center gap-3 p-3 bg-red-50 rounded-lg border border-red-200">
-              <span className="text-red-600 font-medium">{start}</span>
-              <span className="text-red-400">→</span>
-              <span className="text-red-600 font-medium">{end}</span>
-              <span className="text-red-500 text-sm ml-auto">Blocked</span>
-            </div>
-          ))}
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Blocked Combinations Matrix</h2>
+        <p className="text-gray-600 mb-6">This matrix shows all channel combinations that are NOT possible due to business rules and contact ID constraints.</p>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">Started In</th>
+                <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">Ended In</th>
+                <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">Reason</th>
+                <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">Business Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Landing Page</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Homepage</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Circular Navigation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Prevents infinite loops</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Homepage</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Landing Page</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Circular Navigation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Prevents infinite loops</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Chatbot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Voicebot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">AI-enabled Email</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Chatbot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Voicebot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Chatbot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Voicebot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">AI-enabled Email</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Chatbot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Voicebot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Chatbot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Voicebot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">AI-enabled Email</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Chatbot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+              <tr className="bg-red-50">
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
+                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Voicebot</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
+                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <h3 className="font-semibold text-blue-900 mb-2">Contact ID Constraint Explanation</h3>
+          <p className="text-blue-800 text-sm leading-relaxed">
+            Customers can only use either <strong>CS Landing Page</strong> OR <strong>CS Homepage</strong> within the same contact ID. 
+            Other paths create a new contact ID or don't conform with the definition of an interaction ending with the same contact ID. 
+            This ensures that multiple channels within the same customer journey are properly tracked and analyzed as a single interaction.
+          </p>
         </div>
       </div>
 
