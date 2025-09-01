@@ -7,9 +7,7 @@ export default function ChannelMatrixRules() {
       <div className="text-center space-y-4 mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Channel Matrix Rules</h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Understanding the business logic behind customer service channel interactions. 
-          This matrix shows what combinations are <strong>possible</strong> vs. <strong>not possible</strong> 
-          based on our customer journey design.
+          This matrix illustrates which channel start–end combinations are valid and which are not. Customers can begin in either the <strong>CS Landing Page</strong> or the <strong>CS Homepage</strong> (depending on rollout of the legacy experience). Any other path either generates a new contact ID or falls outside the definition of how we measure an interaction ended in a channel.
         </p>
       </div>
 

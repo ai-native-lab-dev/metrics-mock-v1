@@ -265,19 +265,27 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
       </div>
 
       {/* Summary Graph */}
-      <div className="w-full h-80 border rounded-2xl bg-white shadow-sm p-4">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="Bot" stroke="#3b82f6" strokeWidth={2} />
-            <Line type="monotone" dataKey="CSA" stroke="#f97316" strokeWidth={2} />
-            <Line type="monotone" dataKey="Visit" stroke="#a855f7" strokeWidth={2} />
-          </LineChart>
-        </ResponsiveContainer>
+      <div className="w-full border rounded-2xl bg-white shadow-sm p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          {type === "repeat" 
+            ? "Repeat Interaction started in any channel, ended in either Self-Guided CS Landing Page/CS Homepage/Help Pages (Visit); Self-Service (Bot), excluding CS LP/CS Homepage/Help pages); Human-led (CSA). This represents authenticated customers who visited pages or contacted us at least 2 or more times within the 7-day trailing window."
+            : "Single Interaction started in any channel, ended in either Self-Guided CS Landing Page/CS Homepage/Help Pages (Visit); Self-Service (Bot), excluding CS LP/CS Homepage/Help pages); Human-led (CSA). This represents authenticated customers who visited pages or contacted us only 1 time within the 7-day trailing window."
+          }
+        </h3>
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="Bot" stroke="#3b82f6" strokeWidth={2} />
+              <Line type="monotone" dataKey="CSA" stroke="#f97316" strokeWidth={2} />
+              <Line type="monotone" dataKey="Visit" stroke="#a855f7" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
       <Section title="Bot" rows={grouped.Bot} sectionRef={botRef} />
