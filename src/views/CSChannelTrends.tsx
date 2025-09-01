@@ -237,12 +237,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
       <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold">CS Channel Trends: {type === "repeat" ? "Repeat" : "No Repeat"}</h1>
-          <p className="text-sm text-gray-600">
-            {type === "repeat" 
-              ? "Analysis of customer interactions where customers contacted us multiple times within 7 days. Toggle between <strong>2024</strong>, <strong>2025</strong>, or <strong>YoY</strong>. Units: <strong>Count MM</strong> for 2024/2025, <strong>Basis points (%)</strong> for YoY. Sections are color-coded: Teal=Total Interactions, Blue=Bot, Orange=CSA, Purple=Visit."
-              : "Analysis of customer interactions where customers contacted us only once within 7 days. Toggle between <strong>2024</strong>, <strong>2025</strong>, or <strong>YoY</strong>. Units: <strong>Count MM</strong> for 2024/2025, <strong>Basis points (%)</strong> for YoY. Sections are color-coded: Teal=Total Interactions, Blue=Bot, Orange=CSA, Purple=Visit."
-            }
-          </p>
+          {/* Description intentionally minimal per request */}
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <ViewToggle />
@@ -253,21 +248,14 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
-            View Rules
+            View CS Channel Combination Possibilities
           </button>
         </div>
       </header>
 
       {/* Section Navigation */}
       <div className="bg-gray-50 rounded-xl p-4">
-        <div className="text-center mb-3">
-          <p className="text-sm text-gray-600">
-            {type === "repeat" 
-              ? "Repeat Interactions: <span className=\"font-semibold text-gray-800\">{rows.length} channel combinations</span> across <span className=\"font-semibold text-gray-800\">3 categories</span>"
-              : "Single Interactions: <span className=\"font-semibold text-gray-800\">{rows.length} channel combinations</span> across <span className=\"font-semibold text-gray-800\">3 categories</span>"
-            }
-          </p>
-        </div>
+        {/* Removed counts/labels per request */}
         <div className="flex justify-center">
           <QuickNav />
         </div>
