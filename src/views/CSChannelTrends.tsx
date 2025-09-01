@@ -305,40 +305,6 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
           </div>
           
           <HowWeCountInteractions className="mb-4" type={type} />
-
-          <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-            <div className="grid gap-3 md:grid-cols-3">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.bot}}></span>
-                <span className="text-sm font-medium text-gray-700">Self-Service</span>
-                <span className="text-xs text-gray-500">(Bot)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.csa}}></span>
-                <span className="text-sm font-medium text-gray-700">Human-led</span>
-                <span className="text-xs text-gray-500">(CSA)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.visit}}></span>
-                <span className="text-sm font-medium text-gray-700">Self-Guided</span>
-                <span className="text-xs text-gray-500">(Visit)</span>
-              </div>
-            </div>
-            
-            <div className="border-t border-gray-200 pt-3">
-              <p className="text-sm text-gray-600 leading-relaxed">
-                <strong>Coverage:</strong> Interactions started in any channel, ended in CS Landing Page/CS Homepage/Help Pages (Visit), 
-                Bot channels (excluding CS LP/CS Homepage/Help Pages), or CSA channels.
-              </p>
-              <p className="text-sm text-gray-600 mt-2">
-                <strong>Definition:</strong> Authenticated customers who visited pages or contacted us{" "}
-                <span className={`font-semibold ${getTypeColors(type).text}`}>
-                  {type === "repeat" ? "2 or more times" : "only 1 time"}
-                </span>{" "}
-                within the 7-day trailing window.
-              </p>
-            </div>
-          </div>
         </div>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
@@ -366,6 +332,41 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
               </BarChart>
             )}
           </ResponsiveContainer>
+        </div>
+        
+        {/* Channel Type Indicators - Below Chart */}
+        <div className="mt-4 bg-gray-50 rounded-lg p-4 space-y-3">
+          <div className="grid gap-3 md:grid-cols-3">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.bot}}></span>
+              <span className="text-sm font-medium text-gray-700">Self-Service</span>
+              <span className="text-xs text-gray-500">(Bot)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.csa}}></span>
+              <span className="text-sm font-medium text-gray-700">Human-led</span>
+              <span className="text-xs text-gray-500">(CSA)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.visit}}></span>
+              <span className="text-sm font-medium text-gray-700">Self-Guided</span>
+              <span className="text-xs text-gray-500">(Visit)</span>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-200 pt-3">
+            <p className="text-sm text-gray-600 leading-relaxed">
+              <strong>Coverage:</strong> Interactions started in any channel, ended in CS Landing Page/CS Homepage/Help Pages (Visit), 
+              Bot channels (excluding CS LP/CS Homepage/Help Pages), or CSA channels.
+            </p>
+            <p className="text-sm text-gray-600 mt-2">
+              <strong>Definition:</strong> Authenticated customers who visited pages or contacted us{" "}
+              <span className={`font-semibold ${getTypeColors(type).text}`}>
+                {type === "repeat" ? "2 or more times" : "only 1 time"}
+              </span>{" "}
+              within the 7-day trailing window.
+            </p>
+          </div>
         </div>
       </div>
 
