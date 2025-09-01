@@ -135,9 +135,9 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                     CS Channel Trends: No Repeat
                   </button>
                   <button
-                    onClick={() => onViewChange('metrics')}
+                    onClick={() => onViewChange('metrics-total')}
                     className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
-                      isActive('metrics') 
+                      isActive('metrics-total') 
                         ? 'bg-teal-100 text-teal-800 border border-teal-200' 
                         : 'text-gray-600 hover:bg-teal-50 hover:text-teal-700'
                     }`}
@@ -146,37 +146,37 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                     Total Interactions
                   </button>
                   <button
-                    onClick={() => onViewChange('metrics')}
+                    onClick={() => onViewChange('metrics-bot')}
                     className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
-                      isActive('metrics') 
+                      isActive('metrics-bot') 
                         ? 'bg-blue-100 text-blue-800 border border-blue-200' 
                         : 'text-gray-600 hover:bg-blue-50 hover:text-blue-700'
                     }`}
                   >
                     <div className="w-2 h-2 rounded-full bg-blue-400 mr-3"></div>
-                    Self-Service: Bot Only
+                    Self-Service: Bot Channels
                   </button>
                   <button
-                    onClick={() => onViewChange('metrics')}
+                    onClick={() => onViewChange('metrics-csa')}
                     className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
-                      isActive('metrics') 
+                      isActive('metrics-csa') 
                         ? 'bg-orange-100 text-orange-800 border border-orange-200' 
                         : 'text-gray-600 hover:bg-orange-50 hover:text-orange-700'
                     }`}
                   >
                     <div className="w-2 h-2 rounded-full bg-orange-400 mr-3"></div>
-                    Human-Led: CSA Only
+                    Human-Led: CSA Channels
                   </button>
                   <button
-                    onClick={() => onViewChange('metrics')}
+                    onClick={() => onViewChange('metrics-visit')}
                     className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
-                      isActive('metrics') 
+                      isActive('metrics-visit') 
                         ? 'bg-purple-100 text-purple-800 border border-purple-200' 
                         : 'text-gray-600 hover:bg-purple-50 hover:text-purple-700'
                     }`}
                   >
                     <div className="w-2 h-2 rounded-full bg-purple-400 mr-3"></div>
-                    Self-Guided: Page Visits
+                    Self-Guided: Visit Channels
                   </button>
 
 

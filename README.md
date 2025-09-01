@@ -108,11 +108,23 @@ The application uses a consistent pastel color scheme to improve user experience
   - Represents: Cross-channel flow analysis, channel transition insights
   - Colors: Main `#06b6d4` (Cyan-500), Light `#67e8f9` (Cyan-300), Pastel `#a7f3d0` (Emerald-200)
 
+- **Rose/Pink (P95 Metrics)**: `bg-gradient-to-br from-rose-50 to-pink-50`, `border-rose-200`, `bg-gradient-to-r from-rose-100 to-pink-100`, `bg-rose-400`
+  - Used for: P95 percentile metrics, high-impact customer experience analysis
+  - Represents: Critical performance indicators, egregious customer contacts
+  - Colors: Gradient from Rose-50 to Pink-50, Rose-200 borders, Rose-400 accents
+
+- **Indigo/Violet (P90 Metrics)**: `bg-gradient-to-br from-indigo-50 to-violet-50`, `border-indigo-200`, `bg-gradient-to-r from-indigo-100 to-violet-100`, `bg-indigo-400`
+  - Used for: P90 percentile metrics, high-volume customer experience analysis
+  - Represents: Performance benchmarks, customer experience optimization
+  - Colors: Gradient from Indigo-50 to Violet-50, Indigo-200 borders, Indigo-400 accents
+
 #### **Color Application Areas**
 1. **Sidebar Navigation**: Sub-navigation items use their respective colors
 2. **Metrics Table**: Group headers and metric cards use consistent colors
 3. **CS Channel Trends**: Section headers and quick navigation buttons (cyan theme)
-4. **CX Impact**: Metric group headers and analysis sections
+4. **Channel Filters**: Multi-level dropdown filters with cyan pastel background (cyan theme)
+5. **P90/P95 Metrics**: Special gradient backgrounds for percentile metrics (rose/pink for P95, indigo/violet for P90)
+6. **CX Impact**: Metric group headers and analysis sections
 
 #### **Color Psychology & UX Benefits**
 - **Visual Hierarchy**: Colors help users quickly identify metric categories

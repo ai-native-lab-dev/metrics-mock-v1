@@ -6,9 +6,12 @@ import CSChannelTrends from './views/CSChannelTrends';
 import CXImpact from './views/CXImpact';
 import Methodology from './views/Methodology';
 import ChannelMatrixRules from './views/ChannelMatrixRules';
+import MetricsDictionary from './views/MetricsDictionary';
+import CustomerInteractionMatrix from './views/CustomerInteractionMatrix';
+import InteractionFramework from './views/InteractionFramework';
 
 // Define all possible view types for the dashboard
-export type ViewType = 'home' | 'metrics' | 'metrics-total' | 'metrics-bot' | 'metrics-csa' | 'metrics-visit' | 'cs-channel-trends-repeat' | 'cs-channel-trends-no-repeat' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'faqs';
+export type ViewType = 'home' | 'metrics' | 'metrics-total' | 'metrics-bot' | 'metrics-csa' | 'metrics-visit' | 'cs-channel-trends-repeat' | 'cs-channel-trends-no-repeat' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'interaction-framework' | 'customer-interaction-matrix' | 'faqs';
 
 function App() {
   // State management for the main dashboard
@@ -25,11 +28,11 @@ function App() {
       case 'metrics-total':
         return 'Total Interactions';
       case 'metrics-bot':
-        return 'Self-Service: Bot Only';
+        return 'Self-Service: Bot Channels';
       case 'metrics-csa':
-        return 'Human-Led: CSA Only';
+        return 'Human-Led: CSA Channels';
       case 'metrics-visit':
-        return 'Self-Guided: Page Visits';
+        return 'Self-Guided: Visit Channels';
       case 'cs-channel-trends-repeat':
         return 'CS Channel Trends: Repeat';
       case 'cs-channel-trends-no-repeat':
@@ -43,6 +46,10 @@ function App() {
         return 'Metrics Dictionary';
       case 'channel-matrix-rules':
         return 'Channel Matrix Rules';
+      case 'interaction-framework':
+        return 'Customer Interaction Framework';
+      case 'customer-interaction-matrix':
+        return 'Customer Interaction Matrix';
       case 'faqs':
         return 'Frequently Asked Questions';
       default:
@@ -54,16 +61,18 @@ function App() {
   const renderMainContent = () => {
     switch (currentView) {
       case 'home':
-      case 'metrics':
         return <MetricsOverview />;
+      case 'metrics':
+        // Redirect to Total Interactions since we removed "All Metrics Overview"
+        return <MetricsOverview showOnlyGroup="Total Interactions" />;
       case 'metrics-total':
         return <MetricsOverview showOnlyGroup="Total Interactions" />;
       case 'metrics-bot':
-        return <MetricsOverview showOnlyGroup="Self-Service: Bot Only" />;
+        return <MetricsOverview showOnlyGroup="Self-Service: Bot Channels" />;
       case 'metrics-csa':
-        return <MetricsOverview showOnlyGroup="Human-Led: CSA Only" />;
+        return <MetricsOverview showOnlyGroup="Human-Led: CSA Channels" />;
       case 'metrics-visit':
-        return <MetricsOverview showOnlyGroup="Self-Guided: Page Visits" />;
+        return <MetricsOverview showOnlyGroup="Self-Guided: Visit Channels" />;
       case 'cs-channel-trends-repeat':
         return <CSChannelTrends type="repeat" onNavigate={setCurrentView} />;
       case 'cs-channel-trends-no-repeat':
@@ -74,24 +83,24 @@ function App() {
       case 'methodology':
         return <Methodology />;
       case 'dictionary':
+        return <MetricsDictionary />;
       case 'faqs':
         return (
           <div className="max-w-4xl mx-auto">
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-100/50 p-8 shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                {currentView === 'dictionary' ? 'Metrics Dictionary' : 'Frequently Asked Questions'}
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
               <p className="text-gray-600">
-                {currentView === 'dictionary' 
-                  ? 'This section will contain detailed definitions and explanations of all metrics used in the dashboard.'
-                  : 'This section will contain answers to commonly asked questions about the dashboard and its features.'
-                }
+                This section will contain answers to commonly asked questions about the dashboard and its features.
               </p>
             </div>
           </div>
         );
       case 'channel-matrix-rules':
         return <ChannelMatrixRules />;
+      case 'interaction-framework':
+        return <InteractionFramework />;
+      case 'customer-interaction-matrix':
+        return <CustomerInteractionMatrix />;
       default:
         return <MetricsOverview />;
     }

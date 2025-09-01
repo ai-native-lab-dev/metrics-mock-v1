@@ -64,7 +64,7 @@ interface CSChannelMatrixProps {
 export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixProps) {
   const [view, setView] = useState("2025"); // "2024" | "2025" | "YoY"
   const [chartType, setChartType] = useState<"horizontal" | "vertical">("horizontal");
-  const [reportingVertical, setReportingVertical] = useState("All");
+
 
   const botRef = useRef<HTMLDetailsElement>(null);
   const csaRef = useRef<HTMLDetailsElement>(null);
@@ -92,26 +92,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
       const sum = (group: Array<{ start: string; end: string; endCat: string }>) => group.reduce((acc, r) => {
         const vals = staticMonthlyValues(r.start, r.end, 2025, type); // default 2025 view for chart
         
-        // Apply reporting vertical filter
-        let verticalMultiplier = 1;
-        if (reportingVertical !== "All") {
-          switch (reportingVertical) {
-            case "Vertical 1":
-              verticalMultiplier = 0.8;
-              break;
-            case "Vertical 2":
-              verticalMultiplier = 0.6;
-              break;
-            case "Vertical 3":
-              verticalMultiplier = 0.4;
-              break;
-            case "Vertical 4":
-              verticalMultiplier = 0.2;
-              break;
-          }
-        }
-        
-        return acc + Math.round(vals[i] * verticalMultiplier);
+        return acc + vals[i];
       }, 0);
       return {
         month: m,
@@ -120,7 +101,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
         Visit: sum(grouped.Visit)
       };
     });
-  }, [grouped, type, reportingVertical]);
+  }, [grouped, type]);
 
   function Section({ title, rows, sectionRef }: { title: string; rows: Array<{ start: string; end: string; endCat: string }>; sectionRef: React.RefObject<HTMLDetailsElement | null> }) {
     const colors = groupColors(title);
@@ -134,29 +115,8 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
       return acc;
     }, {} as Record<string, Array<{ start: string; end: string; endCat: string }>>);
     
-    // Apply reporting vertical filter to section data
     const getFilteredValues = (r: any, year: number) => {
-      const baseValues = staticMonthlyValues(r.start, r.end, year, type);
-      let verticalMultiplier = 1;
-      
-      if (reportingVertical !== "All") {
-        switch (reportingVertical) {
-          case "Vertical 1":
-            verticalMultiplier = 0.8;
-            break;
-          case "Vertical 2":
-            verticalMultiplier = 0.6;
-            break;
-          case "Vertical 3":
-            verticalMultiplier = 0.4;
-            break;
-          case "Vertical 4":
-            verticalMultiplier = 0.2;
-            break;
-        }
-      }
-      
-      return baseValues.map(val => Math.round(val * verticalMultiplier));
+      return staticMonthlyValues(r.start, r.end, year, type);
     };
     
     const vals2024 = rows.map(r => getFilteredValues(r, 2024));
@@ -169,7 +129,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
           <tr className={`${colors.bg} font-semibold`}>
             <td className="px-3 py-2 border-t border-r border-gray-200" colSpan={2}>Subtotal — {title} (2024)</td>
             <td className="px-3 py-2 border-t bg-gray-50 font-medium w-32 text-center text-gray-700">Count MM</td>
-            {sums.map((v, i) => (<td key={`sub24-${i}`} className="px-2 py-1 border-t text-right w-20">{v}</td>))}
+            {sums.map((v, i) => (<td key={`sub24-${i}`} className="px-2 py-1 border-t text-right w-20 font-mono text-sm font-semibold">{v}</td>))}
           </tr>
         );
       } else if (view === "2025") {
@@ -178,7 +138,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
           <tr className={`${colors.bg} font-semibold`}>
             <td className="px-3 py-2 border-t border-r border-gray-200" colSpan={2}>Subtotal — {title} (2025)</td>
             <td className="px-3 py-2 border-t bg-gray-50 font-medium w-32 text-center text-gray-700">Count MM</td>
-            {sums.map((v, i) => (<td key={`sub25-${i}`} className="px-2 py-1 border-t text-right w-20">{v}</td>))}
+            {sums.map((v, i) => (<td key={`sub25-${i}`} className="px-2 py-1 border-t text-right w-20 font-mono text-sm font-semibold">{v}</td>))}
           </tr>
         );
       } else {
@@ -189,7 +149,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
           <tr className={`${colors.bg} font-semibold`}>
             <td className="px-3 py-2 border-t border-r border-gray-200" colSpan={2}>Subtotal — {title} (YoY Δ)</td>
             <td className="px-3 py-2 border-t bg-gray-50 font-medium w-32 text-center text-gray-700">Basis points (%)</td>
-            {deltas.map((v, i) => (<td key={`suby-${i}`} className={`px-2 py-1 border-t text-right w-20 ${v > 0 ? 'text-green-700' : v < 0 ? 'text-red-700' : 'text-gray-700'}`}>{v}</td>))}
+            {deltas.map((v, i) => (<td key={`suby-${i}`} className={`px-2 py-1 border-t text-right w-20 font-mono text-sm font-semibold ${v > 0 ? 'text-green-700' : v < 0 ? 'text-red-700' : 'text-gray-700'}`}>{v}</td>))}
           </tr>
         );
       }
@@ -201,15 +161,15 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
           <span className={`${colors.dot} w-2 h-2 rounded-full inline-block`}></span>
           {title} <span className="text-gray-500 text-xs">({rows.length})</span>
         </summary>
-        <div className={`${colors.bg} overflow-auto`}>
+        <div className="bg-white overflow-auto border border-gray-200 rounded-lg">
           <table className="min-w-[1200px] w-full text-sm">
-            <thead>
+            <thead className="bg-gray-50">
               <tr>
-                <StickyTh className="text-center w-48 border-r border-gray-200 font-semibold">Started in</StickyTh>
-                <StickyTh className="text-center w-48 border-r border-gray-200 font-semibold">Ended in</StickyTh>
-                <StickyTh className={`text-center w-32 ${colors.header} font-semibold`}>Unit</StickyTh>
+                <StickyTh className="text-center w-48 border-r border-gray-200 font-semibold text-gray-700">Started in</StickyTh>
+                <StickyTh className="text-center w-48 border-r border-gray-200 font-semibold text-gray-700">Ended in</StickyTh>
+                <StickyTh className="text-center w-32 bg-gray-100 font-semibold text-gray-700">Unit</StickyTh>
                 {MONTHS.map(m => (
-                  <StickyTh key={`${view}-${m}`} className="w-20 text-center font-semibold">{view === "YoY" ? `${m} Δ / %` : `${m}`}</StickyTh>
+                  <StickyTh key={`${view}-${m}`} className="w-20 text-center font-semibold text-gray-700">{view === "YoY" ? `${m} Δ / %` : `${m}`}</StickyTh>
                 ))}
               </tr>
             </thead>
@@ -225,7 +185,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                         <span className="text-xs text-gray-500">({endRows.length} paths)</span>
                       </div>
                     </td>
-                    <td className={`px-3 py-2 text-center w-32 ${colors.header} font-medium text-gray-700`}>{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
+                    <td className="px-3 py-2 text-center w-32 bg-gray-100 font-medium text-gray-700">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
                     {MONTHS.map((_, i) => {
                       // Calculate subtotal for this end channel
                       const endVals2024 = endRows.map(r => getFilteredValues(r, 2024));
@@ -233,14 +193,14 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                       const endSum2024 = endVals2024.reduce((acc, vals) => acc + vals[i], 0);
                       const endSum2025 = endVals2025.reduce((acc, vals) => acc + vals[i], 0);
                       
-                      if (view === "2024") return (<td key={`end24-${i}`} className={`px-2 py-1 text-right w-20 font-semibold ${colors.header}`}>{endSum2024}</td>);
-                      if (view === "2025") return (<td key={`end25-${i}`} className={`px-2 py-1 text-right w-20 font-semibold ${colors.header}`}>{endSum2025}</td>);
+                      if (view === "2024") return (<td key={`end24-${i}`} className="px-2 py-1 text-right w-20 font-semibold bg-gray-100 font-mono text-sm">{endSum2024}</td>);
+                      if (view === "2025") return (<td key={`end25-${i}`} className="px-2 py-1 text-right w-20 font-semibold bg-gray-100 font-mono text-sm">{endSum2025}</td>);
                       const delta = endSum2025 - endSum2024;
                       const pct = endSum2024 === 0 ? (endSum2025 > 0 ? Infinity : 0) : ((endSum2025 - endSum2024) / endSum2024) * 100;
                       const label = endSum2024 === 0 ? (endSum2025 > 0 ? "+∞" : "0%") : `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`;
                       const cls = delta > 0 ? 'text-green-700' : delta < 0 ? 'text-red-700' : 'text-gray-700';
                       return (
-                        <td key={`endy-${i}`} className={`px-2 py-1 text-right w-20 font-semibold ${colors.header} ${cls}`}>
+                        <td key={`endy-${i}`} className={`px-2 py-1 text-right w-20 font-semibold bg-gray-100 font-mono text-sm ${cls}`}>
                           {delta} / {label}
                         </td>
                       );
@@ -252,19 +212,19 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                     const v24 = getFilteredValues(r, 2024);
                     const v25 = getFilteredValues(r, 2025);
                     return (
-                      <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white" : "bg-gray-50/40"}>
+                      <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white hover:bg-gray-50" : "bg-gray-50/50 hover:bg-gray-100"}>
                         <td className="px-6 py-2 border-b whitespace-nowrap font-medium text-left w-48 border-r border-gray-200">{r.start}</td>
                         <td className="px-3 py-2 border-b whitespace-nowrap text-left w-48 border-r border-gray-200">{r.end}</td>
-                        <td className={`px-3 py-2 border-b text-center w-32 ${colors.bg} font-medium text-gray-700`}>{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
+                        <td className="px-3 py-2 border-b text-center w-32 bg-gray-50 font-medium text-gray-700">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
                         {MONTHS.map((_, i) => {
-                          if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right w-20">{v24[i]}</td>);
-                          if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right w-20">{v25[i]}</td>);
+                          if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right w-20 font-mono text-sm">{v24[i]}</td>);
+                          if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right w-20 font-mono text-sm">{v25[i]}</td>);
                           const delta = v25[i] - v24[i];
                           const pct = v24[i] === 0 ? (v25[i] > 0 ? Infinity : 0) : ((v25[i] - v24[i]) / v24[i]) * 100;
                           const label = v24[i] === 0 ? (v25[i] > 0 ? "+∞" : "0%") : `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`;
                           const cls = delta > 0 ? 'text-green-700' : delta < 0 ? 'text-red-700' : 'text-gray-700';
                           return (
-                            <td key={`cy-${i}`} className={`px-2 py-1 border-b text-right w-20 ${cls}`}>
+                            <td key={`cy-${i}`} className={`px-2 py-1 border-b text-right w-20 font-mono text-sm ${cls}`}>
                               {delta} / {label}
                             </td>
                           );
@@ -329,28 +289,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
     );
   }
 
-  function ReportingVerticalDropdown() {
-    return (
-      <div className="relative">
-        <select
-          value={reportingVertical}
-          onChange={(e) => setReportingVertical(e.target.value)}
-          className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        >
-          <option value="All">All Verticals</option>
-          <option value="Vertical 1">Vertical 1</option>
-          <option value="Vertical 2">Vertical 2</option>
-          <option value="Vertical 3">Vertical 3</option>
-          <option value="Vertical 4">Vertical 4</option>
-        </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-          </svg>
-        </div>
-      </div>
-    );
-  }
+
 
   function QuickNav() {
     return (
@@ -393,7 +332,6 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
         <div className="flex flex-col sm:flex-row gap-2">
           <ViewToggle />
           <ChartTypeToggle />
-          <ReportingVerticalDropdown />
         </div>
       </header>
 
@@ -413,20 +351,10 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
               <div className={`w-3 h-3 rounded-full ${getTypeColors(type).dot}`}></div>
               <h3 className="text-xl font-bold text-gray-900">
                 {type === "repeat" ? "Repeat Interactions" : "Single Interactions"}
-                {reportingVertical !== "All" && (
-                  <span className="ml-2 text-sm font-normal text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                    {reportingVertical}
-                  </span>
-                )}
               </h3>
             </div>
             <p className="text-sm text-gray-600 italic ml-6">
               Of the {type === "repeat" ? "repeat" : "single-visit"} authenticated customers, what are the total number of contacts and/or visits within the trailing 7-day window?
-              {reportingVertical !== "All" && (
-                <span className="block mt-1 text-blue-600 font-medium">
-                  Filtered for {reportingVertical} only
-                </span>
-              )}
             </p>
           </div>
           
