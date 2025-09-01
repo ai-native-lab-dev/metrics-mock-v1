@@ -176,123 +176,204 @@ export default function ChannelMatrixRules() {
         </div>
       </div>
 
-      {/* Blocked Combinations Matrix */}
+      {/* Channel Transition Matrix */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Blocked Combinations Matrix</h2>
-        <p className="text-gray-600 mb-6">This matrix shows all channel combinations that are NOT possible due to business rules and contact ID constraints.</p>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Channel Transition Matrix</h2>
+        <p className="text-gray-600 mb-6">Customer can start in any [Row], then can end in one of the [Col]?</p>
         
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="bg-gray-50">
-                <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">Started In</th>
-                <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">Ended In</th>
-                <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">Reason</th>
-                <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-700">Business Impact</th>
+              <tr>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-gray-100" rowSpan={2}>
+                  Started In
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-blue-100" colSpan={3}>
+                  Ended in Visit?
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-orange-100" colSpan={5}>
+                  Ended in Bot?
+                </th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-green-100" colSpan={3}>
+                  Ended in CSA?
+                </th>
+              </tr>
+              <tr>
+                {/* Visit columns */}
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-blue-50">CS Landing Page</th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-blue-50">CS Homepage</th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-blue-50">Help Pages</th>
+                {/* Bot columns */}
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-orange-50">CS Chatbot</th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-orange-50">CS Voicebot</th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-orange-50">AI-enabled Email*</th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-orange-50">Legacy Chatbot</th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-orange-50">Legacy Voicebot</th>
+                {/* CSA columns */}
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-green-50">CSA Chat</th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-green-50">CSA Voice</th>
+                <th className="border border-gray-300 px-2 py-2 text-center font-semibold text-gray-700 bg-green-50">CSA Email</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Landing Page</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Homepage</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Circular Navigation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Prevents infinite loops</td>
+              {/* Visit Rows */}
+              <tr className="bg-blue-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">CS Landing Page</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Homepage</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Landing Page</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Circular Navigation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Prevents infinite loops</td>
+              <tr className="bg-blue-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">CS Homepage</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Chatbot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              <tr className="bg-blue-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">Help Pages</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Voicebot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              
+              {/* Bot Rows */}
+              <tr className="bg-orange-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">CS Chatbot</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">AI-enabled Email</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              <tr className="bg-orange-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">CS Voicebot</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Chatbot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              <tr className="bg-orange-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">AI-enabled Email*</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Chat</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Voicebot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              <tr className="bg-orange-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">Legacy Chatbot</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Chatbot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              <tr className="bg-orange-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">Legacy Voicebot</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Voicebot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              
+              {/* CSA Rows */}
+              <tr className="bg-green-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">CSA Chat</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">AI-enabled Email</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              <tr className="bg-green-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">CSA Voice</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Chatbot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
-              </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Voice</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Voicebot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
-              </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Chatbot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
-              </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CS Voicebot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
-              </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">AI-enabled Email</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
-              </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Chatbot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
-              </tr>
-              <tr className="bg-red-50">
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">CSA Email</td>
-                <td className="border border-gray-300 px-4 py-3 font-medium text-red-700">Legacy Voicebot</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">CSA → Bot Escalation</td>
-                <td className="border border-gray-300 px-4 py-3 text-red-600">Human can't escalate to bot</td>
+              <tr className="bg-green-50">
+                <td className="border border-gray-300 px-2 py-2 font-medium text-gray-700">CSA Email</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-red-100 text-red-800 font-medium">Not possible</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
+                <td className="border border-gray-300 px-2 py-2 text-center bg-green-100 text-green-800 font-medium">Yes</td>
               </tr>
             </tbody>
           </table>
