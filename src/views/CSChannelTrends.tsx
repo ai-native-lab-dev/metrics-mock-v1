@@ -111,7 +111,7 @@ export default function CSChannelMatrix() {
       if (view === "2024") {
         const sums = MONTHS.map((_, i) => vals2024.reduce((acc, a) => acc + a[i], 0));
         return (
-          <tr className={`${colors.header} font-semibold`}>
+          <tr className={`${colors.bg} font-semibold`}>
             <td className="px-3 py-2 border-t border-r border-gray-200" colSpan={2}>Subtotal — {title} (2024)</td>
             <td className="px-3 py-2 border-t bg-gray-50 font-medium w-32 text-center text-gray-700">Count MM</td>
             {sums.map((v, i) => (<td key={`sub24-${i}`} className="px-2 py-1 border-t text-right w-20">{v}</td>))}
@@ -120,7 +120,7 @@ export default function CSChannelMatrix() {
       } else if (view === "2025") {
         const sums = MONTHS.map((_, i) => vals2025.reduce((acc, a) => acc + a[i], 0));
         return (
-          <tr className={`${colors.header} font-semibold`}>
+          <tr className={`${colors.bg} font-semibold`}>
             <td className="px-3 py-2 border-t border-r border-gray-200" colSpan={2}>Subtotal — {title} (2025)</td>
             <td className="px-3 py-2 border-t bg-gray-50 font-medium w-32 text-center text-gray-700">Count MM</td>
             {sums.map((v, i) => (<td key={`sub25-${i}`} className="px-2 py-1 border-t text-right w-20">{v}</td>))}
@@ -131,7 +131,7 @@ export default function CSChannelMatrix() {
         const sums25 = MONTHS.map((_, i) => vals2025.reduce((acc, a) => acc + a[i], 0));
         const deltas = MONTHS.map((_, i) => sums25[i] - sums24[i]);
         return (
-          <tr className={`${colors.header} font-semibold`}>
+          <tr className={`${colors.bg} font-semibold`}>
             <td className="px-3 py-2 border-t border-r border-gray-200" colSpan={2}>Subtotal — {title} (YoY Δ)</td>
             <td className="px-3 py-2 border-t bg-gray-50 font-medium w-32 text-center text-gray-700">Basis points (%)</td>
             {deltas.map((v, i) => (<td key={`suby-${i}`} className={`px-2 py-1 border-t text-right w-20 ${v > 0 ? 'text-green-700' : v < 0 ? 'text-red-700' : 'text-gray-700'}`}>{v}</td>))}
