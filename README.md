@@ -21,6 +21,7 @@ A comprehensive React-based dashboard application for analyzing customer experie
 - **Responsive Design**: Mobile-first approach with hamburger menu
 - **Custom Components**: Reusable UI components with consistent styling
 - **Pastel Colored Cards**: Each metric has a unique pastel color for easy recognition
+- **Consistent Color Scheme**: Professional pastel palette for different metric categories
 
 ## Technology Stack
 
@@ -78,29 +79,89 @@ src/
 └── index.css           # Global styles and Tailwind directives
 ```
 
+## Color Coding System
+
+The application uses a consistent pastel color scheme to improve user experience and visual organization:
+
+### 🎨 **Pastel Color Palette**
+
+#### **Primary Navigation Colors**
+- **Teal (Total Interactions)**: `bg-teal-50`, `border-teal-200`, `bg-teal-100`, `bg-teal-400`
+  - Used for: Total interaction metrics, cross-channel analysis
+  - Represents: Comprehensive, holistic view of all interactions
+
+- **Blue (Bot/Self-Service)**: `bg-blue-50`, `border-blue-200`, `bg-blue-100`, `bg-blue-400`
+  - Used for: Bot performance, AI-enabled services
+  - Represents: Technology-driven, automated solutions
+
+- **Orange (CSA/Human)**: `bg-orange-50`, `border-orange-200`, `bg-orange-100`, `bg-orange-400`
+  - Used for: Customer Service Agent metrics, human-led interactions
+  - Represents: Human touch, personalized service
+
+- **Purple (Visit/Page)**: `bg-purple-50`, `border-purple-200`, `bg-purple-100`, `bg-purple-400`
+  - Used for: Page visits, self-guided interactions
+  - Represents: Self-service, user-initiated activities
+
+#### **Color Application Areas**
+1. **Sidebar Navigation**: Sub-navigation items use their respective colors
+2. **Metrics Table**: Group headers and metric cards use consistent colors
+3. **CS Channel Trends**: Section headers and quick navigation buttons
+4. **CX Impact**: Metric group headers and analysis sections
+
+#### **Color Psychology & UX Benefits**
+- **Visual Hierarchy**: Colors help users quickly identify metric categories
+- **Memory Aid**: Consistent colors improve recall and navigation
+- **Professional Appearance**: Pastel tones maintain readability while being visually appealing
+- **Accessibility**: High contrast ratios ensure readability for all users
+
+#### **Implementation Details**
+```typescript
+// Color mapping function used throughout the application
+function getGroupColors(groupName: string) {
+  if (groupName.includes('Total Interactions')) {
+    return { bg: 'bg-teal-50', border: 'border-teal-200', header: 'bg-teal-100', dot: 'bg-teal-400' };
+  } else if (groupName.includes('Bot')) {
+    return { bg: 'bg-blue-50', border: 'border-blue-200', header: 'bg-blue-100', dot: 'bg-blue-400' };
+  } else if (groupName.includes('CSA') || groupName.includes('Human')) {
+    return { bg: 'bg-orange-50', border: 'border-orange-200', header: 'bg-orange-100', dot: 'bg-orange-400' };
+  } else if (groupName.includes('Visit') || groupName.includes('Page')) {
+    return { bg: 'bg-purple-50', border: 'border-purple-200', header: 'bg-purple-100', dot: 'bg-purple-400' };
+  }
+  return { bg: 'bg-gray-50', border: 'border-gray-200', header: 'bg-gray-100', dot: 'bg-gray-400' };
+}
+```
+
 ## Metrics Organization
 
 The dashboard organizes metrics under 4 clear sub-navigations:
 
-### 1. **Total Interactions** (10 metrics)
+### 1. **Total Interactions** (10 metrics) - 🟢 Teal
 - Cross-channel interaction analysis
 - Repeat interaction patterns
 - Channel escalation metrics
 
-### 2. **Self-Service: Bot Only** (10 metrics)
+### 2. **Self-Service: Bot Only** (10 metrics) - 🔵 Blue
 - Bot performance metrics
 - Resolution rates and response times
 - User satisfaction and escalation rates
 
-### 3. **Human-Led: CSA Only** (10 metrics)
+### 3. **Human-Led: CSA Only** (10 metrics) - 🟠 Orange
 - Customer Service Agent metrics
 - Handle times and resolution rates
 - Customer satisfaction scores
 
-### 4. **Self-Guided: Page Visits** (10 metrics)
+### 4. **Self-Guided: Page Visits** (10 metrics) - 🟣 Purple
 - Website analytics and user behavior
 - Self-service completion rates
 - Help center and FAQ usage
+
+### 5. **CS Channel Trends** - 📊 Multi-Color Matrix
+- **Interactive line chart** with color-coded trends
+- **Bot trends**: Blue line (`#3b82f6`)
+- **CSA trends**: Orange line (`#f97316`) 
+- **Visit trends**: Purple line (`#a855f7`)
+- **Section headers**: Match the main color scheme (Teal, Blue, Orange, Purple)
+- **Quick navigation buttons**: Color-coded for easy section access
 
 ## Component Details
 
