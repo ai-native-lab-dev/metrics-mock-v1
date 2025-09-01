@@ -2,6 +2,7 @@ import React, { useMemo, useState, useRef } from "react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import HowWeCountInteractions from "../components/HowWeCountInteractions";
 import { CHART_COLORS, getTypeColors, getChannelGroupColors } from "../utils/colors";
+import { isValidCombination } from "../utils/channelMatrix";
 
 const STARTS = [
   "CS Landing Page","CS Homepage","Help Pages",
@@ -15,10 +16,7 @@ const CSAS = new Set(["CSA Chat","CSA Voice","CSA Email"]);
 const VISITS = new Set(["CS Landing Page","CS Homepage","Help Pages"]);
 
 function isAllowed(start: string, end: string) {
-  if (start === "CS Landing Page" && end === "CS Homepage") return false;
-  if (start === "CS Homepage" && end === "CS Landing Page") return false;
-  if (CSAS.has(start) && BOTS.has(end)) return false;
-  return true;
+  return isValidCombination(start, end);
 }
 
 function endCategory(end: string) {
