@@ -160,22 +160,22 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                     onClick={() => onViewChange('cs-channel-trends-repeat')}
                     className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
                       isActive('cs-channel-trends-repeat') 
-                        ? 'bg-teal-100 text-teal-800 border border-teal-200' 
-                        : 'text-gray-600 hover:bg-teal-50 hover:text-teal-700'
+                        ? 'bg-cyan-100 text-cyan-800 border border-cyan-200' 
+                        : 'text-gray-600 hover:bg-cyan-50 hover:text-cyan-700'
                     }`}
                   >
-                    <div className="w-2 h-2 rounded-full bg-teal-400 mr-3"></div>
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 mr-3"></div>
                     CS Channel Trends: Repeat
                   </button>
                   <button
                     onClick={() => onViewChange('cs-channel-trends-no-repeat')}
                     className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
                       isActive('cs-channel-trends-no-repeat') 
-                        ? 'bg-teal-100 text-teal-800 border border-teal-200' 
-                        : 'text-gray-600 hover:bg-teal-50 hover:text-teal-700'
+                        ? 'bg-cyan-100 text-cyan-800 border border-cyan-200' 
+                        : 'text-gray-600 hover:bg-cyan-50 hover:text-cyan-700'
                     }`}
                   >
-                    <div className="w-2 h-2 rounded-full bg-teal-400 mr-3"></div>
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 mr-3"></div>
                     CS Channel Trends: No Repeat
                   </button>
                 </div>

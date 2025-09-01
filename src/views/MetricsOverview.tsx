@@ -319,7 +319,11 @@ const mockMetricGroups = [
   }
 ];
 
-const MetricsOverview: React.FC = () => {
+interface MetricsOverviewProps {
+  showOnlyGroup?: string;
+}
+
+const MetricsOverview: React.FC<MetricsOverviewProps> = ({ showOnlyGroup }) => {
   const [viewType, setViewType] = useState<'monthly' | 'weekly'>('monthly');
 
   return (
@@ -332,6 +336,7 @@ const MetricsOverview: React.FC = () => {
       <MetricsTable 
         viewType={viewType} 
         metricGroups={mockMetricGroups}
+        showOnlyGroup={showOnlyGroup}
       />
     </div>
   );

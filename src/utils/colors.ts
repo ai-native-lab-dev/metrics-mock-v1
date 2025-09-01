@@ -5,6 +5,13 @@ export const CHART_COLORS = {
   csa: '#f97316',      // Orange
 } as const;
 
+// CS Channel Trends specific colors (Cyan - bright blue-green)
+export const CS_CHANNEL_COLORS = {
+  main: '#06b6d4',     // Cyan-500
+  light: '#67e8f9',    // Cyan-300
+  pastel: '#a7f3d0',   // Emerald-200 (pastel blue-green)
+} as const;
+
 // Channel group colors for UI components
 export const getChannelGroupColors = (groupName: string) => {
   const name = groupName.toLowerCase();

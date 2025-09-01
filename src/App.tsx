@@ -8,7 +8,7 @@ import Methodology from './views/Methodology';
 import ChannelMatrixRules from './views/ChannelMatrixRules';
 
 // Define all possible view types for the dashboard
-export type ViewType = 'home' | 'metrics' | 'cs-channel-trends-repeat' | 'cs-channel-trends-no-repeat' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'faqs';
+export type ViewType = 'home' | 'metrics' | 'metrics-total' | 'metrics-bot' | 'metrics-csa' | 'metrics-visit' | 'cs-channel-trends-repeat' | 'cs-channel-trends-no-repeat' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'faqs';
 
 function App() {
   // State management for the main dashboard
@@ -22,6 +22,14 @@ function App() {
         return 'Dashboard Home';
       case 'metrics':
         return 'Metrics Overview';
+      case 'metrics-total':
+        return 'Total Interactions';
+      case 'metrics-bot':
+        return 'Self-Service: Bot Only';
+      case 'metrics-csa':
+        return 'Human-Led: CSA Only';
+      case 'metrics-visit':
+        return 'Self-Guided: Page Visits';
       case 'cs-channel-trends-repeat':
         return 'CS Channel Trends: Repeat';
       case 'cs-channel-trends-no-repeat':
@@ -48,6 +56,14 @@ function App() {
       case 'home':
       case 'metrics':
         return <MetricsOverview />;
+      case 'metrics-total':
+        return <MetricsOverview showOnlyGroup="Total Interactions" />;
+      case 'metrics-bot':
+        return <MetricsOverview showOnlyGroup="Self-Service: Bot Only" />;
+      case 'metrics-csa':
+        return <MetricsOverview showOnlyGroup="Human-Led: CSA Only" />;
+      case 'metrics-visit':
+        return <MetricsOverview showOnlyGroup="Self-Guided: Page Visits" />;
       case 'cs-channel-trends-repeat':
         return <CSChannelTrends type="repeat" onNavigate={setCurrentView} />;
       case 'cs-channel-trends-no-repeat':

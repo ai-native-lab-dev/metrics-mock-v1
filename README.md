@@ -102,10 +102,15 @@ The application uses a consistent pastel color scheme to improve user experience
   - Used for: Page visits, self-guided interactions
   - Represents: Self-service, user-initiated activities
 
+- **Cyan (CS Channel Trends)**: `bg-cyan-50`, `border-cyan-200`, `bg-cyan-100`, `bg-cyan-400`
+  - Used for: CS Channel Trends navigation, channel analysis components
+  - Represents: Cross-channel flow analysis, channel transition insights
+  - Colors: Main `#06b6d4` (Cyan-500), Light `#67e8f9` (Cyan-300), Pastel `#a7f3d0` (Emerald-200)
+
 #### **Color Application Areas**
 1. **Sidebar Navigation**: Sub-navigation items use their respective colors
 2. **Metrics Table**: Group headers and metric cards use consistent colors
-3. **CS Channel Trends**: Section headers and quick navigation buttons
+3. **CS Channel Trends**: Section headers and quick navigation buttons (cyan theme)
 4. **CX Impact**: Metric group headers and analysis sections
 
 #### **Color Psychology & UX Benefits**
@@ -155,12 +160,13 @@ The dashboard organizes metrics under 4 clear sub-navigations:
 - Self-service completion rates
 - Help center and FAQ usage
 
-### 5. **CS Channel Trends** - 📊 Multi-Color Matrix
+### 5. **CS Channel Trends** - 🔷 Cyan-Themed Analysis
 - **Interactive line chart** with color-coded trends
 - **Bot trends**: Blue line (`#3b82f6`)
 - **CSA trends**: Orange line (`#f97316`) 
 - **Visit trends**: Purple line (`#a855f7`)
-- **Section headers**: Match the main color scheme (Teal, Blue, Orange, Purple)
+- **Navigation theme**: Cyan (`#06b6d4`) for all CS Channel Trends elements
+- **Section headers**: Maintain individual color scheme (Bot=Blue, CSA=Orange, Visit=Purple)
 - **Quick navigation buttons**: Color-coded for easy section access
 
 ## Component Details
