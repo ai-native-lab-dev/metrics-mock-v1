@@ -266,12 +266,48 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
 
       {/* Summary Graph */}
       <div className="w-full border rounded-2xl bg-white shadow-sm p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          {type === "repeat" 
-            ? "Repeat Interaction started in any channel, ended in either Self-Guided CS Landing Page/CS Homepage/Help Pages (Visit); Self-Service (Bot), excluding CS LP/CS Homepage/Help pages); Human-led (CSA). This represents authenticated customers who visited pages or contacted us at least 2 or more times within the 7-day trailing window."
-            : "Single Interaction started in any channel, ended in either Self-Guided CS Landing Page/CS Homepage/Help Pages (Visit); Self-Service (Bot), excluding CS LP/CS Homepage/Help pages); Human-led (CSA). This represents authenticated customers who visited pages or contacted us only 1 time within the 7-day trailing window."
-          }
-        </h3>
+        <div className="mb-6">
+          <div className="flex items-center gap-3 mb-3">
+            <div className={`w-3 h-3 rounded-full ${type === "repeat" ? "bg-orange-400" : "bg-blue-400"}`}></div>
+            <h3 className="text-xl font-bold text-gray-900">
+              {type === "repeat" ? "Repeat Interactions" : "Single Interactions"}
+            </h3>
+          </div>
+          
+          <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+            <div className="grid gap-3 md:grid-cols-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                <span className="text-sm font-medium text-gray-700">Self-Guided</span>
+                <span className="text-xs text-gray-500">(Visit)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                <span className="text-sm font-medium text-gray-700">Self-Service</span>
+                <span className="text-xs text-gray-500">(Bot)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-orange-400"></span>
+                <span className="text-sm font-medium text-gray-700">Human-led</span>
+                <span className="text-xs text-gray-500">(CSA)</span>
+              </div>
+            </div>
+            
+            <div className="border-t border-gray-200 pt-3">
+              <p className="text-sm text-gray-600 leading-relaxed">
+                <strong>Coverage:</strong> Interactions started in any channel, ended in CS Landing Page/CS Homepage/Help Pages (Visit), 
+                Bot channels (excluding CS LP/CS Homepage/Help Pages), or CSA channels.
+              </p>
+              <p className="text-sm text-gray-600 mt-2">
+                <strong>Definition:</strong> Authenticated customers who visited pages or contacted us{" "}
+                <span className={`font-semibold ${type === "repeat" ? "text-orange-700" : "text-blue-700"}`}>
+                  {type === "repeat" ? "2 or more times" : "only 1 time"}
+                </span>{" "}
+                within the 7-day trailing window.
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData}>
