@@ -13,6 +13,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
     metrics: true,
     cxImpact: true,
     methodology: true,
+    dictionary: false,
   });
 
   const toggleSection = (section: keyof typeof expandedSections) => {
@@ -263,15 +264,53 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
             </div>
 
             {/* Metrics Dictionary */}
-            <button
-              onClick={() => onViewChange('dictionary')}
-              className={navItemClass(isActive('dictionary'))}
-            >
-              <svg className="w-5 h-5 mr-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-              </svg>
-              <span>Metrics Dictionary</span>
-            </button>
+            <div>
+              <button
+                onClick={() => toggleSection('dictionary')}
+                className={`flex items-center justify-between w-full px-5 py-3.5 text-sm font-medium rounded-xl transition-all duration-300 ease-out group ${
+                  expandedSections.dictionary
+                    ? 'bg-gradient-to-r from-blue-600/20 to-blue-700/20 text-white shadow-md'
+                    : 'text-gray-300 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-blue-700/20 hover:text-white'
+                }`}
+              >
+                <div className="flex items-center">
+                  <div className={`w-3 h-3 rounded-full mr-3 ${
+                    expandedSections.dictionary ? 'bg-blue-400' : 'bg-gray-400'
+                  }`}></div>
+                  <svg className="w-5 h-5 mr-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  <span className="font-semibold">Metrics Dictionary</span>
+                </div>
+                <svg
+                  className={`w-5 h-5 transition-transform duration-300 ease-out ${
+                    expandedSections.dictionary ? 'rotate-180 text-blue-400' : 'text-gray-400'
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {expandedSections.dictionary && (
+                <div className="mt-3 ml-4 space-y-1">
+                  <button
+                    onClick={() => onViewChange('dictionary')}
+                    className={subNavItemClass(isActive('dictionary'))}
+                  >
+                    Metrics Dictionary
+                  </button>
+                  <button
+                    onClick={() => onViewChange('channel-matrix-rules')}
+                    className={subNavItemClass(isActive('channel-matrix-rules'))}
+                  >
+                    Channel Matrix Rules
+                  </button>
+                </div>
+              )}
+            </div>
 
             {/* FAQs */}
             <button

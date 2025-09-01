@@ -5,9 +5,10 @@ import MetricsOverview from './views/MetricsOverview';
 import CSChannelTrends from './views/CSChannelTrends';
 import CXImpact from './views/CXImpact';
 import Methodology from './views/Methodology';
+import ChannelMatrixRules from './views/ChannelMatrixRules';
 
 // Define all possible view types for the dashboard
-export type ViewType = 'home' | 'metrics' | 'cs-channel-trends' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'faqs';
+export type ViewType = 'home' | 'metrics' | 'cs-channel-trends' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'faqs';
 
 function App() {
   // State management for the main dashboard
@@ -30,6 +31,8 @@ function App() {
         return 'Methodology';
       case 'dictionary':
         return 'Metrics Dictionary';
+      case 'channel-matrix-rules':
+        return 'Channel Matrix Rules';
       case 'faqs':
         return 'Frequently Asked Questions';
       default:
@@ -67,6 +70,8 @@ function App() {
             </div>
           </div>
         );
+      case 'channel-matrix-rules':
+        return <ChannelMatrixRules />;
       default:
         return <MetricsOverview />;
     }
