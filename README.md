@@ -12,11 +12,9 @@ A comprehensive React-based dashboard application for analyzing customer experie
 
 ### 📊 **Views Available**
 1. **Metrics Overview** (Default): Displays 4 navigation groups with 40 comprehensive metrics
-2. **Metrics Dictionary**: Comprehensive definitions and explanations for all dashboard metrics
-3. **Metrics Deck**: Card-based interface for viewing metrics with collapsible details
-4. **CS Channel Trends**: Interactive analysis of channel transition patterns
-5. **CX Impact Analysis**: Focused analysis of P90/P95 metrics with transcript samples
-6. **Methodology**: Comprehensive documentation with interactive diagrams
+2. **CS Channel Trends**: Interactive analysis of channel transition patterns
+3. **CX Impact Analysis**: Focused analysis of P90/P95 metrics with transcript samples
+4. **Methodology**: Comprehensive documentation with interactive diagrams
 
 ### 🎨 **Design Features**
 - **Tailwind CSS**: Modern, utility-first styling framework
@@ -219,39 +217,7 @@ Each metric group contains:
 - **Full Definition**: Expandable detailed explanation
 - **Toggle Button**: Show/hide full definition
 
-## Metrics Dictionary
 
-### 📚 **Comprehensive Metric Documentation**
-The Metrics Dictionary provides detailed definitions and explanations for all dashboard metrics with the following features:
-
-#### **Search & Discovery**
-- **Real-time Search**: Search across metric names, questions, and definitions
-- **Smart Filtering**: Instant results as you type
-- **No Results State**: Helpful guidance when no matches found
-
-#### **Metric Information**
-- **Business Context**: Impact level assessment (High/Medium)
-- **Metric Classification**: Automatic type detection (Count, Percentage, Rate, Time, Score, Average)
-- **Unit Information**: Clear unit specifications (%, min, Count, 1-5, etc.)
-- **Usage Guidelines**: Best practices for metric interpretation
-
-#### **Visual Organization**
-- **Color-Coded Groups**: Consistent with dashboard theme (Teal, Blue, Orange, Purple)
-- **Collapsible Interface**: Expandable groups and individual metrics
-- **Summary Statistics**: Overview of total groups, metrics, and high-impact items
-- **Professional Layout**: Card-based design with proper spacing and typography
-
-#### **Business Impact Levels**
-- **High Impact**: Critical business metrics (Total interactions, Satisfaction scores, Resolution rates)
-- **Medium Impact**: Supporting operational metrics (Time-based, Duration, Queue metrics)
-
-#### **Metric Types**
-- **Count**: Numerical counts and totals
-- **Percentage**: Ratio-based metrics with % units
-- **Rate**: Performance rates and ratios
-- **Time**: Duration and timing metrics (minutes)
-- **Score**: Rating-based metrics (1-5 scale)
-- **Average**: Mean values and averages
 
 ## Responsive Behavior
 
