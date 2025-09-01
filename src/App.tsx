@@ -49,9 +49,9 @@ function App() {
       case 'metrics':
         return <MetricsOverview />;
       case 'cs-channel-trends-repeat':
-        return <CSChannelTrends type="repeat" />;
+        return <CSChannelTrends type="repeat" onNavigate={setCurrentView} />;
       case 'cs-channel-trends-no-repeat':
-        return <CSChannelTrends type="no-repeat" />;
+        return <CSChannelTrends type="no-repeat" onNavigate={setCurrentView} />;
       case 'cx-impact-p95':
       case 'cx-impact-p90':
         return <CXImpact metricGroup={currentView} />;
