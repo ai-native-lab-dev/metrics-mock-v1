@@ -178,6 +178,68 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                     <div className="w-2 h-2 rounded-full bg-purple-400 mr-3"></div>
                     Self-Guided: Page Visits
                   </button>
+
+                  {/* Metrics Deck Options */}
+                  <div className="mt-4 pt-3 border-t border-gray-200">
+                    <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2">
+                      Card View
+                    </div>
+                    <button
+                      onClick={() => onViewChange('metrics-deck')}
+                      className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                        isActive('metrics-deck') 
+                          ? 'bg-indigo-100 text-indigo-800 border border-indigo-200' 
+                          : 'text-gray-600 hover:bg-indigo-50 hover:text-indigo-700'
+                      }`}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-indigo-400 mr-3"></div>
+                      All Metrics Deck
+                    </button>
+                    <button
+                      onClick={() => onViewChange('metrics-deck-total')}
+                      className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                        isActive('metrics-deck-total') 
+                          ? 'bg-teal-100 text-teal-800 border border-teal-200' 
+                          : 'text-gray-600 hover:bg-teal-50 hover:text-teal-700'
+                      }`}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-teal-400 mr-3"></div>
+                      Total Interactions Deck
+                    </button>
+                    <button
+                      onClick={() => onViewChange('metrics-deck-bot')}
+                      className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                        isActive('metrics-deck-bot') 
+                          ? 'bg-blue-100 text-blue-800 border border-blue-200' 
+                          : 'text-gray-600 hover:bg-blue-50 hover:text-blue-700'
+                      }`}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-blue-400 mr-3"></div>
+                      Bot Only Deck
+                    </button>
+                    <button
+                      onClick={() => onViewChange('metrics-deck-csa')}
+                      className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                        isActive('metrics-deck-csa') 
+                          ? 'bg-orange-100 text-orange-800 border border-orange-200' 
+                          : 'text-gray-600 hover:bg-orange-50 hover:text-orange-700'
+                      }`}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-orange-400 mr-3"></div>
+                      CSA Only Deck
+                    </button>
+                    <button
+                      onClick={() => onViewChange('metrics-deck-visit')}
+                      className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                        isActive('metrics-deck-visit') 
+                          ? 'bg-purple-100 text-purple-800 border border-purple-200' 
+                          : 'text-gray-600 hover:bg-purple-50 hover:text-purple-700'
+                      }`}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-purple-400 mr-3"></div>
+                      Page Visits Deck
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import MetricsOverview from './views/MetricsOverview';
+import MetricsDeck from './components/MetricsDeck';
 import CSChannelTrends from './views/CSChannelTrends';
 import CXImpact from './views/CXImpact';
 import Methodology from './views/Methodology';
 import ChannelMatrixRules from './views/ChannelMatrixRules';
 
+// Import mock data for MetricsDeck
+import { mockMetricGroups } from './data/mockData';
+
 // Define all possible view types for the dashboard
-export type ViewType = 'home' | 'metrics' | 'metrics-total' | 'metrics-bot' | 'metrics-csa' | 'metrics-visit' | 'cs-channel-trends-repeat' | 'cs-channel-trends-no-repeat' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'faqs';
+export type ViewType = 'home' | 'metrics' | 'metrics-total' | 'metrics-bot' | 'metrics-csa' | 'metrics-visit' | 'metrics-deck' | 'metrics-deck-total' | 'metrics-deck-bot' | 'metrics-deck-csa' | 'metrics-deck-visit' | 'cs-channel-trends-repeat' | 'cs-channel-trends-no-repeat' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'faqs';
 
 function App() {
   // State management for the main dashboard
@@ -30,6 +34,16 @@ function App() {
         return 'Human-Led: CSA Only';
       case 'metrics-visit':
         return 'Self-Guided: Page Visits';
+      case 'metrics-deck':
+        return 'Metrics Deck';
+      case 'metrics-deck-total':
+        return 'Metrics Deck: Total Interactions';
+      case 'metrics-deck-bot':
+        return 'Metrics Deck: Self-Service: Bot Only';
+      case 'metrics-deck-csa':
+        return 'Metrics Deck: Human-Led: CSA Only';
+      case 'metrics-deck-visit':
+        return 'Metrics Deck: Self-Guided: Page Visits';
       case 'cs-channel-trends-repeat':
         return 'CS Channel Trends: Repeat';
       case 'cs-channel-trends-no-repeat':
@@ -64,6 +78,16 @@ function App() {
         return <MetricsOverview showOnlyGroup="Human-Led: CSA Only" />;
       case 'metrics-visit':
         return <MetricsOverview showOnlyGroup="Self-Guided: Page Visits" />;
+      case 'metrics-deck':
+        return <MetricsDeck metricGroups={mockMetricGroups} />;
+      case 'metrics-deck-total':
+        return <MetricsDeck metricGroups={mockMetricGroups} showOnlyGroup="Total Interactions" />;
+      case 'metrics-deck-bot':
+        return <MetricsDeck metricGroups={mockMetricGroups} showOnlyGroup="Self-Service: Bot Only" />;
+      case 'metrics-deck-csa':
+        return <MetricsDeck metricGroups={mockMetricGroups} showOnlyGroup="Human-Led: CSA Only" />;
+      case 'metrics-deck-visit':
+        return <MetricsDeck metricGroups={mockMetricGroups} showOnlyGroup="Self-Guided: Page Visits" />;
       case 'cs-channel-trends-repeat':
         return <CSChannelTrends type="repeat" onNavigate={setCurrentView} />;
       case 'cs-channel-trends-no-repeat':
