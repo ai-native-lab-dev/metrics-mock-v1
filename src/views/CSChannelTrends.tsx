@@ -209,10 +209,19 @@ export default function CSChannelMatrix() {
 
   function QuickNav() {
     return (
-      <div className="flex gap-2">
-        <button onClick={() => botRef.current?.scrollIntoView({ behavior: 'smooth' })} className="px-3 py-1 rounded-xl border bg-blue-50 hover:bg-blue-100">Go to Bot</button>
-        <button onClick={() => csaRef.current?.scrollIntoView({ behavior: 'smooth' })} className="px-3 py-1 rounded-xl border bg-orange-50 hover:bg-orange-100">Go to CSA</button>
-        <button onClick={() => visitRef.current?.scrollIntoView({ behavior: 'smooth' })} className="px-3 py-1 rounded-xl border bg-purple-50 hover:bg-purple-100">Go to Visit</button>
+      <div className="flex gap-3">
+        <button onClick={() => botRef.current?.scrollIntoView({ behavior: 'smooth' })} className="px-4 py-2 rounded-lg border bg-blue-50 hover:bg-blue-100 text-blue-800 font-medium flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+          Bot ({grouped.Bot.length} metrics)
+        </button>
+        <button onClick={() => csaRef.current?.scrollIntoView({ behavior: 'smooth' })} className="px-4 py-2 rounded-lg border bg-orange-50 hover:bg-orange-100 text-orange-800 font-medium flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-orange-400"></span>
+          CSA ({grouped.CSA.length} metrics)
+        </button>
+        <button onClick={() => visitRef.current?.scrollIntoView({ behavior: 'smooth' })} className="px-4 py-2 rounded-lg border bg-purple-50 hover:bg-purple-100 text-purple-800 font-medium flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+          Visit ({grouped.Visit.length} metrics)
+        </button>
       </div>
     );
   }
@@ -226,9 +235,18 @@ export default function CSChannelMatrix() {
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <ViewToggle />
-          <QuickNav />
         </div>
       </header>
+
+      {/* Section Navigation */}
+      <div className="bg-gray-50 rounded-xl p-4">
+        <div className="text-center mb-3">
+          <p className="text-sm text-gray-600">Total: <span className="font-semibold text-gray-800">{rows.length} channel combinations</span> across <span className="font-semibold text-gray-800">3 categories</span></p>
+        </div>
+        <div className="flex justify-center">
+          <QuickNav />
+        </div>
+      </div>
 
       {/* Summary Graph */}
       <div className="w-full h-80 border rounded-2xl bg-white shadow-sm p-4">
