@@ -130,7 +130,7 @@ export default function CSChannelMatrix() {
         const deltas = MONTHS.map((_, i) => sums25[i] - sums24[i]);
         return (
           <tr className={`${colors.header} font-semibold`}>
-            <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (YoY Δ MM)</td>
+            <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (YoY Δ)</td>
             {deltas.map((v, i) => (<td key={`suby-${i}`} className={`px-2 py-1 border-t text-right ${v > 0 ? 'text-green-700' : v < 0 ? 'text-red-700' : 'text-gray-700'}`}>{v}</td>))}
           </tr>
         );
@@ -149,7 +149,7 @@ export default function CSChannelMatrix() {
               <tr>
                 <StickyTh className="text-left">Started in</StickyTh>
                 <StickyTh className="text-left">Ended in</StickyTh>
-                <StickyTh className="text-left">Unit (Count MM)</StickyTh>
+                <StickyTh className="text-left">Unit</StickyTh>
                 {MONTHS.map(m => (
                   <StickyTh key={`${view}-${m}`}>{view === "YoY" ? `${m} Δ / %` : `${m}`}</StickyTh>
                 ))}
@@ -163,7 +163,7 @@ export default function CSChannelMatrix() {
                   <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white" : "bg-gray-50/40"}>
                     <td className="px-3 py-2 border-b whitespace-nowrap font-medium text-left">{r.start}</td>
                     <td className="px-3 py-2 border-b whitespace-nowrap text-left">{r.end}</td>
-                    <td className="px-3 py-2 border-b text-left">Count MM</td>
+                    <td className="px-3 py-2 border-b text-left">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
                     {MONTHS.map((_, i) => {
                       if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right">{v24[i]}</td>);
                       if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right">{v25[i]}</td>);
@@ -219,7 +219,7 @@ export default function CSChannelMatrix() {
       <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold">CS Channel Trends</h1>
-          <p className="text-sm text-gray-600">Toggle between <strong>2024</strong>, <strong>2025</strong>, or <strong>YoY</strong>. Units are <strong>Count (MM)</strong>. Sections are color-coded: Teal=Total Interactions, Blue=Bot, Orange=CSA, Purple=Visit.</p>
+          <p className="text-sm text-gray-600">Toggle between <strong>2024</strong>, <strong>2025</strong>, or <strong>YoY</strong>. Units: <strong>Count MM</strong> for 2024/2025, <strong>Basis points (%)</strong> for YoY. Sections are color-coded: Teal=Total Interactions, Blue=Bot, Orange=CSA, Purple=Visit.</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <ViewToggle />
