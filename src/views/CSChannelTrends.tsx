@@ -37,10 +37,11 @@ function hashCode(str: string) {
   return Math.abs(h);
 } 
 
-function staticMonthlyValues(start: string, end: string, year: number) {
+function staticMonthlyValues(start: string, end: string, year: number, type: "repeat" | "no-repeat") {
   return MONTHS.map((m, idx) => {
     const seed = hashCode(`${start}-${end}-${year}-${idx}`);
-    return 5 + (seed % 16); // 5..20 (MM)
+    const baseValue = type === "repeat" ? 3 + (seed % 12) : 8 + (seed % 15); // Repeat: 3-15, No-repeat: 8-23
+    return baseValue;
   });
 }
 
@@ -63,7 +64,11 @@ function groupColors(groupName: string) {
   return { bg: 'bg-gray-50', border: 'border-gray-200', header: 'bg-gray-100', dot: 'bg-gray-400' };
 }
 
-export default function CSChannelMatrix() {
+interface CSChannelMatrixProps {
+  type: "repeat" | "no-repeat";
+}
+
+export default function CSChannelMatrix({ type }: CSChannelMatrixProps) {
   const [view, setView] = useState("2025"); // "2024" | "2025" | "YoY"
 
   const botRef = useRef<HTMLDetailsElement>(null);
@@ -90,7 +95,7 @@ export default function CSChannelMatrix() {
   const chartData = useMemo(() => {
     return MONTHS.map((m, i) => {
       const sum = (group: Array<{ start: string; end: string; endCat: string }>) => group.reduce((acc, r) => {
-        const vals = staticMonthlyValues(r.start, r.end, 2025); // default 2025 view for chart
+        const vals = staticMonthlyValues(r.start, r.end, 2025, type); // default 2025 view for chart
         return acc + vals[i];
       }, 0);
       return {
@@ -100,12 +105,12 @@ export default function CSChannelMatrix() {
         Visit: sum(grouped.Visit)
       };
     });
-  }, [grouped]);
+  }, [grouped, type]);
 
   function Section({ title, rows, sectionRef }: { title: string; rows: Array<{ start: string; end: string; endCat: string }>; sectionRef: React.RefObject<HTMLDetailsElement | null> }) {
     const colors = groupColors(title);
-    const vals2024 = rows.map(r => staticMonthlyValues(r.start, r.end, 2024));
-    const vals2025 = rows.map(r => staticMonthlyValues(r.start, r.end, 2025));
+    const vals2024 = rows.map(r => staticMonthlyValues(r.start, r.end, 2024, type));
+    const vals2025 = rows.map(r => staticMonthlyValues(r.start, r.end, 2025, type));
 
     const subtotalRow = (() => {
       if (view === "2024") {
@@ -160,8 +165,8 @@ export default function CSChannelMatrix() {
             </thead>
             <tbody>
               {rows.map((r, idx) => {
-                const v24 = staticMonthlyValues(r.start, r.end, 2024);
-                const v25 = staticMonthlyValues(r.start, r.end, 2025);
+                const v24 = staticMonthlyValues(r.start, r.end, 2024, type);
+                const v25 = staticMonthlyValues(r.start, r.end, 2025, type);
                 return (
                   <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white" : "bg-gray-50/40"}>
                     <td className="px-3 py-2 border-b whitespace-nowrap font-medium text-left w-48 border-r border-gray-200">{r.start}</td>
@@ -230,8 +235,13 @@ export default function CSChannelMatrix() {
     <div className="w-full p-4 space-y-6">
       <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-1">
-          <h1 className="text-2xl font-semibold">CS Channel Trends</h1>
-          <p className="text-sm text-gray-600">Toggle between <strong>2024</strong>, <strong>2025</strong>, or <strong>YoY</strong>. Units: <strong>Count MM</strong> for 2024/2025, <strong>Basis points (%)</strong> for YoY. Sections are color-coded: Teal=Total Interactions, Blue=Bot, Orange=CSA, Purple=Visit.</p>
+          <h1 className="text-2xl font-semibold">CS Channel Trends: {type === "repeat" ? "Repeat" : "No Repeat"}</h1>
+          <p className="text-sm text-gray-600">
+            {type === "repeat" 
+              ? "Analysis of customer interactions where customers contacted us multiple times within 7 days. Toggle between <strong>2024</strong>, <strong>2025</strong>, or <strong>YoY</strong>. Units: <strong>Count MM</strong> for 2024/2025, <strong>Basis points (%)</strong> for YoY. Sections are color-coded: Teal=Total Interactions, Blue=Bot, Orange=CSA, Purple=Visit."
+              : "Analysis of customer interactions where customers contacted us only once within 7 days. Toggle between <strong>2024</strong>, <strong>2025</strong>, or <strong>YoY</strong>. Units: <strong>Count MM</strong> for 2024/2025, <strong>Basis points (%)</strong> for YoY. Sections are color-coded: Teal=Total Interactions, Blue=Bot, Orange=CSA, Purple=Visit."
+            }
+          </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <ViewToggle />
@@ -241,7 +251,12 @@ export default function CSChannelMatrix() {
       {/* Section Navigation */}
       <div className="bg-gray-50 rounded-xl p-4">
         <div className="text-center mb-3">
-          <p className="text-sm text-gray-600">Total: <span className="font-semibold text-gray-800">{rows.length} channel combinations</span> across <span className="font-semibold text-gray-800">3 categories</span></p>
+          <p className="text-sm text-gray-600">
+            {type === "repeat" 
+              ? "Repeat Interactions: <span className=\"font-semibold text-gray-800\">{rows.length} channel combinations</span> across <span className=\"font-semibold text-gray-800\">3 categories</span>"
+              : "Single Interactions: <span className=\"font-semibold text-gray-800\">{rows.length} channel combinations</span> across <span className=\"font-semibold text-gray-800\">3 categories</span>"
+            }
+          </p>
         </div>
         <div className="flex justify-center">
           <QuickNav />

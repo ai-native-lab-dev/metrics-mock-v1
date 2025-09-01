@@ -8,7 +8,7 @@ import Methodology from './views/Methodology';
 import ChannelMatrixRules from './views/ChannelMatrixRules';
 
 // Define all possible view types for the dashboard
-export type ViewType = 'home' | 'metrics' | 'cs-channel-trends' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'faqs';
+export type ViewType = 'home' | 'metrics' | 'cs-channel-trends-repeat' | 'cs-channel-trends-no-repeat' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'faqs';
 
 function App() {
   // State management for the main dashboard
@@ -22,8 +22,10 @@ function App() {
         return 'Dashboard Home';
       case 'metrics':
         return 'Metrics Overview';
-      case 'cs-channel-trends':
-        return 'CS Channel Trends';
+      case 'cs-channel-trends-repeat':
+        return 'CS Channel Trends: Repeat';
+      case 'cs-channel-trends-no-repeat':
+        return 'CS Channel Trends: No Repeat';
       case 'cx-impact-p95':
       case 'cx-impact-p90':
         return 'CX Impact Analysis';
@@ -46,8 +48,10 @@ function App() {
       case 'home':
       case 'metrics':
         return <MetricsOverview />;
-      case 'cs-channel-trends':
-        return <CSChannelTrends />;
+      case 'cs-channel-trends-repeat':
+        return <CSChannelTrends type="repeat" />;
+      case 'cs-channel-trends-no-repeat':
+        return <CSChannelTrends type="no-repeat" />;
       case 'cx-impact-p95':
       case 'cx-impact-p90':
         return <CXImpact metricGroup={currentView} />;
