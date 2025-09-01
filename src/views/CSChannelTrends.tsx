@@ -300,11 +300,23 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
       {/* Summary Graph */}
       <div className="w-full border rounded-2xl bg-white shadow-sm p-6">
         <div className="mb-6">
-          <div className="flex items-center gap-3 mb-3">
-            <div className={`w-3 h-3 rounded-full ${type === "repeat" ? "bg-orange-400" : "bg-blue-400"}`}></div>
-            <h3 className="text-xl font-bold text-gray-900">
-              {type === "repeat" ? "Repeat Interactions" : "Single Interactions"}
-            </h3>
+          <div className="mb-3">
+            <div className="flex items-center gap-3 mb-2">
+              <div className={`w-3 h-3 rounded-full ${type === "repeat" ? "bg-orange-400" : "bg-blue-400"}`}></div>
+              <h3 className="text-xl font-bold text-gray-900">
+                {type === "repeat" ? "Repeat Interactions" : "Single Interactions"}
+              </h3>
+            </div>
+            {type === "repeat" && (
+              <p className="text-sm text-gray-600 italic ml-6">
+                Of the repeat authenticated customers, what are the total number of contacts and/or visits within the trailing 7-day window?
+              </p>
+            )}
+            {type === "no-repeat" && (
+              <p className="text-sm text-gray-600 italic ml-6">
+                Of the single-visit authenticated customers, what are the total number of contacts and/or visits within the trailing 7-day window?
+              </p>
+            )}
           </div>
           
           <div className="bg-gray-50 rounded-lg p-4 space-y-3">
