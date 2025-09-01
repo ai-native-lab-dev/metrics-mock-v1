@@ -236,20 +236,23 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
     <div className="w-full p-4 space-y-6">
       <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-1">
-          <h1 className="text-2xl font-semibold">CS Channel Trends: {type === "repeat" ? "Repeat" : "No Repeat"}</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">CS Channel Trends: {type === "repeat" ? "Repeat" : "No Repeat"}</h1>
           {/* Description intentionally minimal per request */}
+          <div className="mt-2">
+            <button
+              onClick={() => onNavigate('channel-matrix-rules')}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 transition-colors"
+              aria-label="View CS Channel Combination Possibilities"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              View CS Channel Combination Possibilities
+            </button>
+          </div>
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <ViewToggle />
-          <button 
-            onClick={() => onNavigate('channel-matrix-rules')}
-            className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg border flex items-center gap-2 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            View CS Channel Combination Possibilities
-          </button>
         </div>
       </header>
 
