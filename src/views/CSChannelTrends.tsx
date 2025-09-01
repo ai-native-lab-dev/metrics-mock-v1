@@ -310,17 +310,17 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
           <div className="bg-gray-50 rounded-lg p-4 space-y-3">
             <div className="grid gap-3 md:grid-cols-3">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                <span className="w-2 h-2 rounded-full" style={{backgroundColor: "#a855f7"}}></span>
                 <span className="text-sm font-medium text-gray-700">Self-Guided</span>
                 <span className="text-xs text-gray-500">(Visit)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                <span className="w-2 h-2 rounded-full" style={{backgroundColor: "#3b82f6"}}></span>
                 <span className="text-sm font-medium text-gray-700">Self-Service</span>
                 <span className="text-xs text-gray-500">(Bot)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-orange-400"></span>
+                <span className="w-2 h-2 rounded-full" style={{backgroundColor: "#f97316"}}></span>
                 <span className="text-sm font-medium text-gray-700">Human-led</span>
                 <span className="text-xs text-gray-500">(CSA)</span>
               </div>
