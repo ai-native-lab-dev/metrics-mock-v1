@@ -96,14 +96,17 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
         let verticalMultiplier = 1;
         if (reportingVertical !== "All") {
           switch (reportingVertical) {
-            case "Consumer":
+            case "Vertical 1":
+              verticalMultiplier = 0.8;
+              break;
+            case "Vertical 2":
               verticalMultiplier = 0.6;
               break;
-            case "Business":
-              verticalMultiplier = 0.3;
+            case "Vertical 3":
+              verticalMultiplier = 0.4;
               break;
-            case "Enterprise":
-              verticalMultiplier = 0.1;
+            case "Vertical 4":
+              verticalMultiplier = 0.2;
               break;
           }
         }
@@ -129,14 +132,17 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
       
       if (reportingVertical !== "All") {
         switch (reportingVertical) {
-          case "Consumer":
+          case "Vertical 1":
+            verticalMultiplier = 0.8;
+            break;
+          case "Vertical 2":
             verticalMultiplier = 0.6;
             break;
-          case "Business":
-            verticalMultiplier = 0.3;
+          case "Vertical 3":
+            verticalMultiplier = 0.4;
             break;
-          case "Enterprise":
-            verticalMultiplier = 0.1;
+          case "Vertical 4":
+            verticalMultiplier = 0.2;
             break;
         }
       }
@@ -278,25 +284,25 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
     );
   }
 
-  function ReportingVerticalToggle() {
-    const verticals = ["All", "Consumer", "Business", "Enterprise"];
-    
+  function ReportingVerticalDropdown() {
     return (
-      <div className="inline-flex rounded-lg border border-gray-300 overflow-hidden bg-white">
-        {verticals.map((vertical) => (
-          <button
-            key={vertical}
-            onClick={() => setReportingVertical(vertical)}
-            className={`px-3 py-2 text-sm font-medium ${
-              reportingVertical === vertical 
-                ? 'bg-blue-100 text-blue-900 border-blue-200' 
-                : 'text-gray-600 hover:bg-gray-50'
-            }`}
-            aria-pressed={reportingVertical === vertical}
-          >
-            {vertical}
-          </button>
-        ))}
+      <div className="relative">
+        <select
+          value={reportingVertical}
+          onChange={(e) => setReportingVertical(e.target.value)}
+          className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        >
+          <option value="All">All Verticals</option>
+          <option value="Vertical 1">Vertical 1</option>
+          <option value="Vertical 2">Vertical 2</option>
+          <option value="Vertical 3">Vertical 3</option>
+          <option value="Vertical 4">Vertical 4</option>
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+          </svg>
+        </div>
       </div>
     );
   }
@@ -342,7 +348,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
         <div className="flex flex-col sm:flex-row gap-2">
           <ViewToggle />
           <ChartTypeToggle />
-          <ReportingVerticalToggle />
+          <ReportingVerticalDropdown />
         </div>
       </header>
 
@@ -364,7 +370,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                 {type === "repeat" ? "Repeat Interactions" : "Single Interactions"}
                 {reportingVertical !== "All" && (
                   <span className="ml-2 text-sm font-normal text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                    {reportingVertical} Only
+                    {reportingVertical}
                   </span>
                 )}
               </h3>
@@ -373,7 +379,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
               Of the {type === "repeat" ? "repeat" : "single-visit"} authenticated customers, what are the total number of contacts and/or visits within the trailing 7-day window?
               {reportingVertical !== "All" && (
                 <span className="block mt-1 text-blue-600 font-medium">
-                  Filtered for {reportingVertical} vertical only
+                  Filtered for {reportingVertical} only
                 </span>
               )}
             </p>
