@@ -23,13 +23,15 @@ interface MetricsTableProps {
   metricGroups: MetricGroup[]; // Array of metric groups to display
   onDataCellClick?: (metricName: string, period: string, value: number) => void; // Optional callback for cell clicks
   showOnlyGroup?: string; // Optional filter to show only specific group
+  showOnlyMetricType?: string; // Optional filter to show only specific metric type (repeat-base, repeat-rate, no-repeat-base, no-repeat-rate)
 }
 
 const MetricsTable: React.FC<MetricsTableProps> = ({ 
   viewType, 
   metricGroups, 
   onDataCellClick,
-  showOnlyGroup 
+  showOnlyGroup,
+  showOnlyMetricType
 }) => {
   // State for tracking which metric groups are expanded (default: all groups)
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set(['Total Interactions', 'Self-Service: Bot Only', 'Human-Led: CSA Only', 'Self-Guided: Page Visits']));
@@ -152,6 +154,23 @@ const MetricsTable: React.FC<MetricsTableProps> = ({
     ? metricGroups.filter(group => group.name === showOnlyGroup)
     : metricGroups;
 
+  // Filter metrics within groups based on showOnlyMetricType prop
+  const processedGroups = showOnlyMetricType 
+    ? filteredGroups.map(group => ({
+        ...group,
+        metrics: group.metrics.filter(metric => {
+          // Filter based on metric name patterns
+          const name = metric.metricName.toLowerCase();
+          if (showOnlyMetricType === 'repeat') {
+            return name.includes('repeat');
+          } else if (showOnlyMetricType === 'no-repeat') {
+            return !name.includes('repeat');
+          }
+          return true;
+        })
+      }))
+    : filteredGroups;
+
   const columns = getColumns();
 
   return (
@@ -204,7 +223,7 @@ const MetricsTable: React.FC<MetricsTableProps> = ({
             </tr>
           </thead>
           <tbody className="bg-white/50 divide-y divide-gray-100/50">
-            {filteredGroups.map((group) => (
+            {processedGroups.map((group) => (
               <React.Fragment key={group.name}>
                 {/* Group Header */}
                 {(() => {
