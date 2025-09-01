@@ -63,99 +63,7 @@ function groupColors(groupName: string) {
   return { bg: 'bg-gray-50', border: 'border-gray-200', header: 'bg-gray-100', dot: 'bg-gray-400' };
 }
 
-interface SectionProps {
-  title: string;
-  rows: Array<{ start: string; end: string; endCat: string }>;
-  sectionRef: React.RefObject<HTMLDetailsElement | null>;
-}
-
-function Section({ title, rows, sectionRef, view }: SectionProps & { view: string }) {
-  const colors = groupColors(title);
-  const vals2024 = rows.map(r => staticMonthlyValues(r.start, r.end, 2024));
-  const vals2025 = rows.map(r => staticMonthlyValues(r.start, r.end, 2025));
-
-  const subtotalRow = (() => {
-    if (view === "2024") {
-      const sums = MONTHS.map((_, i) => vals2024.reduce((acc, a) => acc + a[i], 0));
-      return (
-        <tr className={`${colors.header} font-semibold`}>
-          <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (2024)</td>
-          {sums.map((v, i) => (<td key={`sub24-${i}`} className="px-2 py-1 border-t text-right">{v}</td>))}
-        </tr>
-      );
-    } else if (view === "2025") {
-      const sums = MONTHS.map((_, i) => vals2025.reduce((acc, a) => acc + a[i], 0));
-      return (
-        <tr className={`${colors.header} font-semibold`}>
-          <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (2025)</td>
-          {sums.map((v, i) => (<td key={`sub25-${i}`} className="px-2 py-1 border-t text-right">{v}</td>))}
-        </tr>
-      );
-    } else {
-      const sums24 = MONTHS.map((_, i) => vals2024.reduce((acc, a) => acc + a[i], 0));
-      const sums25 = MONTHS.map((_, i) => vals2025.reduce((acc, a) => acc + a[i], 0));
-      const deltas = MONTHS.map((_, i) => sums25[i] - sums24[i]);
-      return (
-        <tr className={`${colors.header} font-semibold`}>
-          <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (YoY Δ MM)</td>
-          {deltas.map((v, i) => (<td key={`suby-${i}`} className={`px-2 py-1 border-t text-right ${v > 0 ? 'text-green-700' : v < 0 ? 'text-red-700' : 'text-gray-700'}`}>{v}</td>))}
-        </tr>
-      );
-    }
-  })();
-
-  return (
-    <details ref={sectionRef} open className={`border ${colors.border} rounded-2xl overflow-hidden`}>
-      <summary className={`px-4 py-3 ${colors.header} font-semibold flex items-center gap-2`}>
-        <span className={`${colors.dot} w-2 h-2 rounded-full inline-block`}></span>
-        {title} <span className="text-gray-500 text-xs">({rows.length})</span>
-      </summary>
-      <div className={`${colors.bg} overflow-auto`}>
-        <table className="min-w-[1200px] w-full text-sm">
-          <thead>
-            <tr>
-              <StickyTh className="text-left">Started in</StickyTh>
-              <StickyTh className="text-left">Ended in</StickyTh>
-              <StickyTh className="text-left">Unit (Count MM)</StickyTh>
-              {MONTHS.map(m => (
-                <StickyTh key={`${view}-${m}`}>{view === "YoY" ? `${m} Δ / %` : `${m}`}</StickyTh>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, idx) => {
-              const v24 = staticMonthlyValues(r.start, r.end, 2024);
-              const v25 = staticMonthlyValues(r.start, r.end, 2025);
-              return (
-                <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white" : "bg-gray-50/40"}>
-                  <td className="px-3 py-2 border-b whitespace-nowrap font-medium text-left">{r.start}</td>
-                  <td className="px-3 py-2 border-b whitespace-nowrap text-left">{r.end}</td>
-                  <td className="px-3 py-2 border-b text-left">Count MM</td>
-                  {MONTHS.map((_, i) => {
-                    if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right">{v24[i]}</td>);
-                    if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right">{v25[i]}</td>);
-                    const delta = v25[i] - v24[i];
-                    const pct = v24[i] === 0 ? (v25[i] > 0 ? Infinity : 0) : ((v25[i] - v24[i]) / v24[i]) * 100;
-                    const label = v24[i] === 0 ? (v25[i] > 0 ? "+∞" : "0%") : `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`;
-                    const cls = delta > 0 ? 'text-green-700' : delta < 0 ? 'text-red-700' : 'text-gray-700';
-                    return (
-                      <td key={`cy-${i}`} className={`px-2 py-1 border-b text-right ${cls}`}>
-                        {delta} / {label}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-            {subtotalRow}
-          </tbody>
-        </table>
-      </div>
-    </details>
-  );
-}
-
-export default function CSChannelTrends() {
+export default function CSChannelMatrix() {
   const [view, setView] = useState("2025"); // "2024" | "2025" | "YoY"
 
   const botRef = useRef<HTMLDetailsElement>(null);
@@ -193,6 +101,92 @@ export default function CSChannelTrends() {
       };
     });
   }, [grouped]);
+
+  function Section({ title, rows, sectionRef }: { title: string; rows: Array<{ start: string; end: string; endCat: string }>; sectionRef: React.RefObject<HTMLDetailsElement | null> }) {
+    const colors = groupColors(title);
+    const vals2024 = rows.map(r => staticMonthlyValues(r.start, r.end, 2024));
+    const vals2025 = rows.map(r => staticMonthlyValues(r.start, r.end, 2025));
+
+    const subtotalRow = (() => {
+      if (view === "2024") {
+        const sums = MONTHS.map((_, i) => vals2024.reduce((acc, a) => acc + a[i], 0));
+        return (
+          <tr className={`${colors.header} font-semibold`}>
+            <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (2024)</td>
+            {sums.map((v, i) => (<td key={`sub24-${i}`} className="px-2 py-1 border-t text-right">{v}</td>))}
+          </tr>
+        );
+      } else if (view === "2025") {
+        const sums = MONTHS.map((_, i) => vals2025.reduce((acc, a) => acc + a[i], 0));
+        return (
+          <tr className={`${colors.header} font-semibold`}>
+            <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (2025)</td>
+            {sums.map((v, i) => (<td key={`sub25-${i}`} className="px-2 py-1 border-t text-right">{v}</td>))}
+          </tr>
+        );
+      } else {
+        const sums24 = MONTHS.map((_, i) => vals2024.reduce((acc, a) => acc + a[i], 0));
+        const sums25 = MONTHS.map((_, i) => vals2025.reduce((acc, a) => acc + a[i], 0));
+        const deltas = MONTHS.map((_, i) => sums25[i] - sums24[i]);
+        return (
+          <tr className={`${colors.header} font-semibold`}>
+            <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (YoY Δ MM)</td>
+            {deltas.map((v, i) => (<td key={`suby-${i}`} className={`px-2 py-1 border-t text-right ${v > 0 ? 'text-green-700' : v < 0 ? 'text-red-700' : 'text-gray-700'}`}>{v}</td>))}
+          </tr>
+        );
+      }
+    })();
+
+    return (
+      <details ref={sectionRef} open className={`border ${colors.border} rounded-2xl overflow-hidden`}>
+        <summary className={`px-4 py-3 ${colors.header} font-semibold flex items-center gap-2`}>
+          <span className={`${colors.dot} w-2 h-2 rounded-full inline-block`}></span>
+          {title} <span className="text-gray-500 text-xs">({rows.length})</span>
+        </summary>
+        <div className={`${colors.bg} overflow-auto`}>
+          <table className="min-w-[1200px] w-full text-sm">
+            <thead>
+              <tr>
+                <StickyTh className="text-left">Started in</StickyTh>
+                <StickyTh className="text-left">Ended in</StickyTh>
+                <StickyTh className="text-left">Unit (Count MM)</StickyTh>
+                {MONTHS.map(m => (
+                  <StickyTh key={`${view}-${m}`}>{view === "YoY" ? `${m} Δ / %` : `${m}`}</StickyTh>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r, idx) => {
+                const v24 = staticMonthlyValues(r.start, r.end, 2024);
+                const v25 = staticMonthlyValues(r.start, r.end, 2025);
+                return (
+                  <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white" : "bg-gray-50/40"}>
+                    <td className="px-3 py-2 border-b whitespace-nowrap font-medium text-left">{r.start}</td>
+                    <td className="px-3 py-2 border-b whitespace-nowrap text-left">{r.end}</td>
+                    <td className="px-3 py-2 border-b text-left">Count MM</td>
+                    {MONTHS.map((_, i) => {
+                      if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right">{v24[i]}</td>);
+                      if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right">{v25[i]}</td>);
+                      const delta = v25[i] - v24[i];
+                      const pct = v24[i] === 0 ? (v25[i] > 0 ? Infinity : 0) : ((v25[i] - v24[i]) / v24[i]) * 100;
+                      const label = v24[i] === 0 ? (v25[i] > 0 ? "+∞" : "0%") : `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`;
+                      const cls = delta > 0 ? 'text-green-700' : delta < 0 ? 'text-red-700' : 'text-gray-700';
+                      return (
+                        <td key={`cy-${i}`} className={`px-2 py-1 border-b text-right ${cls}`}>
+                          {delta} / {label}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+              {subtotalRow}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    );
+  }
 
   function ViewToggle() {
     const opts = ["2024", "2025", "YoY"];
@@ -249,9 +243,9 @@ export default function CSChannelTrends() {
         </ResponsiveContainer>
       </div>
 
-      <Section title="Bot" rows={grouped.Bot} sectionRef={botRef} view={view} />
-      <Section title="CSA" rows={grouped.CSA} sectionRef={csaRef} view={view} />
-      <Section title="Visit" rows={grouped.Visit} sectionRef={visitRef} view={view} />
+      <Section title="Bot" rows={grouped.Bot} sectionRef={botRef} />
+      <Section title="CSA" rows={grouped.CSA} sectionRef={csaRef} />
+      <Section title="Visit" rows={grouped.Visit} sectionRef={visitRef} />
     </div>
   );
 }
