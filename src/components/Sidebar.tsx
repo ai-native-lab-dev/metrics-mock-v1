@@ -113,6 +113,28 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
               {expandedSections.metrics && (
                 <div className="mt-3 ml-4 space-y-1">
                   <button
+                    onClick={() => onViewChange('cs-channel-trends-repeat')}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('cs-channel-trends-repeat') 
+                        ? 'bg-cyan-100 text-cyan-800 border border-cyan-200' 
+                        : 'text-gray-600 hover:bg-cyan-50 hover:text-cyan-700'
+                    }`}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 mr-3"></div>
+                    CS Channel Trends: Repeat
+                  </button>
+                  <button
+                    onClick={() => onViewChange('cs-channel-trends-no-repeat')}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('cs-channel-trends-no-repeat') 
+                        ? 'bg-cyan-100 text-cyan-800 border border-cyan-200' 
+                        : 'text-gray-600 hover:bg-cyan-50 hover:text-cyan-700'
+                    }`}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 mr-3"></div>
+                    CS Channel Trends: No Repeat
+                  </button>
+                  <button
                     onClick={() => onViewChange('metrics')}
                     className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
                       isActive('metrics') 
@@ -155,28 +177,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                   >
                     <div className="w-2 h-2 rounded-full bg-purple-400 mr-3"></div>
                     Self-Guided: Page Visits
-                  </button>
-                  <button
-                    onClick={() => onViewChange('cs-channel-trends-repeat')}
-                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
-                      isActive('cs-channel-trends-repeat') 
-                        ? 'bg-cyan-100 text-cyan-800 border border-cyan-200' 
-                        : 'text-gray-600 hover:bg-cyan-50 hover:text-cyan-700'
-                    }`}
-                  >
-                    <div className="w-2 h-2 rounded-full bg-cyan-400 mr-3"></div>
-                    CS Channel Trends: Repeat
-                  </button>
-                  <button
-                    onClick={() => onViewChange('cs-channel-trends-no-repeat')}
-                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
-                      isActive('cs-channel-trends-no-repeat') 
-                        ? 'bg-cyan-100 text-cyan-800 border border-cyan-200' 
-                        : 'text-gray-600 hover:bg-cyan-50 hover:text-cyan-700'
-                    }`}
-                  >
-                    <div className="w-2 h-2 rounded-full bg-cyan-400 mr-3"></div>
-                    CS Channel Trends: No Repeat
                   </button>
                 </div>
               )}
