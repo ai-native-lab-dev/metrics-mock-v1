@@ -50,51 +50,20 @@ function App() {
     }
   };
 
-  // Helper function to parse metric view types
-  const parseMetricView = (view: ViewType) => {
-    if (!view.startsWith('metrics-')) return null;
-    
-    const parts = view.split('-');
-    if (parts.length < 2) return null;
-    
-    const category = parts[1]; // total, bot, csa, visit
-    const metricType = parts.slice(2).join('-'); // repeat-base, repeat-rate, no-repeat-base, no-repeat-rate, or empty
-    
-    return { category, metricType };
-  };
-
   // Render the appropriate content component based on the current view
   const renderMainContent = () => {
     switch (currentView) {
       case 'home':
       case 'metrics':
         return <MetricsOverview />;
-      
-      // Handle all metric views
-      default:
-        if (currentView.startsWith('metrics-')) {
-          const parsed = parseMetricView(currentView);
-          if (parsed) {
-            const { category, metricType } = parsed;
-            
-            // Map category to group name
-            const groupMap: Record<string, string> = {
-              'total': 'Total Interactions',
-              'bot': 'Self-Service: Bot Only',
-              'csa': 'Human-Led: CSA Only',
-              'visit': 'Self-Guided: Page Visits'
-            };
-            
-            const groupName = groupMap[category];
-            if (groupName) {
-              return <MetricsOverview 
-                showOnlyGroup={groupName} 
-                showOnlyMetricType={metricType || undefined}
-              />;
-            }
-          }
-        }
-        break;
+      case 'metrics-total':
+        return <MetricsOverview showOnlyGroup="Total Interactions" />;
+      case 'metrics-bot':
+        return <MetricsOverview showOnlyGroup="Self-Service: Bot Only" />;
+      case 'metrics-csa':
+        return <MetricsOverview showOnlyGroup="Human-Led: CSA Only" />;
+      case 'metrics-visit':
+        return <MetricsOverview showOnlyGroup="Self-Guided: Page Visits" />;
       case 'cs-channel-trends-repeat':
         return <CSChannelTrends type="repeat" onNavigate={setCurrentView} />;
       case 'cs-channel-trends-no-repeat':

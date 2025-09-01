@@ -5,12 +5,12 @@ import { CHART_COLORS, getTypeColors, getChannelGroupColors } from "../utils/col
 
 const STARTS = [
   "CS Landing Page","CS Homepage","Help Pages",
-  "CS Chatbot","CS Voicebot","AI-enabled Email","Legacy Chatbot","Legacy Voicebot",
+  "CS Chatbot","CS Voicebot","Legacy Chatbot","Legacy Voicebot",
   "CSA Chat","CSA Voice","CSA Email",
 ];
 
 const ENDS = [...STARTS];
-const BOTS = new Set(["CS Chatbot","CS Voicebot","AI-enabled Email","Legacy Chatbot","Legacy Voicebot"]);
+const BOTS = new Set(["CS Chatbot","CS Voicebot","Legacy Chatbot","Legacy Voicebot"]);
 const CSAS = new Set(["CSA Chat","CSA Voice","CSA Email"]);
 const VISITS = new Set(["CS Landing Page","CS Homepage","Help Pages"]);
 
@@ -125,6 +125,15 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
   function Section({ title, rows, sectionRef }: { title: string; rows: Array<{ start: string; end: string; endCat: string }>; sectionRef: React.RefObject<HTMLDetailsElement | null> }) {
     const colors = groupColors(title);
     
+    // Group rows by "Ended In" channel
+    const groupedByEnd = rows.reduce((acc, row) => {
+      if (!acc[row.end]) {
+        acc[row.end] = [];
+      }
+      acc[row.end].push(row);
+      return acc;
+    }, {} as Record<string, Array<{ start: string; end: string; endCat: string }>>);
+    
     // Apply reporting vertical filter to section data
     const getFilteredValues = (r: any, year: number) => {
       const baseValues = staticMonthlyValues(r.start, r.end, year, type);
@@ -205,30 +214,66 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
               </tr>
             </thead>
             <tbody>
-              {rows.map((r, idx) => {
-                const v24 = staticMonthlyValues(r.start, r.end, 2024, type);
-                const v25 = staticMonthlyValues(r.start, r.end, 2025, type);
-                return (
-                  <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white" : "bg-gray-50/40"}>
-                    <td className="px-3 py-2 border-b whitespace-nowrap font-medium text-left w-48 border-r border-gray-200">{r.start}</td>
-                    <td className="px-3 py-2 border-b whitespace-nowrap text-left w-48 border-r border-gray-200">{r.end}</td>
-                    <td className="px-3 py-2 border-b text-center w-32 bg-gray-50 font-medium text-gray-700">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
+              {Object.entries(groupedByEnd).map(([endChannel, endRows]) => (
+                <React.Fragment key={endChannel}>
+                  {/* Sub-section header for each "Ended In" channel */}
+                  <tr className={`${colors.header} border-b-2 border-gray-300`}>
+                    <td className="px-3 py-2 font-semibold text-left w-48 border-r border-gray-200" colSpan={2}>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">Ended in:</span>
+                        <span className="font-bold text-base">{endChannel}</span>
+                        <span className="text-xs text-gray-500">({endRows.length} paths)</span>
+                      </div>
+                    </td>
+                    <td className="px-3 py-2 text-center w-32 bg-gray-100 font-medium text-gray-700">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
                     {MONTHS.map((_, i) => {
-                      if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right w-20">{v24[i]}</td>);
-                      if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right w-20">{v25[i]}</td>);
-                      const delta = v25[i] - v24[i];
-                      const pct = v24[i] === 0 ? (v25[i] > 0 ? Infinity : 0) : ((v25[i] - v24[i]) / v24[i]) * 100;
-                      const label = v24[i] === 0 ? (v25[i] > 0 ? "+∞" : "0%") : `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`;
+                      // Calculate subtotal for this end channel
+                      const endVals2024 = endRows.map(r => getFilteredValues(r, 2024));
+                      const endVals2025 = endRows.map(r => getFilteredValues(r, 2025));
+                      const endSum2024 = endVals2024.reduce((acc, vals) => acc + vals[i], 0);
+                      const endSum2025 = endVals2025.reduce((acc, vals) => acc + vals[i], 0);
+                      
+                      if (view === "2024") return (<td key={`end24-${i}`} className="px-2 py-1 text-right w-20 font-semibold bg-gray-100">{endSum2024}</td>);
+                      if (view === "2025") return (<td key={`end25-${i}`} className="px-2 py-1 text-right w-20 font-semibold bg-gray-100">{endSum2025}</td>);
+                      const delta = endSum2025 - endSum2024;
+                      const pct = endSum2024 === 0 ? (endSum2025 > 0 ? Infinity : 0) : ((endSum2025 - endSum2024) / endSum2024) * 100;
+                      const label = endSum2024 === 0 ? (endSum2025 > 0 ? "+∞" : "0%") : `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`;
                       const cls = delta > 0 ? 'text-green-700' : delta < 0 ? 'text-red-700' : 'text-gray-700';
                       return (
-                        <td key={`cy-${i}`} className={`px-2 py-1 border-b text-right w-20 ${cls}`}>
+                        <td key={`endy-${i}`} className={`px-2 py-1 text-right w-20 font-semibold bg-gray-100 ${cls}`}>
                           {delta} / {label}
                         </td>
                       );
                     })}
                   </tr>
-                );
-              })}
+                  
+                  {/* Individual rows for this end channel */}
+                  {endRows.map((r, idx) => {
+                    const v24 = getFilteredValues(r, 2024);
+                    const v25 = getFilteredValues(r, 2025);
+                    return (
+                      <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white" : "bg-gray-50/40"}>
+                        <td className="px-6 py-2 border-b whitespace-nowrap font-medium text-left w-48 border-r border-gray-200">{r.start}</td>
+                        <td className="px-3 py-2 border-b whitespace-nowrap text-left w-48 border-r border-gray-200">{r.end}</td>
+                        <td className="px-3 py-2 border-b text-center w-32 bg-gray-50 font-medium text-gray-700">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
+                        {MONTHS.map((_, i) => {
+                          if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right w-20">{v24[i]}</td>);
+                          if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right w-20">{v25[i]}</td>);
+                          const delta = v25[i] - v24[i];
+                          const pct = v24[i] === 0 ? (v25[i] > 0 ? Infinity : 0) : ((v25[i] - v24[i]) / v24[i]) * 100;
+                          const label = v24[i] === 0 ? (v25[i] > 0 ? "+∞" : "0%") : `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`;
+                          const cls = delta > 0 ? 'text-green-700' : delta < 0 ? 'text-red-700' : 'text-gray-700';
+                          return (
+                            <td key={`cy-${i}`} className={`px-2 py-1 border-b text-right w-20 ${cls}`}>
+                              {delta} / {label}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </React.Fragment>
+              ))}
               {subtotalRow}
             </tbody>
           </table>
