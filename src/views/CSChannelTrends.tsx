@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useRef } from "react";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import HowWeCountInteractions from "../components/HowWeCountInteractions";
+import { CHART_COLORS, getTypeColors, getChannelGroupColors } from "../utils/colors";
 
 const STARTS = [
   "CS Landing Page","CS Homepage","Help Pages",
@@ -51,18 +53,8 @@ function StickyTh({ children, className = "" }: { children: React.ReactNode; cla
   );
 }
 
-function groupColors(groupName: string) {
-  if (groupName.includes('Total Interactions')) {
-    return { bg: 'bg-teal-50', border: 'border-teal-200', header: 'bg-teal-100', dot: 'bg-teal-400' };
-  } else if (groupName.includes('Bot')) {
-    return { bg: 'bg-blue-50', border: 'border-blue-200', header: 'bg-blue-100', dot: 'bg-blue-400' };
-  } else if (groupName.includes('CSA') || groupName.includes('Human')) {
-    return { bg: 'bg-orange-50', border: 'border-orange-200', header: 'bg-orange-100', dot: 'bg-orange-400' };
-  } else if (groupName.includes('Visit') || groupName.includes('Page')) {
-    return { bg: 'bg-purple-50', border: 'border-purple-200', header: 'bg-purple-100', dot: 'bg-purple-400' };
-  }
-  return { bg: 'bg-gray-50', border: 'border-gray-200', header: 'bg-gray-100', dot: 'bg-gray-400' };
-}
+// Use centralized color system
+const groupColors = getChannelGroupColors;
 
 interface CSChannelMatrixProps {
   type: "repeat" | "no-repeat";
@@ -300,47 +292,34 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
       {/* Summary Graph */}
       <div className="w-full border rounded-2xl bg-white shadow-sm p-6">
         <div className="mb-6">
-          <div className="mb-3">
+          <div className="mb-4">
             <div className="flex items-center gap-3 mb-2">
-              <div className={`w-3 h-3 rounded-full ${type === "repeat" ? "bg-orange-400" : "bg-blue-400"}`}></div>
+              <div className={`w-3 h-3 rounded-full ${getTypeColors(type).dot}`}></div>
               <h3 className="text-xl font-bold text-gray-900">
                 {type === "repeat" ? "Repeat Interactions" : "Single Interactions"}
               </h3>
             </div>
-            {type === "repeat" && (
-              <p className="text-sm text-gray-600 italic ml-6">
-                Of the repeat authenticated customers, what are the total number of contacts and/or visits within the trailing 7-day window?
-              </p>
-            )}
-            {type === "no-repeat" && (
-              <p className="text-sm text-gray-600 italic ml-6">
-                Of the single-visit authenticated customers, what are the total number of contacts and/or visits within the trailing 7-day window?
-              </p>
-            )}
-          </div>
-          
-          {/* How We Count Interactions */}
-          <div className="bg-blue-50 rounded-xl p-6 border border-blue-200 mb-4">
-            <h4 className="text-lg font-semibold text-blue-900 mb-3">How We Count Interactions</h4>
-            <p className="text-blue-800 leading-relaxed">
-              Customer interactions can start and end in any CS channel, with valid paths defined in the CS Channel Matrix. The value we count is the number of times authenticated customers interacted with us — measured as <strong>page visits</strong> for Visit channels, and as <strong>contacts</strong> for Bot and CSA channels — always classified by the channel where the interaction <strong>ended</strong>.
+            <p className="text-sm text-gray-600 italic ml-6">
+              Of the {type === "repeat" ? "repeat" : "single-visit"} authenticated customers, what are the total number of contacts and/or visits within the trailing 7-day window?
             </p>
           </div>
+          
+          <HowWeCountInteractions className="mb-4" />
 
           <div className="bg-gray-50 rounded-lg p-4 space-y-3">
             <div className="grid gap-3 md:grid-cols-3">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full" style={{backgroundColor: "#a855f7"}}></span>
+                <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.visit}}></span>
                 <span className="text-sm font-medium text-gray-700">Self-Guided</span>
                 <span className="text-xs text-gray-500">(Visit)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full" style={{backgroundColor: "#3b82f6"}}></span>
+                <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.bot}}></span>
                 <span className="text-sm font-medium text-gray-700">Self-Service</span>
                 <span className="text-xs text-gray-500">(Bot)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full" style={{backgroundColor: "#f97316"}}></span>
+                <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.csa}}></span>
                 <span className="text-sm font-medium text-gray-700">Human-led</span>
                 <span className="text-xs text-gray-500">(CSA)</span>
               </div>
@@ -353,7 +332,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
               </p>
               <p className="text-sm text-gray-600 mt-2">
                 <strong>Definition:</strong> Authenticated customers who visited pages or contacted us{" "}
-                <span className={`font-semibold ${type === "repeat" ? "text-orange-700" : "text-blue-700"}`}>
+                <span className={`font-semibold ${getTypeColors(type).text}`}>
                   {type === "repeat" ? "2 or more times" : "only 1 time"}
                 </span>{" "}
                 within the 7-day trailing window.
@@ -370,9 +349,9 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="Bot" stroke="#3b82f6" strokeWidth={2} />
-                <Line type="monotone" dataKey="CSA" stroke="#f97316" strokeWidth={2} />
-                <Line type="monotone" dataKey="Visit" stroke="#a855f7" strokeWidth={2} />
+                <Line type="monotone" dataKey="Bot" stroke={CHART_COLORS.bot} strokeWidth={2} />
+                <Line type="monotone" dataKey="CSA" stroke={CHART_COLORS.csa} strokeWidth={2} />
+                <Line type="monotone" dataKey="Visit" stroke={CHART_COLORS.visit} strokeWidth={2} />
               </LineChart>
             ) : (
               <BarChart data={chartData}>
@@ -381,9 +360,9 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="Bot" fill="#3b82f6" />
-                <Bar dataKey="CSA" fill="#f97316" />
-                <Bar dataKey="Visit" fill="#a855f7" />
+                <Bar dataKey="Bot" fill={CHART_COLORS.bot} />
+                <Bar dataKey="CSA" fill={CHART_COLORS.csa} />
+                <Bar dataKey="Visit" fill={CHART_COLORS.visit} />
               </BarChart>
             )}
           </ResponsiveContainer>
