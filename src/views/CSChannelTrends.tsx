@@ -113,7 +113,7 @@ export default function CSChannelMatrix() {
         return (
           <tr className={`${colors.header} font-semibold`}>
             <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (2024)</td>
-            {sums.map((v, i) => (<td key={`sub24-${i}`} className="px-2 py-1 border-t text-right">{v}</td>))}
+            {sums.map((v, i) => (<td key={`sub24-${i}`} className="px-2 py-1 border-t text-right w-20">{v}</td>))}
           </tr>
         );
       } else if (view === "2025") {
@@ -121,7 +121,7 @@ export default function CSChannelMatrix() {
         return (
           <tr className={`${colors.header} font-semibold`}>
             <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (2025)</td>
-            {sums.map((v, i) => (<td key={`sub25-${i}`} className="px-2 py-1 border-t text-right">{v}</td>))}
+            {sums.map((v, i) => (<td key={`sub25-${i}`} className="px-2 py-1 border-t text-right w-20">{v}</td>))}
           </tr>
         );
       } else {
@@ -131,7 +131,7 @@ export default function CSChannelMatrix() {
         return (
           <tr className={`${colors.header} font-semibold`}>
             <td className="px-3 py-2 border-t" colSpan={3}>Subtotal — {title} (YoY Δ)</td>
-            {deltas.map((v, i) => (<td key={`suby-${i}`} className={`px-2 py-1 border-t text-right ${v > 0 ? 'text-green-700' : v < 0 ? 'text-red-700' : 'text-gray-700'}`}>{v}</td>))}
+            {deltas.map((v, i) => (<td key={`suby-${i}`} className={`px-2 py-1 border-t text-right w-20 ${v > 0 ? 'text-green-700' : v < 0 ? 'text-red-700' : 'text-gray-700'}`}>{v}</td>))}
           </tr>
         );
       }
@@ -147,11 +147,11 @@ export default function CSChannelMatrix() {
           <table className="min-w-[1200px] w-full text-sm">
             <thead>
               <tr>
-                <StickyTh className="text-left">Started in</StickyTh>
-                <StickyTh className="text-left">Ended in</StickyTh>
-                <StickyTh className="text-left">Unit</StickyTh>
+                <StickyTh className="text-left w-48">Started in</StickyTh>
+                <StickyTh className="text-left w-48">Ended in</StickyTh>
+                <StickyTh className="text-left w-32">Unit</StickyTh>
                 {MONTHS.map(m => (
-                  <StickyTh key={`${view}-${m}`}>{view === "YoY" ? `${m} Δ / %` : `${m}`}</StickyTh>
+                  <StickyTh key={`${view}-${m}`} className="w-20">{view === "YoY" ? `${m} Δ / %` : `${m}`}</StickyTh>
                 ))}
               </tr>
             </thead>
@@ -161,18 +161,18 @@ export default function CSChannelMatrix() {
                 const v25 = staticMonthlyValues(r.start, r.end, 2025);
                 return (
                   <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white" : "bg-gray-50/40"}>
-                    <td className="px-3 py-2 border-b whitespace-nowrap font-medium text-left">{r.start}</td>
-                    <td className="px-3 py-2 border-b whitespace-nowrap text-left">{r.end}</td>
-                    <td className="px-3 py-2 border-b text-left">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
+                    <td className="px-3 py-2 border-b whitespace-nowrap font-medium text-left w-48">{r.start}</td>
+                    <td className="px-3 py-2 border-b whitespace-nowrap text-left w-48">{r.end}</td>
+                    <td className="px-3 py-2 border-b text-left w-32">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
                     {MONTHS.map((_, i) => {
-                      if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right">{v24[i]}</td>);
-                      if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right">{v25[i]}</td>);
+                      if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right w-20">{v24[i]}</td>);
+                      if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right w-20">{v25[i]}</td>);
                       const delta = v25[i] - v24[i];
                       const pct = v24[i] === 0 ? (v25[i] > 0 ? Infinity : 0) : ((v25[i] - v24[i]) / v24[i]) * 100;
                       const label = v24[i] === 0 ? (v25[i] > 0 ? "+∞" : "0%") : `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`;
                       const cls = delta > 0 ? 'text-green-700' : delta < 0 ? 'text-red-700' : 'text-gray-700';
                       return (
-                        <td key={`cy-${i}`} className={`px-2 py-1 border-b text-right ${cls}`}>
+                        <td key={`cy-${i}`} className={`px-2 py-1 border-b text-right w-20 ${cls}`}>
                           {delta} / {label}
                         </td>
                       );
