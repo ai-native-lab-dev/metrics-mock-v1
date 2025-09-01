@@ -207,7 +207,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
               <tr>
                 <StickyTh className="text-center w-48 border-r border-gray-200 font-semibold">Started in</StickyTh>
                 <StickyTh className="text-center w-48 border-r border-gray-200 font-semibold">Ended in</StickyTh>
-                <StickyTh className="text-center w-32 bg-gray-100 font-semibold">Unit</StickyTh>
+                <StickyTh className={`text-center w-32 ${colors.header} font-semibold`}>Unit</StickyTh>
                 {MONTHS.map(m => (
                   <StickyTh key={`${view}-${m}`} className="w-20 text-center font-semibold">{view === "YoY" ? `${m} Δ / %` : `${m}`}</StickyTh>
                 ))}
@@ -225,7 +225,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                         <span className="text-xs text-gray-500">({endRows.length} paths)</span>
                       </div>
                     </td>
-                    <td className="px-3 py-2 text-center w-32 bg-gray-100 font-medium text-gray-700">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
+                    <td className={`px-3 py-2 text-center w-32 ${colors.header} font-medium text-gray-700`}>{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
                     {MONTHS.map((_, i) => {
                       // Calculate subtotal for this end channel
                       const endVals2024 = endRows.map(r => getFilteredValues(r, 2024));
@@ -233,14 +233,14 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                       const endSum2024 = endVals2024.reduce((acc, vals) => acc + vals[i], 0);
                       const endSum2025 = endVals2025.reduce((acc, vals) => acc + vals[i], 0);
                       
-                      if (view === "2024") return (<td key={`end24-${i}`} className="px-2 py-1 text-right w-20 font-semibold bg-gray-100">{endSum2024}</td>);
-                      if (view === "2025") return (<td key={`end25-${i}`} className="px-2 py-1 text-right w-20 font-semibold bg-gray-100">{endSum2025}</td>);
+                      if (view === "2024") return (<td key={`end24-${i}`} className={`px-2 py-1 text-right w-20 font-semibold ${colors.header}`}>{endSum2024}</td>);
+                      if (view === "2025") return (<td key={`end25-${i}`} className={`px-2 py-1 text-right w-20 font-semibold ${colors.header}`}>{endSum2025}</td>);
                       const delta = endSum2025 - endSum2024;
                       const pct = endSum2024 === 0 ? (endSum2025 > 0 ? Infinity : 0) : ((endSum2025 - endSum2024) / endSum2024) * 100;
                       const label = endSum2024 === 0 ? (endSum2025 > 0 ? "+∞" : "0%") : `${pct >= 0 ? "+" : ""}${pct.toFixed(1)}%`;
                       const cls = delta > 0 ? 'text-green-700' : delta < 0 ? 'text-red-700' : 'text-gray-700';
                       return (
-                        <td key={`endy-${i}`} className={`px-2 py-1 text-right w-20 font-semibold bg-gray-100 ${cls}`}>
+                        <td key={`endy-${i}`} className={`px-2 py-1 text-right w-20 font-semibold ${colors.header} ${cls}`}>
                           {delta} / {label}
                         </td>
                       );
@@ -255,7 +255,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                       <tr key={`${r.start}→${r.end}`} className={idx % 2 ? "bg-white" : "bg-gray-50/40"}>
                         <td className="px-6 py-2 border-b whitespace-nowrap font-medium text-left w-48 border-r border-gray-200">{r.start}</td>
                         <td className="px-3 py-2 border-b whitespace-nowrap text-left w-48 border-r border-gray-200">{r.end}</td>
-                        <td className="px-3 py-2 border-b text-center w-32 bg-gray-50 font-medium text-gray-700">{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
+                        <td className={`px-3 py-2 border-b text-center w-32 ${colors.bg} font-medium text-gray-700`}>{view === "YoY" ? "Basis points (%)" : "Count MM"}</td>
                         {MONTHS.map((_, i) => {
                           if (view === "2024") return (<td key={`c24-${i}`} className="px-2 py-1 border-b text-right w-20">{v24[i]}</td>);
                           if (view === "2025") return (<td key={`c25-${i}`} className="px-2 py-1 border-b text-right w-20">{v25[i]}</td>);
