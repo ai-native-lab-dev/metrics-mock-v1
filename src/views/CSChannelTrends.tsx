@@ -304,15 +304,10 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
             </p>
           </div>
           
-          <HowWeCountInteractions className="mb-4" />
+          <HowWeCountInteractions className="mb-4" type={type} />
 
           <div className="bg-gray-50 rounded-lg p-4 space-y-3">
             <div className="grid gap-3 md:grid-cols-3">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.visit}}></span>
-                <span className="text-sm font-medium text-gray-700">Self-Guided</span>
-                <span className="text-xs text-gray-500">(Visit)</span>
-              </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.bot}}></span>
                 <span className="text-sm font-medium text-gray-700">Self-Service</span>
@@ -322,6 +317,11 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
                 <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.csa}}></span>
                 <span className="text-sm font-medium text-gray-700">Human-led</span>
                 <span className="text-xs text-gray-500">(CSA)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full" style={{backgroundColor: CHART_COLORS.visit}}></span>
+                <span className="text-sm font-medium text-gray-700">Self-Guided</span>
+                <span className="text-xs text-gray-500">(Visit)</span>
               </div>
             </div>
             
