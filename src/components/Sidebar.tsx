@@ -113,27 +113,58 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                 <div className="mt-3 ml-4 space-y-1">
                   <button
                     onClick={() => onViewChange('metrics')}
-                    className={subNavItemClass(isActive('metrics'))}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('metrics') 
+                        ? 'bg-teal-100 text-teal-800 border border-teal-200' 
+                        : 'text-gray-600 hover:bg-teal-50 hover:text-teal-700'
+                    }`}
                   >
+                    <div className="w-2 h-2 rounded-full bg-teal-400 mr-3"></div>
                     Total Interactions
                   </button>
                   <button
                     onClick={() => onViewChange('metrics')}
-                    className={subNavItemClass(isActive('metrics'))}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('metrics') 
+                        ? 'bg-blue-100 text-blue-800 border border-blue-200' 
+                        : 'text-gray-600 hover:bg-blue-50 hover:text-blue-700'
+                    }`}
                   >
+                    <div className="w-2 h-2 rounded-full bg-blue-400 mr-3"></div>
                     Self-Service: Bot Only
                   </button>
                   <button
                     onClick={() => onViewChange('metrics')}
-                    className={subNavItemClass(isActive('metrics'))}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('metrics') 
+                        ? 'bg-orange-100 text-orange-800 border border-orange-200' 
+                        : 'text-gray-600 hover:bg-orange-50 hover:text-orange-700'
+                    }`}
                   >
+                    <div className="w-2 h-2 rounded-full bg-orange-400 mr-3"></div>
                     Human-Led: CSA Only
                   </button>
                   <button
                     onClick={() => onViewChange('metrics')}
-                    className={subNavItemClass(isActive('metrics'))}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('metrics') 
+                        ? 'bg-purple-100 text-purple-800 border border-purple-200' 
+                        : 'text-gray-600 hover:bg-purple-50 hover:text-purple-700'
+                    }`}
                   >
+                    <div className="w-2 h-2 rounded-full bg-purple-400 mr-3"></div>
                     Self-Guided: Page Visits
+                  </button>
+                  <button
+                    onClick={() => onViewChange('cs-channel-trends')}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('cs-channel-trends') 
+                        ? 'bg-teal-100 text-teal-800 border border-teal-200' 
+                        : 'text-gray-600 hover:bg-teal-50 hover:text-teal-700'
+                    }`}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-teal-400 mr-3"></div>
+                    CS Channel Trends
                   </button>
                 </div>
               )}

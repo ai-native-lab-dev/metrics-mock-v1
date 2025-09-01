@@ -119,21 +119,32 @@ const MetricsTable: React.FC<MetricsTableProps> = ({
     return 'Count';
   };
 
-  // Get pastel color classes for metric cards
-  const getMetricCardColors = (metricIndex: number): { bg: string; border: string; header: string } => {
-    const colors = [
-      { bg: 'bg-blue-50', border: 'border-blue-200', header: 'bg-blue-100' },
-      { bg: 'bg-green-50', border: 'border-green-200', header: 'bg-green-100' },
-      { bg: 'bg-purple-50', border: 'border-purple-200', header: 'bg-purple-100' },
-      { bg: 'bg-pink-50', border: 'border-pink-200', header: 'bg-pink-100' },
-      { bg: 'bg-yellow-50', border: 'border-yellow-200', header: 'bg-yellow-100' },
-      { bg: 'bg-indigo-50', border: 'border-indigo-200', header: 'bg-indigo-100' },
-      { bg: 'bg-teal-50', border: 'border-teal-200', header: 'bg-teal-100' },
-      { bg: 'bg-orange-50', border: 'border-orange-200', header: 'bg-orange-100' },
-      { bg: 'bg-cyan-50', border: 'border-cyan-200', header: 'bg-cyan-100' },
-      { bg: 'bg-rose-50', border: 'border-rose-200', header: 'bg-rose-100' }
+  // Get consistent color classes based on group name
+  const getGroupColors = (groupName: string): { bg: string; border: string; header: string; dot: string } => {
+    if (groupName.includes('Total Interactions')) {
+      return { bg: 'bg-teal-50', border: 'border-teal-200', header: 'bg-teal-100', dot: 'bg-teal-400' };
+    } else if (groupName.includes('Bot')) {
+      return { bg: 'bg-blue-50', border: 'border-blue-200', header: 'bg-blue-100', dot: 'bg-blue-400' };
+    } else if (groupName.includes('CSA') || groupName.includes('Human')) {
+      return { bg: 'bg-orange-50', border: 'border-orange-200', header: 'bg-orange-100', dot: 'bg-orange-400' };
+    } else if (groupName.includes('Visit') || groupName.includes('Page')) {
+      return { bg: 'bg-purple-50', border: 'border-purple-200', header: 'bg-purple-100', dot: 'bg-purple-400' };
+    }
+    // Default fallback
+    return { bg: 'bg-gray-50', border: 'border-gray-200', header: 'bg-gray-100', dot: 'bg-gray-400' };
+  };
+
+  // Get pastel color classes for metric cards (consistent with group colors)
+  const getMetricCardColors = (groupName: string, metricIndex: number): { bg: string; border: string; header: string } => {
+    const groupColors = getGroupColors(groupName);
+    // Use the same color family but with slight variations for individual metrics
+    const variations = [
+      { bg: groupColors.bg, border: groupColors.border, header: groupColors.header },
+      { bg: groupColors.bg.replace('50', '25'), border: groupColors.border, header: groupColors.header },
+      { bg: groupColors.bg, border: groupColors.border.replace('200', '300'), header: groupColors.header },
+      { bg: groupColors.bg.replace('50', '25'), border: groupColors.border.replace('200', '300'), header: groupColors.header }
     ];
-    return colors[metricIndex % colors.length];
+    return variations[metricIndex % variations.length];
   };
 
   // Filter groups based on showOnlyGroup prop, or show all groups by default
@@ -196,20 +207,23 @@ const MetricsTable: React.FC<MetricsTableProps> = ({
             {filteredGroups.map((group) => (
               <React.Fragment key={group.name}>
                 {/* Group Header */}
-                <tr className={`group-header sticky top-20 z-10 ${
-                  expandedGroups.has(group.name)
-                    ? 'bg-gray-100'
-                    : 'bg-gray-50'
-                }`}>
-                  <td colSpan={columns.length + 2}>
-                    <button
-                      onClick={() => toggleGroup(group.name)}
-                      className={`w-full px-8 py-5 text-left flex items-center justify-between transition-all duration-300 ease-out group hover:bg-gray-200`}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-3 h-3 rounded-full ${
-                          expandedGroups.has(group.name) ? 'bg-blue-500' : 'bg-gray-400'
-                        }`}></div>
+                {(() => {
+                  const groupColors = getGroupColors(group.name);
+                  return (
+                    <tr className={`group-header sticky top-20 z-10 ${
+                      expandedGroups.has(group.name)
+                        ? groupColors.header
+                        : groupColors.bg
+                    }`}>
+                      <td colSpan={columns.length + 2}>
+                        <button
+                          onClick={() => toggleGroup(group.name)}
+                          className={`w-full px-8 py-5 text-left flex items-center justify-between transition-all duration-300 ease-out group hover:${groupColors.header.replace('bg-', 'bg-').replace('100', '200')}`}
+                        >
+                          <div className="flex items-center space-x-3">
+                            <div className={`w-3 h-3 rounded-full ${
+                              expandedGroups.has(group.name) ? groupColors.dot : 'bg-gray-400'
+                            }`}></div>
                         <span className="text-sm font-bold text-gray-900 group-hover:text-gray-700">
                           {group.name}
                         </span>
@@ -226,13 +240,15 @@ const MetricsTable: React.FC<MetricsTableProps> = ({
                              >
                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                              </svg>
-                    </button>
-                  </td>
-                </tr>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })()}
 
                 {/* Metric Rows */}
                 {expandedGroups.has(group.name) && group.metrics.map((metric, metricIndex) => {
-                  const colors = getMetricCardColors(metricIndex);
+                  const colors = getMetricCardColors(group.name, metricIndex);
                   return (
                   <React.Fragment key={metric.metricName}>
                     {/* Metric Card Container */}
