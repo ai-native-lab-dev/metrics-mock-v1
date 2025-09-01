@@ -64,6 +64,7 @@ interface CSChannelMatrixProps {
 export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixProps) {
   const [view, setView] = useState("2025"); // "2024" | "2025" | "YoY"
   const [chartType, setChartType] = useState<"horizontal" | "vertical">("horizontal");
+  const [reportingVertical, setReportingVertical] = useState("All");
 
   const botRef = useRef<HTMLDetailsElement>(null);
   const csaRef = useRef<HTMLDetailsElement>(null);
@@ -90,7 +91,24 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
     return MONTHS.map((m, i) => {
       const sum = (group: Array<{ start: string; end: string; endCat: string }>) => group.reduce((acc, r) => {
         const vals = staticMonthlyValues(r.start, r.end, 2025, type); // default 2025 view for chart
-        return acc + vals[i];
+        
+        // Apply reporting vertical filter
+        let verticalMultiplier = 1;
+        if (reportingVertical !== "All") {
+          switch (reportingVertical) {
+            case "Consumer":
+              verticalMultiplier = 0.6;
+              break;
+            case "Business":
+              verticalMultiplier = 0.3;
+              break;
+            case "Enterprise":
+              verticalMultiplier = 0.1;
+              break;
+          }
+        }
+        
+        return acc + Math.round(vals[i] * verticalMultiplier);
       }, 0);
       return {
         month: m,
@@ -99,12 +117,35 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
         Visit: sum(grouped.Visit)
       };
     });
-  }, [grouped, type]);
+  }, [grouped, type, reportingVertical]);
 
   function Section({ title, rows, sectionRef }: { title: string; rows: Array<{ start: string; end: string; endCat: string }>; sectionRef: React.RefObject<HTMLDetailsElement | null> }) {
     const colors = groupColors(title);
-    const vals2024 = rows.map(r => staticMonthlyValues(r.start, r.end, 2024, type));
-    const vals2025 = rows.map(r => staticMonthlyValues(r.start, r.end, 2025, type));
+    
+    // Apply reporting vertical filter to section data
+    const getFilteredValues = (r: any, year: number) => {
+      const baseValues = staticMonthlyValues(r.start, r.end, year, type);
+      let verticalMultiplier = 1;
+      
+      if (reportingVertical !== "All") {
+        switch (reportingVertical) {
+          case "Consumer":
+            verticalMultiplier = 0.6;
+            break;
+          case "Business":
+            verticalMultiplier = 0.3;
+            break;
+          case "Enterprise":
+            verticalMultiplier = 0.1;
+            break;
+        }
+      }
+      
+      return baseValues.map(val => Math.round(val * verticalMultiplier));
+    };
+    
+    const vals2024 = rows.map(r => getFilteredValues(r, 2024));
+    const vals2025 = rows.map(r => getFilteredValues(r, 2025));
 
     const subtotalRow = (() => {
       if (view === "2024") {
@@ -237,6 +278,29 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
     );
   }
 
+  function ReportingVerticalToggle() {
+    const verticals = ["All", "Consumer", "Business", "Enterprise"];
+    
+    return (
+      <div className="inline-flex rounded-lg border border-gray-300 overflow-hidden bg-white">
+        {verticals.map((vertical) => (
+          <button
+            key={vertical}
+            onClick={() => setReportingVertical(vertical)}
+            className={`px-3 py-2 text-sm font-medium ${
+              reportingVertical === vertical 
+                ? 'bg-blue-100 text-blue-900 border-blue-200' 
+                : 'text-gray-600 hover:bg-gray-50'
+            }`}
+            aria-pressed={reportingVertical === vertical}
+          >
+            {vertical}
+          </button>
+        ))}
+      </div>
+    );
+  }
+
   function QuickNav() {
     return (
       <div className="flex gap-3">
@@ -278,6 +342,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
         <div className="flex flex-col sm:flex-row gap-2">
           <ViewToggle />
           <ChartTypeToggle />
+          <ReportingVerticalToggle />
         </div>
       </header>
 
@@ -297,10 +362,20 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
               <div className={`w-3 h-3 rounded-full ${getTypeColors(type).dot}`}></div>
               <h3 className="text-xl font-bold text-gray-900">
                 {type === "repeat" ? "Repeat Interactions" : "Single Interactions"}
+                {reportingVertical !== "All" && (
+                  <span className="ml-2 text-sm font-normal text-blue-600 bg-blue-50 px-2 py-1 rounded">
+                    {reportingVertical} Only
+                  </span>
+                )}
               </h3>
             </div>
             <p className="text-sm text-gray-600 italic ml-6">
               Of the {type === "repeat" ? "repeat" : "single-visit"} authenticated customers, what are the total number of contacts and/or visits within the trailing 7-day window?
+              {reportingVertical !== "All" && (
+                <span className="block mt-1 text-blue-600 font-medium">
+                  Filtered for {reportingVertical} vertical only
+                </span>
+              )}
             </p>
           </div>
           
