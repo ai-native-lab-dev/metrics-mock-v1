@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useRef } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const STARTS = [
   "CS Landing Page","CS Homepage","Help Pages",
@@ -71,6 +71,7 @@ interface CSChannelMatrixProps {
 
 export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixProps) {
   const [view, setView] = useState("2025"); // "2024" | "2025" | "YoY"
+  const [chartType, setChartType] = useState<"horizontal" | "vertical">("horizontal");
 
   const botRef = useRef<HTMLDetailsElement>(null);
   const csaRef = useRef<HTMLDetailsElement>(null);
@@ -213,6 +214,37 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
     );
   }
 
+  function ChartTypeToggle() {
+    return (
+      <div className="inline-flex rounded-lg border border-gray-300 overflow-hidden bg-white">
+        <button
+          onClick={() => setChartType("horizontal")}
+          className={`px-3 py-2 text-sm flex items-center gap-2 ${
+            chartType === "horizontal" ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50'
+          }`}
+          aria-pressed={chartType === "horizontal"}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4" />
+          </svg>
+          Line
+        </button>
+        <button
+          onClick={() => setChartType("vertical")}
+          className={`px-3 py-2 text-sm flex items-center gap-2 ${
+            chartType === "vertical" ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50'
+          }`}
+          aria-pressed={chartType === "vertical"}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          Bar
+        </button>
+      </div>
+    );
+  }
+
   function QuickNav() {
     return (
       <div className="flex gap-3">
@@ -253,6 +285,7 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <ViewToggle />
+          <ChartTypeToggle />
         </div>
       </header>
 
@@ -310,16 +343,29 @@ export default function CSChannelMatrix({ type, onNavigate }: CSChannelMatrixPro
         </div>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="Bot" stroke="#3b82f6" strokeWidth={2} />
-              <Line type="monotone" dataKey="CSA" stroke="#f97316" strokeWidth={2} />
-              <Line type="monotone" dataKey="Visit" stroke="#a855f7" strokeWidth={2} />
-            </LineChart>
+            {chartType === "horizontal" ? (
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="Bot" stroke="#3b82f6" strokeWidth={2} />
+                <Line type="monotone" dataKey="CSA" stroke="#f97316" strokeWidth={2} />
+                <Line type="monotone" dataKey="Visit" stroke="#a855f7" strokeWidth={2} />
+              </LineChart>
+            ) : (
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="Bot" fill="#3b82f6" />
+                <Bar dataKey="CSA" fill="#f97316" />
+                <Bar dataKey="Visit" fill="#a855f7" />
+              </BarChart>
+            )}
           </ResponsiveContainer>
         </div>
       </div>
