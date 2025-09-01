@@ -11,7 +11,7 @@ A comprehensive React-based dashboard application for analyzing customer experie
 - **Real-time Controls**: Toggle between monthly/weekly views and apply dimension filters
 
 ### 📊 **Views Available**
-1. **Metrics Overview** (Default): Displays Visit and Bot metric groups
+1. **Metrics Overview** (Default): Displays 4 navigation groups with 40 comprehensive metrics
 2. **CX Impact Analysis**: Focused analysis of P90/P95 metrics with transcript samples
 3. **Methodology**: Comprehensive documentation with interactive diagrams
 
@@ -20,12 +20,12 @@ A comprehensive React-based dashboard application for analyzing customer experie
 - **Inter Font**: Clean, readable typography from Google Fonts
 - **Responsive Design**: Mobile-first approach with hamburger menu
 - **Custom Components**: Reusable UI components with consistent styling
+- **Pastel Colored Cards**: Each metric has a unique pastel color for easy recognition
 
 ## Technology Stack
 
 - **React 18** with TypeScript
 - **Tailwind CSS** for styling
-- **Canvas API** for interactive diagrams
 - **Responsive Design** with mobile-first approach
 
 ## Getting Started
@@ -38,8 +38,8 @@ A comprehensive React-based dashboard application for analyzing customer experie
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd metricsmockv2
+   git clone git@github.com:ai-native-lab-dev/metrics-mock-v1.git
+   cd metrics-mock-v1
    ```
 
 2. **Install dependencies**
@@ -71,12 +71,36 @@ src/
 │   ├── Controls.tsx    # View toggle and dimension filters
 │   └── MetricsTable.tsx # Interactive data table component
 ├── views/              # Main view components
-│   ├── MetricsOverview.tsx # Default metrics view
+│   ├── MetricsOverview.tsx # Default metrics view with 4 navigation groups
 │   ├── CXImpact.tsx    # CX Impact analysis view
 │   └── Methodology.tsx # Methodology documentation view
 ├── App.tsx             # Main application component
 └── index.css           # Global styles and Tailwind directives
 ```
+
+## Metrics Organization
+
+The dashboard organizes metrics under 4 clear sub-navigations:
+
+### 1. **Total Interactions** (10 metrics)
+- Cross-channel interaction analysis
+- Repeat interaction patterns
+- Channel escalation metrics
+
+### 2. **Self-Service: Bot Only** (10 metrics)
+- Bot performance metrics
+- Resolution rates and response times
+- User satisfaction and escalation rates
+
+### 3. **Human-Led: CSA Only** (10 metrics)
+- Customer Service Agent metrics
+- Handle times and resolution rates
+- Customer satisfaction scores
+
+### 4. **Self-Guided: Page Visits** (10 metrics)
+- Website analytics and user behavior
+- Self-service completion rates
+- Help center and FAQ usage
 
 ## Component Details
 
@@ -85,16 +109,19 @@ src/
 - **Collapsible on mobile** with overlay
 - **Expandable sections** for Metrics, CX Impact, and Methodology
 - **Active state indicators** for current view
+- **4 clear sub-navigations** under Metrics section
 
 ### Metrics Table
-- **Dynamic columns** based on view type (Monthly/Weekly)
-- **Expandable metric groups** with sticky headers
-- **Interactive data cells** for CX Impact analysis
-- **Percentage calculations** with color-coded differences
+- **40 comprehensive metrics** across 4 navigation groups
+- **Pastel colored cards** for each metric (blue, green, purple, pink, etc.)
+- **Weekly pagination** with 13, 26, 39, 52 week options
+- **Sticky headers and columns** for easy scrolling
+- **Unit column** properly positioned (Count, %, min)
+- **Interactive data cells** with hover effects
 
 ### Controls Component
 - **View toggle** between Monthly and Weekly data
-- **Dimension filters** for Reporting Vertical, Prime Status, and Order Status
+- **Dimension filters** for Reporting Vertical and Customer Segment
 - **Responsive layout** that stacks on smaller screens
 
 ## Custom CSS Classes
@@ -115,7 +142,7 @@ Each metric group contains:
 - **Metric Name**: Clear identifier for the metric
 - **Question**: What business question the metric answers
 - **Definition**: Detailed explanation of the metric
-- **Data Arrays**: 2025 and 2024 values for each time period
+- **Data Arrays**: 2025 and 2024 values for each time period (52 weeks of data)
 
 ### Special Metrics (P90/P95)
 - **TL;DR Definition**: Short, actionable summary
