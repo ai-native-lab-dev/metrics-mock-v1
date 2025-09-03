@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ title, onMenuClick }) => {
           {/* Title */}
           <div className="ml-5 lg:ml-0">
             <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
-            <p className="text-sm text-gray-500 mt-1">Real-time analytics dashboard — As of August 31, 2025</p>
+
           </div>
         </div>
 

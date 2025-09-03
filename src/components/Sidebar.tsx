@@ -33,7 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
     }`;
 
   const subNavItemClass = (active: boolean) => 
-    `flex items-center px-10 py-3 text-sm font-medium rounded-xl transition-all duration-300 ease-out ${
+    `flex items-center px-6 py-3 text-sm font-medium rounded-xl transition-all duration-300 ease-out ${
       active 
         ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md ring-1 ring-blue-400/30' 
         : 'text-gray-400 hover:bg-gradient-to-r hover:from-blue-600/30 hover:to-blue-700/30 hover:text-white'
@@ -250,7 +250,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                   <svg className="w-5 h-5 mr-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
-                  <span className="font-semibold">Methodology</span>
+                  <span className="font-semibold">Measurement</span>
                 </div>
                                  <svg
                    className={`w-5 h-5 transition-transform duration-300 ease-out ${
@@ -270,7 +270,19 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                     onClick={() => onViewChange('methodology')}
                     className={subNavItemClass(isActive('methodology'))}
                   >
-                    Methodology
+                    Measurement
+                  </button>
+                  <button
+                    onClick={() => onViewChange('customer-interaction-matrix')}
+                    className={subNavItemClass(isActive('customer-interaction-matrix'))}
+                  >
+                    Primitive Dimension
+                  </button>
+                  <button
+                    onClick={() => onViewChange('interpretation')}
+                    className={subNavItemClass(isActive('interpretation'))}
+                  >
+                    Interpretation
                   </button>
                 </div>
               )}

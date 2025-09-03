@@ -15,6 +15,7 @@ A comprehensive React-based dashboard application for analyzing customer experie
 2. **CS Channel Trends**: Interactive analysis of channel transition patterns
 3. **CX Impact Analysis**: Focused analysis of P90/P95 metrics with transcript samples
 4. **Methodology**: Comprehensive documentation with interactive diagrams
+5. **Customer Interaction Matrix**: Detailed taxonomy of customer interactions with L0-L8 levels
 
 ### 🎨 **Design Features**
 - **Tailwind CSS**: Modern, utility-first styling framework
@@ -55,7 +56,9 @@ A comprehensive React-based dashboard application for analyzing customer experie
    ```
 
 4. **Open your browser**
-   Navigate to `http://localhost:3000`
+   - If port 3000 is available: Navigate to `http://localhost:3000`
+   - If port 3000 is occupied: The app will automatically use the next available port (e.g., `http://localhost:3001`)
+   - Check the terminal output for the exact URL
 
 ### Build for Production
 
@@ -74,8 +77,13 @@ src/
 │   └── MetricsTable.tsx # Interactive data table component
 ├── views/              # Main view components
 │   ├── MetricsOverview.tsx # Default metrics view with 4 navigation groups
+│   ├── CSChannelTrends.tsx # CS Channel Trends analysis view
 │   ├── CXImpact.tsx    # CX Impact analysis view
-│   └── Methodology.tsx # Methodology documentation view
+│   ├── Methodology.tsx # Methodology documentation view
+│   ├── CustomerInteractionMatrix.tsx # Customer interaction taxonomy matrix
+│   ├── ChannelMatrixRules.tsx # Channel matrix rules documentation
+│   ├── InteractionFramework.tsx # Customer interaction framework
+│   └── MetricsDictionary.tsx # Metrics dictionary and definitions
 ├── App.tsx             # Main application component
 └── index.css           # Global styles and Tailwind directives
 ```
@@ -182,14 +190,50 @@ The dashboard organizes metrics under 4 clear sub-navigations:
 - **Section headers**: Maintain individual color scheme (Bot=Blue, CSA=Orange, Visit=Purple)
 - **Quick navigation buttons**: Color-coded for easy section access
 
+### 6. **Customer Interaction Matrix** - 📋 Comprehensive Taxonomy
+- **Two-tab interface**: "Repeat Customer Interaction Base" and "Additional Dimensions"
+- **L0-L6 Levels**: Core interaction taxonomy from CX Focus to Time Span
+- **L7-L8 Levels**: Customer Context and Temporal/Reporting dimensions
+- **Color-coded levels**: Each interaction level has distinct colors for easy identification
+- **Interactive tables**: Detailed breakdown of customer interaction patterns
+- **Professional styling**: Clean, readable tables with Inter font family
+
 ## Component Details
 
 ### Sidebar Navigation
 - **Fixed width** on medium screens and larger
 - **Collapsible on mobile** with overlay
-- **Expandable sections** for Metrics, CX Impact, and Methodology
+- **Expandable sections** for Metrics, CX Impact, Methodology, and Metrics Dictionary
 - **Active state indicators** for current view
 - **4 clear sub-navigations** under Metrics section
+- **Methodology sub-navigation** includes:
+  - Methodology (main documentation)
+  - Customer Interaction Matrix (detailed taxonomy)
+
+### Navigation Structure
+```
+📊 Metrics
+  ├── CS Channel Trends: Repeat
+  ├── CS Channel Trends: No Repeat
+  ├── Total Interactions
+  ├── Self-Service: Bot Channels
+  ├── Human-Led: CSA Channels
+  └── Self-Guided: Visit Channels
+
+⚡ CX Impact
+  ├── P95 Analysis
+  └── P90 Analysis
+
+📋 Methodology
+  ├── Methodology
+  └── Customer Interaction Matrix
+
+📚 Metrics Dictionary
+  ├── Metrics Dictionary
+  └── Channel Matrix Rules
+
+❓ FAQs
+```
 
 ### Metrics Table
 - **40 comprehensive metrics** across 4 navigation groups
@@ -282,6 +326,53 @@ Each metric group contains:
 ## License
 
 This project is licensed under the MIT License.
+
+## Troubleshooting
+
+### Common Issues
+
+#### Port Already in Use
+If you see "Something is already running on port 3000":
+1. **Option 1**: Press `Y` when prompted to run on another port
+2. **Option 2**: Kill the existing process:
+   ```bash
+   lsof -ti:3000 | xargs kill -9
+   npm start
+   ```
+3. **Option 3**: Use a specific port:
+   ```bash
+   PORT=3001 npm start
+   ```
+
+#### TypeScript Compilation Errors
+If you encounter TypeScript errors:
+1. Check for duplicate properties in object literals
+2. Ensure all function parameters have proper type annotations
+3. Run `npm run build` to see detailed error messages
+
+#### Dependencies Issues
+If you encounter dependency-related errors:
+```bash
+rm -rf node_modules package-lock.json
+npm install
+npm start
+```
+
+### Development Tips
+
+#### Accessing Customer Interaction Matrix
+1. Start the application: `npm start`
+2. Open the sidebar (hamburger menu on mobile)
+3. Expand the "Methodology" section
+4. Click on "Customer Interaction Matrix"
+
+#### Hot Reloading
+The development server supports hot reloading. Changes to components will automatically refresh the browser.
+
+#### Browser Developer Tools
+- Use React Developer Tools extension for component inspection
+- Check the Console tab for any runtime errors
+- Use the Network tab to monitor API calls (if applicable)
 
 ## Support
 

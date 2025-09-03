@@ -9,9 +9,10 @@ import ChannelMatrixRules from './views/ChannelMatrixRules';
 import MetricsDictionary from './views/MetricsDictionary';
 import CustomerInteractionMatrix from './views/CustomerInteractionMatrix';
 import InteractionFramework from './views/InteractionFramework';
+import Interpretation from './views/Interpretation';
 
 // Define all possible view types for the dashboard
-export type ViewType = 'home' | 'metrics' | 'metrics-total' | 'metrics-bot' | 'metrics-csa' | 'metrics-visit' | 'cs-channel-trends-repeat' | 'cs-channel-trends-no-repeat' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'interaction-framework' | 'customer-interaction-matrix' | 'faqs';
+export type ViewType = 'home' | 'metrics' | 'metrics-total' | 'metrics-bot' | 'metrics-csa' | 'metrics-visit' | 'cs-channel-trends-repeat' | 'cs-channel-trends-no-repeat' | 'cx-impact-p95' | 'cx-impact-p90' | 'methodology' | 'dictionary' | 'channel-matrix-rules' | 'interaction-framework' | 'customer-interaction-matrix' | 'interpretation' | 'faqs';
 
 function App() {
   // State management for the main dashboard
@@ -50,6 +51,8 @@ function App() {
         return 'Customer Interaction Framework';
       case 'customer-interaction-matrix':
         return 'Customer Interaction Matrix';
+      case 'interpretation':
+        return 'Interpretation';
       case 'faqs':
         return 'Frequently Asked Questions';
       default:
@@ -101,13 +104,15 @@ function App() {
         return <InteractionFramework />;
       case 'customer-interaction-matrix':
         return <CustomerInteractionMatrix />;
+      case 'interpretation':
+        return <Interpretation />;
       default:
         return <MetricsOverview />;
     }
   };
 
   return (
-    <div className="flex h-screen bg-gray-25">
+    <div className="flex h-screen bg-gray-100 min-h-screen">
       <Sidebar 
         currentView={currentView} 
         onViewChange={setCurrentView}
@@ -121,7 +126,7 @@ function App() {
           onMenuClick={() => setSidebarOpen(!sidebarOpen)}
         />
         
-        <main className="flex-1 overflow-y-auto p-8 bg-gray-25">
+        <main className="flex-1 overflow-y-auto p-8 pb-16 bg-gray-100 relative z-10">
           {renderMainContent()}
         </main>
       </div>
