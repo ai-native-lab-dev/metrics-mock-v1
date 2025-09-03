@@ -78,7 +78,7 @@ const IntroductionSection: React.FC = () => (
         
         <div className="text-center">
           <p className="text-lg text-gray-700 leading-relaxed">
-            To uncover the drivers behind repeat and no-repeat, we use a structured set of approaches and then apply them to the areas most likely to explain customer behavior.
+            To understand why customers return or not, we do not assume the top drivers in advance; we combine lenses as the question and the data require. We look at it five ways on top of the metrics.
           </p>
         </div>
       </div>
@@ -88,7 +88,7 @@ const IntroductionSection: React.FC = () => (
 
 const ApproachesSection: React.FC = () => (
   <Section className="bg-white">
-    <div className="bg-teal-50 border border-teal-200 rounded-2xl p-12 md:p-16">
+    <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-12 md:p-16">
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
           How We Identify Drivers
@@ -124,15 +124,15 @@ const ApproachesSection: React.FC = () => (
             example: "Regression or HTE analysis showing a new policy reduced repeats more for non-Prime vs. Prime customers."
           }
         ].map((approach, index) => (
-          <div key={index} className="bg-black rounded-2xl p-8 border border-gray-800">
-            <h3 className="text-2xl font-bold text-white mb-4">{approach.title}</h3>
-            <p className="text-lg text-gray-300 leading-relaxed mb-6">{approach.description}</p>
-            <details className="bg-gray-800 rounded-xl border border-gray-700">
-              <summary className="p-4 cursor-pointer text-sm font-medium text-gray-400 hover:text-gray-300">
+          <div key={index} className="bg-indigo-200 rounded-2xl p-8 border border-indigo-300">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">{approach.title}</h3>
+            <p className="text-lg text-gray-700 leading-relaxed mb-6">{approach.description}</p>
+            <details className="bg-indigo-100 rounded-xl border border-indigo-200">
+              <summary className="p-4 cursor-pointer text-sm font-medium text-gray-600 hover:text-gray-700">
                 Example
               </summary>
               <div className="px-4 pb-4">
-                <p className="text-gray-200 font-medium">{approach.example}</p>
+                <p className="text-gray-700 font-medium">{approach.example}</p>
               </div>
             </details>
           </div>
@@ -144,7 +144,7 @@ const ApproachesSection: React.FC = () => (
 
 const FocusAreasSection: React.FC = () => (
   <Section className="bg-white">
-    <div className="bg-amber-50 border border-amber-200 rounded-2xl p-12 md:p-16">
+    <div className="bg-rose-50 border border-rose-200 rounded-2xl p-12 md:p-16">
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
           Our Initial Focus: Where We Looked
@@ -183,7 +183,7 @@ const FocusAreasSection: React.FC = () => (
             note: undefined
           }
         ].map((area, index) => (
-          <div key={index} className="bg-amber-200 rounded-2xl p-8 border border-amber-300">
+          <div key={index} className="bg-rose-200 rounded-2xl p-8 border border-rose-300">
             <h3 className="text-2xl font-bold text-gray-800 mb-4">{area.title}</h3>
             <p className="text-lg text-gray-700 leading-relaxed mb-6">{area.description}</p>
             {area.details && (
@@ -197,7 +197,7 @@ const FocusAreasSection: React.FC = () => (
               </div>
             )}
             {area.note && (
-              <div className="bg-amber-100 rounded-xl p-4 border border-amber-200">
+              <div className="bg-rose-100 rounded-xl p-4 border border-rose-200">
                 <p className="text-sm font-medium text-gray-600">{area.note}</p>
               </div>
             )}

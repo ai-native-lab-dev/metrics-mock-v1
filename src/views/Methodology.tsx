@@ -103,7 +103,7 @@ const MeasurementFlowSection: React.FC = () => (
             We start with one simple question:
           </p>
           <p className="text-xl text-gray-700 leading-relaxed mb-8 font-semibold">
-            Did the customer interact with us — through a visit or a contact?
+            Did the customer start interacting with us through a self-guided page visit, a self-service contact, or a human-led, AI-assisted contact?
           </p>
           
 
@@ -168,16 +168,16 @@ const MeasurementFlowSection: React.FC = () => (
           {/* Legend */}
           <div className="flex justify-center space-x-8 mt-8">
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-blue-100 rounded-full border border-blue-200"></div>
-              <span className="text-sm font-medium text-gray-700">Contact ID</span>
+              <div className="w-4 h-4 bg-purple-100 rounded-full border border-purple-200"></div>
+              <span className="text-sm font-medium text-gray-700">Customer ID</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-4 bg-green-100 rounded-full border border-green-200"></div>
               <span className="text-sm font-medium text-gray-700">Visit ID</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-purple-100 rounded-full border border-purple-200"></div>
-              <span className="text-sm font-medium text-gray-700">Customer ID</span>
+              <div className="w-4 h-4 bg-blue-100 rounded-full border border-blue-200"></div>
+              <span className="text-sm font-medium text-gray-700">Contact ID</span>
           </div>
         </div>
       </div>
@@ -239,16 +239,16 @@ const MeasurementFlowSection: React.FC = () => (
           {/* Legend */}
           <div className="flex justify-center space-x-8 mb-8">
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-blue-100 rounded-full border border-blue-200"></div>
-              <span className="text-sm font-medium text-gray-700">Contact ID</span>
+              <div className="w-4 h-4 bg-purple-100 rounded-full border border-purple-200"></div>
+              <span className="text-sm font-medium text-gray-700">Customer ID</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-4 h-4 bg-green-100 rounded-full border border-green-200"></div>
               <span className="text-sm font-medium text-gray-700">Visit ID</span>
                   </div>
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-purple-100 rounded-full border border-purple-200"></div>
-              <span className="text-sm font-medium text-gray-700">Customer ID</span>
+              <div className="w-4 h-4 bg-blue-100 rounded-full border border-blue-200"></div>
+              <span className="text-sm font-medium text-gray-700">Contact ID</span>
               </div>
           </div>
         </div>
