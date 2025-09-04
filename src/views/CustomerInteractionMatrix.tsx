@@ -78,18 +78,17 @@ export default function CustomerInteractionMatrix() {
     <div className="space-y-8">
       {/* Original Table */}
       <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm">
-        <h2 className="text-3xl font-bold text-gray-900 mb-6">Primitive Dimensions Matrix</h2>
-        <table className="w-full border-separate border-spacing-0 text-center rounded-xl overflow-hidden shadow-md" style={{fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '15px', border: 'none'}}>
+        <table className="w-full border-separate border-spacing-0 text-center rounded-xl overflow-hidden shadow-md" style={{fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '18px', border: 'none'}}>
           <thead style={{ background: COLORS.head.base, color: COLORS.head.tx }}>
             {/* Row 1: Taxonomy Level */}
             <tr className="text-sm tracking-wide">
-              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '5px 8px', width: '120px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '13px' }}>L0</th>
-              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '5px 8px', width: '120px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '13px' }}>L1</th>
-              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '5px 8px', width: '140px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '13px' }}>L2</th>
-              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '5px 8px', width: '120px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '13px' }}>L3</th>
-              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '5px 8px', width: '180px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '13px' }}>L4</th>
-              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '5px 8px', width: '120px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '13px' }}>L5</th>
-              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '5px 8px', width: '120px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '13px' }}>L6</th>
+              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '8px 12px', width: '140px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '16px' }}>L0</th>
+              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '8px 12px', width: '140px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '16px' }}>L1</th>
+              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '8px 12px', width: '160px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '16px' }}>L2</th>
+              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '8px 12px', width: '140px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '16px' }}>L3</th>
+              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '8px 12px', width: '200px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '16px' }}>L4</th>
+              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '8px 12px', width: '140px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '16px' }}>L5</th>
+              <th style={{ background: '#2d3748', color: '#e2e8f0', padding: '8px 12px', width: '140px', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif', fontSize: '16px' }}>L6</th>
             </tr>
             {/* Row 2: Header */}
             <tr className="text-sm tracking-wide">
@@ -126,22 +125,22 @@ export default function CustomerInteractionMatrix() {
           </thead>
           <tbody className="text-sm divide-y divide-gray-200">
 
-            {/* Example Rows – all end with Customer Touchpoint */}
+            {/* Simplified Example Rows */}
             <tr>
-              <td rowSpan={13} style={col('l0')}>Total Customer Interaction</td>
-              <td rowSpan={3} style={col('l1a')}>Visit</td>
-              <td rowSpan={3} style={col('l2Light')}>
+              <td rowSpan={6} style={{...col('l0'), padding: '20px 12px', fontSize: '18px', lineHeight: '1.4'}}>Total Customer Interaction</td>
+              <td rowSpan={2} style={col('l1a')}>Visit</td>
+              <td rowSpan={2} style={col('l2Light')}>
                 <div>Self-Guided</div>
                 <div style={{fontSize: '0.9em', fontStyle: 'italic', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>("Visit" Webpages)</div>
               </td>
               <td style={col('l3Light')}>AI-enabled</td>
               <td style={col('l4a')}>CS Landing Page</td>
-              <td rowSpan={13} style={{...col('l5'), width: '120px', padding: '10px 8px'}}>
+              <td rowSpan={6} style={{...col('l5'), width: '120px', padding: '10px 8px'}}>
                 <div style={{fontWeight: 'normal', marginBottom: '3px', fontSize: '0.95em', lineHeight: '1.3', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>"No-Repeat"</div>
                 <div style={{fontSize: '0.8em', fontWeight: 'normal', color: COLORS.l5.tx, margin: '3px 0', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>OR</div>
                 <div style={{fontWeight: 'normal', marginTop: '3px', fontSize: '0.95em', lineHeight: '1.3', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>"Repeat"</div>
               </td>
-              <td rowSpan={13} style={{...col('l6'), width: '120px', padding: '10px 8px'}}>
+              <td rowSpan={6} style={{...col('l6'), width: '120px', padding: '10px 8px'}}>
                 <div style={{fontWeight: 'normal', fontSize: '0.95em', lineHeight: '1.3', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>
                   7-day trailing window (base),<br/>
                   Weekly,<br/>
@@ -154,56 +153,29 @@ export default function CustomerInteractionMatrix() {
               <td style={col('l3Light')}>Legacy-based</td>
               <td style={col('l4a')}>CS Homepage</td>
             </tr>
-            <tr>
-              <td style={col('l3Light')}>Static mostly</td>
-              <td style={col('l4a')}>Help Pages</td>
-            </tr>
-                        {/* Separator line after Visit-related values - spans L1 to L4 only */}
-            <tr>
-              <td colSpan={4} style={{height: '3px', background: '#000000', border: 'none', padding: '0'}}></td>
-            </tr>
 
-            {/* Contact (Bot + CSA) rows keep same logic */}
+            {/* Contact (Bot + CSA) rows - simplified */}
             <tr>
-              <td rowSpan={9} style={col('l1b')}>Contact</td>
-              <td rowSpan={5} style={col('l2')}>
+              <td rowSpan={4} style={col('l1b')}>Contact</td>
+              <td rowSpan={2} style={col('l2')}>
                 <div>Self-Service</div>
                 <div style={{fontSize: '0.9em', fontStyle: 'italic', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>("Bot")</div>
               </td>
-              <td rowSpan={3} style={col('l3')}>AI-enabled</td>
+              <td style={col('l3')}>AI-enabled</td>
               <td style={{...col('l4b'), fontWeight: 'normal'}}>CS Chatbot</td>
             </tr>
             <tr>
-              <td style={{...col('l4b'), fontWeight: 'normal'}}>
-                <div>CS Voicebot</div>
-                <div style={{fontSize: '0.9em', fontStyle: 'italic', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>(incl. AI-enabled AVA)</div>
-              </td>
-            </tr>
-            <tr>
-              <td style={{...col('l4b'), fontWeight: 'normal'}}>
-                <div>AI-enabled Email</div>
-                <div style={{fontSize: '0.9em', fontStyle: 'italic', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>(coming soon)</div>
-              </td>
-            </tr>
-            <tr>
-              <td rowSpan={2} style={col('l3')}>Legacy-based</td>
+              <td style={col('l3')}>Legacy-based</td>
               <td style={{...col('l4b'), fontWeight: 'normal'}}>Legacy Chatbot</td>
-          </tr>
-          <tr>
-              <td style={{...col('l4b'), fontWeight: 'normal'}}>Legacy Voicebot</td>
-            </tr>
-            {/* Separator line after Self-Service values - spans L2 to L4 only */}
-            <tr>
-              <td colSpan={3} style={{height: '3px', background: '#000000', border: 'none', padding: '0'}}></td>
             </tr>
 
             {/* CSA Human-led */}
             <tr>
-              <td rowSpan={3} style={col('l2')}>
+              <td rowSpan={2} style={col('l2')}>
                 <div>Human-led</div>
                 <div style={{fontSize: '0.9em', fontStyle: 'italic', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>("CSA")</div>
               </td>
-              <td rowSpan={3} style={col('taupe')}>
+              <td rowSpan={2} style={col('taupe')}>
                 <div>Human-led,</div>
                 <div style={{fontSize: '0.9em', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>AI-assisted</div>
               </td>
@@ -211,9 +183,6 @@ export default function CustomerInteractionMatrix() {
             </tr>
             <tr>
               <td style={{...col('l4'), fontWeight: 'normal'}}>CSA Voice</td>
-            </tr>
-            <tr>
-              <td style={{...col('l4'), fontWeight: 'normal'}}>CSA Email</td>
             </tr>
           </tbody>
         </table>
@@ -472,7 +441,7 @@ export default function CustomerInteractionMatrix() {
                 
               </td>
               <td className="text-center py-3 text-sm font-medium" style={colAdditional('l1aLight')}>
-                Stores (Consumer + AB + SDS Recipients + CAP)
+                Stores Roll-up (Stores+ AB + SDS Recipients + CAP)
               </td>
               <td className="text-center py-3 text-sm font-medium" style={colAdditional('l1aLight')}>
                 
@@ -502,7 +471,7 @@ export default function CustomerInteractionMatrix() {
                 
               </td>
               <td className="text-center py-3 text-sm font-medium" style={colAdditional('l1aLight')}>
-                Amazon CS (Stores + D2 + AB + SDS Drivers)
+                Amazon CS (Stores Roll-up + D2 + SDS Drivers)
               </td>
               <td className="text-center py-3 text-sm font-medium" style={colAdditional('l1aLight')}>
                 

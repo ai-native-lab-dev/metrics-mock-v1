@@ -64,8 +64,16 @@ const IntroductionSection: React.FC = () => (
     <div className="bg-white border border-gray-100 rounded-2xl p-12 md:p-16">
       <div className="max-w-5xl mx-auto">
         <p className="text-xl text-gray-700 leading-relaxed mb-12 text-center">
-          Customers don't think in terms of "channels" — they just try to solve their issue. A single experience might include browsing Help Pages, trying the CS Chatbot, and then ending with a CSA over chat or voice. To improve those experiences, we need a system that measures interactions in a way that is:
+          Customers don't think in terms of "channels" — they're simply trying to get something done, their job-to-be-done. "I need to know when my order will arrive." "I want to return an item that isn't what I expected." "I need help troubleshooting something that isn't working."
         </p>
+        
+        <p className="text-xl text-gray-700 leading-relaxed mb-8 text-center">
+          A single experience might span multiple steps: browsing Help Pages, trying the CS Chatbot, and then ending with a CSA over chat or voice. From the customer's point of view, these hand-offs are invisible — they just see one journey.
+        </p>
+        
+        <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+          To improve those experiences, we need a system that measures interactions in a way that is:
+        </h3>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-black rounded-2xl p-8 border border-gray-800">
@@ -120,12 +128,9 @@ const MeasurementFlowSection: React.FC = () => (
           </div>
 
           <p className="text-lg text-gray-700 leading-relaxed mb-8">
-            Sometimes a customer only visits, sometimes they only contact, and often they do both in the same issue. Together, these make up the Total Customer Interaction. Sometimes both appear together — for example, a customer starts on the CS Landing Page (Visit) and ends in CSA Chat (Contact).
+            Sometimes a customer only visits, sometimes they only contact, and often they do both, resulting in multiple interactions for the same issue. Visits and Contacts together make up the Total Customer Interactions. Sometimes both visits and contacts appear together during one interaction — for example, a customer starts on the CS Landing Page (Visit) and ends in CSA Chat (Contact).
           </p>
           
-          <p className="text-lg text-gray-700 leading-relaxed mb-8">
-            Every visit and contact is tied to a Customer ID, so we measure effort at the customer level
-          </p>
           
           {/* Customer ID Illustration */}
           <div className="text-center mb-8">
@@ -252,6 +257,30 @@ const MeasurementFlowSection: React.FC = () => (
               </div>
           </div>
         </div>
+
+        {/* ID Anchoring Details */}
+        <div className="mt-16">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-lg text-gray-700 leading-relaxed mb-8">
+              Every CS Landing Page, CS Homepage, and Help Pages visit (Session ID, etc.) is tied to an authenticated Customer ID. Every self-service contact (CS Chatbots, CS Voicebots, Legacy Chatbot, Legacy Voicebot) and human-led contact (CSA) with available Comm_ID (Contact ID) is also tied to an authenticated Customer ID.
+            </p>
+
+            <p className="text-lg text-gray-700 leading-relaxed mb-6">
+              <strong>Why Objective:</strong> Because every Visit and every Contact is anchored to an authenticated Customer ID. That removes ambiguity — we're not guessing or sampling. We're measuring exactly what happened, grounded in system-generated IDs like Session ID and Comm_ID.
+            </p>
+            
+            <p className="text-lg text-gray-700 leading-relaxed mb-6">
+              <strong>Why Exhaustive:</strong> Because the framework covers every possible path a customer can take. That means:
+            </p>
+            
+            <ul className="text-lg text-gray-700 leading-relaxed mb-8 ml-6 space-y-2">
+              <li>• Every type of visit (landing page, homepage, help pages)</li>
+              <li>• Every type of self-service contact (chatbots, voicebots, legacy)</li>
+              <li>• Every type of human-led contact (CSA chat, voice, email)</li>
+              <li>• All of these are tied back to the Customer ID</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
     {/* Step 2 */}
@@ -261,15 +290,69 @@ const MeasurementFlowSection: React.FC = () => (
 
                 <div className="max-w-5xl mx-auto">
           
+                    {/* How We Count Interactions */}
+          <div className="mb-16">
+            <div className="text-center mb-8">
+              <h4 className="text-3xl font-bold text-gray-900 mb-4">How We Count Interactions</h4>
+              <div className="w-24 h-1 bg-gray-300 mx-auto rounded-full"></div>
+            </div>
+            
+            <p className="text-lg text-gray-700 leading-relaxed text-center max-w-4xl mx-auto">
+              Customer interactions can start and end in any CS channel, with valid paths defined in the CS Channel Matrix. We count the number of times authenticated customers interacted with us within the 7-day trailing window — measured as customer ID & page visits or contacts (with available Comm_ID) for Bot and CSA channels — always classified by the channel where the interaction ended.
+            </p>
+          </div>
+
+          {/* Why We Measure in a 7-Day Window */}
+          <div className="mb-16">
+            <div className="text-center mb-8">
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">Why We Measure in a 7-Day Window</h4>
+              <p className="text-lg text-gray-600 italic">A time frame that matches the rhythm of customer experiences</p>
+              <div className="w-16 h-1 bg-gray-300 mx-auto rounded-full mt-4"></div>
+            </div>
+            
+            <div className="max-w-4xl mx-auto">
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                Many customer needs play out over several days — deliveries, returns, and refunds don't resolve overnight. A 7-day trailing window gives us the right balance:
+              </p>
+              
+              <div className="space-y-6">
+                <div className="bg-white rounded-xl p-6 border border-gray-200">
+                  <h5 className="text-lg font-bold text-gray-900 mb-3">Reflects customer reality</h5>
+                  <p className="text-gray-700 leading-relaxed">
+                    Delivery questions often resolve in 2–3 days, returns may take 4–5, and refunds can run close to a week. A seven-day span keeps these connected interactions part of the same experience.
+                  </p>
+                </div>
+                
+                <div className="bg-white rounded-xl p-6 border border-gray-200">
+                  <h5 className="text-lg font-bold text-gray-900 mb-3">Keeps the signal clean</h5>
+                  <p className="text-gray-700 leading-relaxed">
+                    A week is long enough to capture true repeats without pulling in unrelated events. It smooths out daily spikes — like weekend delivery peaks or weekday billing issues — so we see the underlying pattern, not noise.
+                  </p>
+                </div>
+                
+                <div className="bg-white rounded-xl p-6 border border-gray-200">
+                  <h5 className="text-lg font-bold text-gray-900 mb-3">Works with how teams operate</h5>
+                  <p className="text-gray-700 leading-relaxed">
+                    Most CS and business reviews run on weekly cycles. Using the same time frame makes metrics easier to compare, align, and act on across reports and teams.
+                  </p>
+                </div>
+              </div>
+              
+              <p className="text-lg text-gray-700 leading-relaxed text-center mt-8 font-medium">
+                Seven days is long enough to capture what matters to customers, and short enough to keep the focus clear.
+              </p>
+            </div>
+          </div>
+
                     {/* Classification Flow */}
-          <div className="mb-20">
+          <div className="mb-12">
             <div className="text-center mb-12">
               <h4 className="text-3xl font-bold text-gray-900 mb-4">How We Classify Single and Multiple Interactions</h4>
               <div className="w-24 h-1 bg-gray-300 mx-auto rounded-full"></div>
             </div>
             
             {/* Simple Flow Diagram */}
-            <div className="bg-white rounded-2xl p-12 border border-gray-200 shadow-sm mb-12">
+            <div className="bg-white rounded-2xl p-12 border border-gray-200 shadow-sm mb-8">
               <div className="text-center">
                 <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                   <div className="bg-black rounded-2xl p-8 border border-gray-800 shadow-sm">
@@ -299,14 +382,13 @@ const MeasurementFlowSection: React.FC = () => (
             </div>
             
             {/* Key Principle */}
-            <div className="text-center mb-12">
+            <div className="text-center mb-6">
               <div className="bg-yellow-50 rounded-3xl p-8 border border-yellow-200 max-w-5xl mx-auto shadow-sm">
                 <p className="text-2xl text-gray-800 font-bold mb-4">
                   Repeat doesn't tell us good or bad — it's just an indicator of single or multiple customer interactions within trailing 7 days.
                 </p>
               </div>
             </div>
-
 
           </div>
 
@@ -316,10 +398,6 @@ const MeasurementFlowSection: React.FC = () => (
 );
 
 const faqData = [
-  {
-    question: "Why 7 days?",
-    answer: "Many issues take a few days to play out (deliveries, returns, refunds). A week also aligns with how teams review and report. The same 7-day rule keeps results consistent and smooths out daily spikes. Seven days is long enough to capture real repeats, short enough to separate unrelated problems."
-  },
   {
     question: "Are all no-repeats good? (1 interaction in 7 days)",
     answer: "Not always. A no-repeat only shows that the customer didn't return.",

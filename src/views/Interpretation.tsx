@@ -43,13 +43,9 @@ const Section: React.FC<{ children: React.ReactNode; className?: string; style?:
 // -- Page Section Components --
 
 const HeroSection: React.FC = () => (
-  <header className="text-center py-24 md:py-32 bg-black">
-    <div className="max-w-5xl mx-auto px-6">
-      <div className="inline-flex items-center px-4 py-2 rounded-full bg-purple-100 border border-purple-200 mb-8">
-        <span className="text-sm font-medium text-purple-700">Interpretation</span>
-      </div>
-      
-      <h1 className="text-5xl md:text-6xl font-bold text-white mb-8 leading-tight tracking-tight">
+  <header className="text-center py-16 bg-black">
+    <div className="max-w-4xl mx-auto px-6">
+      <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
         From Measurement to Drivers
       </h1>
     </div>
@@ -58,27 +54,27 @@ const HeroSection: React.FC = () => (
 
 const IntroductionSection: React.FC = () => (
   <Section className="!py-0 bg-white">
-    <div className="bg-white border border-gray-100 rounded-2xl p-12 md:p-16">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">The Foundation Question</h2>
-          <p className="text-xl text-gray-700 leading-relaxed mb-8">
-            Measuring whether customers interacted once or more within 7 days gives us a clear baseline. But that only tells us <span className="text-purple-600 font-semibold">what happened</span>.
+    <div className="bg-white border border-gray-100 rounded-xl p-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">The Foundation Question</h2>
+          <p className="text-lg text-gray-700 leading-relaxed mb-6">
+            Measuring customer interactions gives us a baseline, but that only tells us <span className="text-purple-600 font-semibold">what happened</span>.
           </p>
         </div>
         
-        <div className="bg-purple-50 rounded-2xl p-8 border border-purple-200 mb-8">
+        <div className="bg-purple-50 rounded-xl p-6 border border-purple-200 mb-6">
           <div className="text-center">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">The Harder Question</h3>
-            <p className="text-xl text-gray-700 leading-relaxed font-medium">
+            <h3 className="text-xl font-bold text-gray-900 mb-3">The Harder Question</h3>
+            <p className="text-lg text-gray-700 font-medium">
               <span className="text-purple-700 font-bold">Why did it happen?</span>
             </p>
           </div>
         </div>
         
         <div className="text-center">
-          <p className="text-lg text-gray-700 leading-relaxed">
-            To understand why customers return or not, we do not assume the top drivers in advance; we combine lenses as the question and the data require. We look at it five ways on top of the metrics.
+          <p className="text-base text-gray-700 leading-relaxed">
+            We identify drivers through five approaches: gut-sense, heuristics, anomaly detection, AI models, and causal inference.
           </p>
         </div>
       </div>
@@ -88,53 +84,39 @@ const IntroductionSection: React.FC = () => (
 
 const ApproachesSection: React.FC = () => (
   <Section className="bg-white">
-    <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-12 md:p-16">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+    <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-8">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
           How We Identify Drivers
         </h2>
-
       </div>
       
-      <div className="max-w-5xl mx-auto space-y-8">
+      <div className="max-w-4xl mx-auto space-y-4">
         {[
           {
             title: "Gut-Sense (Judgment)",
-            description: "→ \"I think this is why…\"",
-            example: "Suspected refunds were confusing based on CSA feedback."
+            description: "→ \"I think this is why…\""
           },
           {
             title: "Heuristic (Rules-Based)",
-            description: "→ \"Rule of thumb…\"",
-            example: "Flagging repeat rates >20% as a problem."
+            description: "→ \"Rule of thumb…\""
           },
           {
             title: "Anomaly-Based (Spot Check)",
-            description: "→ \"That looks odd…\"",
-            example: "Noticing a sudden spike in bot-only repeats."
+            description: "→ \"That looks odd…\""
           },
           {
             title: "AI-Based (Model Inference)",
-            description: "→ \"AI spots the trends…\"",
-            example: "Models linking late deliveries to higher repeat contacts."
+            description: "→ \"AI spots the trends…\""
           },
           {
             title: "Econ-Based (Causal Inference)",
-            description: "→ \"Cause and effect was tested…\"",
-            example: "Regression or HTE analysis showing a new policy reduced repeats more for non-Prime vs. Prime customers."
+            description: "→ \"Cause and effect was tested…\""
           }
         ].map((approach, index) => (
-          <div key={index} className="bg-indigo-200 rounded-2xl p-8 border border-indigo-300">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">{approach.title}</h3>
-            <p className="text-lg text-gray-700 leading-relaxed mb-6">{approach.description}</p>
-            <details className="bg-indigo-100 rounded-xl border border-indigo-200">
-              <summary className="p-4 cursor-pointer text-sm font-medium text-gray-600 hover:text-gray-700">
-                Example
-              </summary>
-              <div className="px-4 pb-4">
-                <p className="text-gray-700 font-medium">{approach.example}</p>
-              </div>
-            </details>
+          <div key={index} className="bg-indigo-200 rounded-xl p-4 border border-indigo-300">
+            <h3 className="text-lg font-bold text-gray-800 mb-2">{approach.title}</h3>
+            <p className="text-base text-gray-700">{approach.description}</p>
           </div>
         ))}
       </div>
@@ -144,63 +126,35 @@ const ApproachesSection: React.FC = () => (
 
 const FocusAreasSection: React.FC = () => (
   <Section className="bg-white">
-    <div className="bg-rose-50 border border-rose-200 rounded-2xl p-12 md:p-16">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
-          Our Initial Focus: Where We Looked
+    <div className="bg-rose-50 border border-rose-200 rounded-xl p-8">
+      <div className="text-center mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          Our Initial Focus Areas
         </h2>
       </div>
       
-      <div className="max-w-5xl mx-auto space-y-8">
+      <div className="max-w-4xl mx-auto space-y-4">
         {[
           {
-            title: "Egregious (3+) & High-Volume (P95)",
-            description: "Customers with 3+ contacts in 7 days, where volume spikes at the 95th percentile.",
-            note: undefined
-          },
-          {
-            title: "Egregious (3+) & High-Volume (P90)",
-            description: "Similar definition but at the 90th percentile, capturing a broader set of repeat customers.",
-            note: undefined
+            title: "Egregious (3+) & High-Volume Repeats",
+            description: "Customers with 3+ contacts in 7 days, focusing on P90 percentile."
           },
           {
             title: "CS Channel Trends",
-            description: "Heatmaps comparing:",
-            details: [
-              "Repeats by start and end channel.",
-              "No-repeats by end channel."
-            ],
-            note: undefined
+            description: "Heatmaps comparing repeats and no-repeats by channel."
           },
           {
-            title: "Pareto of Customer-Perceived Reasons",
-            description: "Transcript analysis (using LLMs) identified the small set of reasons customers themselves gave that accounted for most repeats.",
-            note: undefined
+            title: "Customer-Perceived Reasons",
+            description: "Transcript analysis identifying key reasons for repeats."
           },
           {
             title: "Silent Dissatisfaction",
-            description: "Some \"no-repeat\" transcripts still showed negative sentiment. These customers didn't come back, but their dissatisfaction signaled hidden problems affecting trust.",
-            note: undefined
+            description: "No-repeat customers with negative sentiment signals."
           }
         ].map((area, index) => (
-          <div key={index} className="bg-rose-200 rounded-2xl p-8 border border-rose-300">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">{area.title}</h3>
-            <p className="text-lg text-gray-700 leading-relaxed mb-6">{area.description}</p>
-            {area.details && (
-              <div className="mb-6">
-                {area.details.map((detail, detailIndex) => (
-                  <div key={detailIndex} className="flex items-start space-x-3 mb-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-gray-700">{detail}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-            {area.note && (
-              <div className="bg-rose-100 rounded-xl p-4 border border-rose-200">
-                <p className="text-sm font-medium text-gray-600">{area.note}</p>
-              </div>
-            )}
+          <div key={index} className="bg-rose-200 rounded-xl p-4 border border-rose-300">
+            <h3 className="text-lg font-bold text-gray-800 mb-2">{area.title}</h3>
+            <p className="text-base text-gray-700">{area.description}</p>
           </div>
         ))}
       </div>

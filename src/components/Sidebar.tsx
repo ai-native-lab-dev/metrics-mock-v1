@@ -14,6 +14,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
     cxImpact: true,
     methodology: true,
     dictionary: false,
+    potentialKeyMetrics: true,
   });
 
   const toggleSection = (section: keyof typeof expandedSections) => {
@@ -79,8 +80,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
               <span>Home</span>
             </button>
 
-            {/* Metrics */}
-            <div>
+            {/* Metrics - HIDDEN */}
+            {/* <div>
               <button
                 onClick={() => toggleSection('metrics')}
                 className={`flex items-center justify-between w-full px-5 py-3.5 text-sm font-medium rounded-xl transition-all duration-300 ease-out group ${
@@ -178,14 +179,14 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                     <div className="w-2 h-2 rounded-full bg-purple-400 mr-3"></div>
                     Self-Guided: Visit Channels
                   </button>
-
+                  
 
                 </div>
               )}
-            </div>
+            </div> */}
 
-            {/* CX Impact */}
-            <div>
+            {/* CX Impact - HIDDEN */}
+            {/* <div>
               <button
                 onClick={() => toggleSection('cxImpact')}
                 className={`flex items-center justify-between w-full px-5 py-3.5 text-sm font-medium rounded-xl transition-all duration-300 ease-out group ${
@@ -228,6 +229,78 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                     className={subNavItemClass(isActive('cx-impact-p90'))}
                   >
                     P90 Analysis
+                  </button>
+                </div>
+              )}
+            </div> */}
+
+            {/* Potential Key Metrics */}
+            <div>
+              <button
+                onClick={() => toggleSection('potentialKeyMetrics')}
+                className={`flex items-center justify-between w-full px-5 py-3.5 text-sm font-medium rounded-xl transition-all duration-300 ease-out group ${
+                  expandedSections.potentialKeyMetrics
+                    ? 'bg-gradient-to-r from-blue-600/20 to-blue-700/20 text-white shadow-md'
+                    : 'text-gray-300 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-blue-700/20 hover:text-white'
+                }`}
+              >
+                <div className="flex items-center">
+                  <div className={`w-3 h-3 rounded-full mr-3 ${
+                    expandedSections.potentialKeyMetrics ? 'bg-blue-400' : 'bg-gray-400'
+                  }`}></div>
+                  <svg className="w-5 h-5 mr-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  <span className="font-semibold">Potential Key Metrics</span>
+                </div>
+                <svg
+                  className={`w-5 h-5 transition-transform duration-300 ease-out ${
+                    expandedSections.potentialKeyMetrics ? 'rotate-180 text-blue-400' : 'text-gray-400'
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {expandedSections.potentialKeyMetrics && (
+                <div className="mt-3 ml-4 space-y-1">
+                  <button
+                    onClick={() => onViewChange('egregious-high-volume-repeats')}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('egregious-high-volume-repeats') 
+                        ? 'bg-red-100 text-red-800 border border-red-200' 
+                        : 'text-gray-600 hover:bg-red-50 hover:text-red-700'
+                    }`}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-red-400 mr-3"></div>
+                    Egregious Repeats
+                  </button>
+                  
+                  <button
+                    onClick={() => onViewChange('shopping-churn-high-volume-repeats')}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('shopping-churn-high-volume-repeats') 
+                        ? 'bg-amber-100 text-amber-800 border border-amber-200' 
+                        : 'text-gray-600 hover:bg-amber-50 hover:text-amber-700'
+                    }`}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-amber-400 mr-3"></div>
+                    Shopping Churn Signal
+                  </button>
+                  
+                  <button
+                    onClick={() => onViewChange('no-repeat-negative-sentiment')}
+                    className={`w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ease-out text-left flex items-center ${
+                      isActive('no-repeat-negative-sentiment') 
+                        ? 'bg-gray-100 text-gray-800 border border-gray-200' 
+                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-700'
+                    }`}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-gray-400 mr-3"></div>
+                    No-Repeat Dissatisfaction
                   </button>
                 </div>
               )}
@@ -279,6 +352,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                     Primitive Dimension
                   </button>
                   <button
+                    onClick={() => onViewChange('channel-matrix-rules')}
+                    className={subNavItemClass(isActive('channel-matrix-rules'))}
+                  >
+                    Channel Matrix
+                  </button>
+                  <button
                     onClick={() => onViewChange('interpretation')}
                     className={subNavItemClass(isActive('interpretation'))}
                   >
@@ -288,8 +367,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
               )}
             </div>
 
-            {/* Metrics Dictionary */}
-            <div>
+            {/* Metrics Dictionary - HIDDEN */}
+            {/* <div>
               <button
                 onClick={() => toggleSection('dictionary')}
                 className={`flex items-center justify-between w-full px-5 py-3.5 text-sm font-medium rounded-xl transition-all duration-300 ease-out group ${
@@ -327,18 +406,12 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                   >
                     Metrics Dictionary
                   </button>
-                  <button
-                    onClick={() => onViewChange('channel-matrix-rules')}
-                    className={subNavItemClass(isActive('channel-matrix-rules'))}
-                  >
-                    Channel Matrix Rules
-                  </button>
                 </div>
               )}
-            </div>
+            </div> */}
 
-            {/* FAQs */}
-            <button
+            {/* FAQs - HIDDEN */}
+            {/* <button
               onClick={() => onViewChange('faqs')}
               className={navItemClass(isActive('faqs'))}
             >
@@ -346,7 +419,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen, on
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span>FAQs</span>
-            </button>
+            </button> */}
           </nav>
 
           {/* Footer */}
