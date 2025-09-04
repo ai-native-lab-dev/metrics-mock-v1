@@ -127,20 +127,20 @@ export default function CustomerInteractionMatrix() {
 
             {/* Simplified Example Rows */}
             <tr>
-              <td rowSpan={6} style={{...col('l0'), padding: '20px 12px', fontSize: '18px', lineHeight: '1.4'}}>Total Customer Interaction</td>
-              <td rowSpan={2} style={col('l1a')}>Visit</td>
-              <td rowSpan={2} style={col('l2Light')}>
+              <td rowSpan={11} style={{...col('l0'), padding: '20px 12px', fontSize: '18px', lineHeight: '1.4'}}>Total Customer Interaction</td>
+              <td rowSpan={3} style={col('l1a')}>Visit</td>
+              <td rowSpan={3} style={col('l2Light')}>
                 <div>Self-Guided</div>
                 <div style={{fontSize: '0.9em', fontStyle: 'italic', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>("Visit" Webpages)</div>
               </td>
               <td style={col('l3Light')}>AI-enabled</td>
               <td style={col('l4a')}>CS Landing Page</td>
-              <td rowSpan={6} style={{...col('l5'), width: '120px', padding: '10px 8px'}}>
+              <td rowSpan={11} style={{...col('l5'), width: '120px', padding: '10px 8px'}}>
                 <div style={{fontWeight: 'normal', marginBottom: '3px', fontSize: '0.95em', lineHeight: '1.3', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>"No-Repeat"</div>
                 <div style={{fontSize: '0.8em', fontWeight: 'normal', color: COLORS.l5.tx, margin: '3px 0', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>OR</div>
                 <div style={{fontWeight: 'normal', marginTop: '3px', fontSize: '0.95em', lineHeight: '1.3', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>"Repeat"</div>
               </td>
-              <td rowSpan={6} style={{...col('l6'), width: '120px', padding: '10px 8px'}}>
+              <td rowSpan={11} style={{...col('l6'), width: '120px', padding: '10px 8px'}}>
                 <div style={{fontWeight: 'normal', fontSize: '0.95em', lineHeight: '1.3', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>
                   7-day trailing window (base),<br/>
                   Weekly,<br/>
@@ -153,29 +153,42 @@ export default function CustomerInteractionMatrix() {
               <td style={col('l3Light')}>Legacy-based</td>
               <td style={col('l4a')}>CS Homepage</td>
             </tr>
+            <tr>
+              <td style={col('l3Light')}>Help Content</td>
+              <td style={col('l4a')}>Help Pages</td>
+            </tr>
 
             {/* Contact (Bot + CSA) rows - simplified */}
             <tr>
-              <td rowSpan={4} style={col('l1b')}>Contact</td>
-              <td rowSpan={2} style={col('l2')}>
+              <td rowSpan={8} style={col('l1b')}>Contact</td>
+              <td rowSpan={5} style={col('l2')}>
                 <div>Self-Service</div>
                 <div style={{fontSize: '0.9em', fontStyle: 'italic', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>("Bot")</div>
               </td>
-              <td style={col('l3')}>AI-enabled</td>
+              <td rowSpan={3} style={col('l3')}>AI-enabled</td>
               <td style={{...col('l4b'), fontWeight: 'normal'}}>CS Chatbot</td>
             </tr>
             <tr>
-              <td style={col('l3')}>Legacy-based</td>
+              <td style={{...col('l4b'), fontWeight: 'normal'}}>CS Voicebot</td>
+            </tr>
+            <tr>
+              <td style={{...col('l4b'), fontWeight: 'normal'}}>AI-enabled Email*</td>
+            </tr>
+            <tr>
+              <td rowSpan={2} style={col('l3')}>Legacy-based</td>
               <td style={{...col('l4b'), fontWeight: 'normal'}}>Legacy Chatbot</td>
+            </tr>
+            <tr>
+              <td style={{...col('l4b'), fontWeight: 'normal'}}>Legacy Voicebot</td>
             </tr>
 
             {/* CSA Human-led */}
             <tr>
-              <td rowSpan={2} style={col('l2')}>
+              <td rowSpan={3} style={col('l2')}>
                 <div>Human-led</div>
                 <div style={{fontSize: '0.9em', fontStyle: 'italic', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>("CSA")</div>
               </td>
-              <td rowSpan={2} style={col('taupe')}>
+              <td rowSpan={3} style={col('taupe')}>
                 <div>Human-led,</div>
                 <div style={{fontSize: '0.9em', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif'}}>AI-assisted</div>
               </td>
@@ -184,9 +197,13 @@ export default function CustomerInteractionMatrix() {
             <tr>
               <td style={{...col('l4'), fontWeight: 'normal'}}>CSA Voice</td>
             </tr>
+            <tr>
+              <td style={{...col('l4'), fontWeight: 'normal'}}>CSA Email</td>
+            </tr>
           </tbody>
         </table>
       </div>
+
     </div>
   );
 

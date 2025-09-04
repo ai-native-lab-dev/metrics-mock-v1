@@ -297,9 +297,158 @@ const MeasurementFlowSection: React.FC = () => (
               <div className="w-24 h-1 bg-gray-300 mx-auto rounded-full"></div>
             </div>
             
-            <p className="text-lg text-gray-700 leading-relaxed text-center max-w-4xl mx-auto">
-              Customer interactions can start and end in any CS channel, with valid paths defined in the CS Channel Matrix. We count the number of times authenticated customers interacted with us within the 7-day trailing window — measured as customer ID & page visits or contacts (with available Comm_ID) for Bot and CSA channels — always classified by the channel where the interaction ended.
-            </p>
+            <div className="max-w-4xl mx-auto">
+              <p className="text-lg text-gray-700 leading-relaxed mb-6">
+                Customer interactions can start and end in any CS channel, with valid paths defined in the CS Channel Matrix. The question is how we count interaction volume. At this stage, the framework is simple: it measures what happened — whether a customer interacted once or multiple times within a trailing 7-day window — without assuming why.
+              </p>
+
+              <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
+                <h5 className="text-xl font-bold text-gray-900 mb-4">Total Customer Interactions =</h5>
+                <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  <li>Self-Guided Visit (Page Visits)</li>
+                  <li>Self-Service Contact (Bot)</li>
+                  <li>Human-Led Contact (CSA)</li>
+                </ul>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Single (No-Repeat) Interactions */}
+                <div className="bg-green-50 rounded-xl p-6 border border-green-200">
+                  <h5 className="text-xl font-bold text-gray-900 mb-4">Single (No-Repeat) Interaction</h5>
+                  <p className="text-gray-700 mb-4">
+                    <strong>Definition:</strong> Exactly one interaction within the trailing 7-day window.
+                  </p>
+                  <p className="text-gray-700 mb-4">
+                    <strong>Metric Form:</strong> No-Repeat Interaction Started in Any CS Channel and Ended in {`{Specific CS Channel}`}.
+                  </p>
+                  
+                  <div className="space-y-3 text-sm text-gray-600">
+                    <p><strong>Visit</strong> = one Visit ID (Session ID + Marketplace ID) for an authenticated customer.</p>
+                    <ul className="list-disc list-inside ml-4 space-y-1">
+                      <li>A visit session ends after 60 minutes of inactivity.</li>
+                      <li>Continuous activity (e.g., 100+ clicks over 3 hours with no 60-min gap) = one visit.</li>
+                    </ul>
+                    
+                    <p><strong>Contact</strong> = one (Comm_ID + Customer_ID) for Bot or CSA.</p>
+                    <ul className="list-disc list-inside ml-4 space-y-1">
+                      <li>Always classified by the ending channel (e.g., CS Homepage, CS Chatbot, CSA Voice).</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Multiple (Repeat) Interactions */}
+                <div className="bg-orange-50 rounded-xl p-6 border border-orange-200">
+                  <h5 className="text-xl font-bold text-gray-900 mb-4">Multiple (Repeat) Interactions</h5>
+                  <p className="text-gray-700 mb-4">
+                    <strong>Definition:</strong> Two or more distinct interactions within the trailing 7-day window.
+                  </p>
+                  <p className="text-gray-700 mb-4">
+                    <strong>Metric Form:</strong> Repeat Interaction Started in Any CS Channel and Ended in {`{Specific CS Channel}`}.
+                  </p>
+                  
+                  <div className="space-y-3 text-sm text-gray-600">
+                    <ul className="list-disc list-inside space-y-1">
+                      <li>Requires ≥2 distinct Visit IDs or Contact IDs.</li>
+                      <li>Valid paths are defined by the CS Channel Matrix.</li>
+                      <li>Always classified by the ending channel (e.g., Help Pages, Legacy Chatbot, CSA Email).</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Current Key Inclusions and Exclusions */}
+            <div className="mt-12 bg-gray-50 rounded-xl p-8 border border-gray-200">
+              <h5 className="text-2xl font-bold text-gray-900 mb-6">Current Key Inclusions and Exclusions</h5>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Inclusions */}
+                <div className="bg-green-50 rounded-xl p-6 border border-green-200">
+                  <h6 className="text-xl font-bold text-green-800 mb-4">Inclusions</h6>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-lg font-semibold text-gray-900 mb-2">Reporting Verticals Covered</div>
+                      <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                        <li>Amazon CS</li>
+                        <li>Stores Rollup = (Stores + AB + SDS Recipients + CAP)</li>
+                        <li>Stores</li>
+                        <li>D2 (Device & Digital)</li>
+                        <li>SDS Driver Delivery</li>
+                        <li>SDS Driver Non-Delivery</li>
+                        <li>SDS Recipient</li>
+                        <li>Amazon Business (AB)</li>
+                        <li>CAP</li>
+                        <li>Social Media (only Email contacts handled in AC3)</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <div className="text-lg font-semibold text-gray-900 mb-2">Time Coverage</div>
+                      <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                        <li>Data for 2024</li>
+                        <li>Data for 2025 YTD</li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <div className="text-lg font-semibold text-gray-900 mb-2">Marketplace</div>
+                      <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                        <li>US Marketplace only</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Exclusions */}
+                <div className="bg-red-50 rounded-xl p-6 border border-red-200">
+                  <h6 className="text-xl font-bold text-red-800 mb-4">Exclusions</h6>
+                  
+                  <ul className="list-disc list-inside space-y-2 text-sm text-gray-700">
+                    <li>Outbound contacts</li>
+                    <li>Records without a Comm ID</li>
+                    <li>Records without a Customer ID (unauthenticated customers)</li>
+                    <li>CSA → CSA Dart contacts</li>
+                    <li>Social Media not handled in AC3 Email (e.g., Sprinklr data)</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Further Opportunities / Extensions */}
+              <div className="mt-8 bg-blue-50 rounded-xl p-6 border border-blue-200">
+                <h6 className="text-xl font-bold text-blue-800 mb-4">Further Opportunities / Extensions</h6>
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <div className="text-lg font-semibold text-gray-900 mb-2">Partitioning within existing categories</div>
+                    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                      <li>AI-enabled IVA (currently grouped within CS Voicebot)</li>
+                      <li>Small population of AC3-handled social media email (currently grouped under CSA email)</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <div className="text-lg font-semibold text-gray-900 mb-2">Potential New Inclusions</div>
+                    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                      <li>CS on Rufus</li>
+                      <li>CS on Alexa</li>
+                      <li>For Digital (D2): possible subdivision by device type or by "cantilever" → splitting Digital interactions into sub-dimensions based on device form factor and usage context (e.g., Echo devices vs. Fire Tablets vs. Kindle).</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Currently Excluded (Reconfirmation) */}
+              <div className="mt-6 bg-yellow-50 rounded-xl p-6 border border-yellow-200">
+                <h6 className="text-xl font-bold text-yellow-800 mb-4">Currently Excluded (Reconfirmation)</h6>
+                <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                  <li>Outbound contacts</li>
+                  <li>Dart: CSA → CSA transitions</li>
+                  <li>Unauthenticated customers</li>
+                  <li>Contacts without available Comm_ID (e.g., due to backfilling gaps)</li>
+                </ul>
+              </div>
+            </div>
           </div>
 
           {/* Why We Measure in a 7-Day Window */}
